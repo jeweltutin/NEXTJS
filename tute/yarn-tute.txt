@@ -1,0 +1,3 @@
+https://classic.yarnpkg.com/lang/en/docs/getting-started/
+
+https://www.knowledgehut.com/blog/web-development/yarn-vs-npm#frequently-asked-questions

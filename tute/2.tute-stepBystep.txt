@@ -1,0 +1,42 @@
+// NextJS Masterclass in Bangla - Next JS Tutorial Bangla // First started
+https://www.youtube.com/watch?v=I4O9Of7rFSM&ab_channel=IstiaqHasan
+
+// Installation
+https://nextjs.org/docs/getting-started/installation
+// Next.js 13.4 Tutorial in Hindi-NextJS, React Server Comp. & MongoDB // First started with next install & continueing
+https://www.youtube.com/watch?v=lpsLAP4x-tk&t=820s&ab_channel=ThapaTechnical
+
+// Create a To-Do App with Next.js 13: Learn CRUD Operations and Tailwind CSS UI // Almost done
+https://www.youtube.com/watch?v=wi2xdrpmJNk&ab_channel=CandDev
+
+//Tailwind CSS Bangla Tutorial Course  // Started - running
+https://www.youtube.com/watch?v=9F7Cmfw5uLc&list=PLHiZ4m8vCp9P23SqlHL0QAqiwS_oCofV2&index=9&ab_channel=LearnwithSumit-LWS-Bangladesh
+
+//Next.js Full Course for Beginners | Nextjs 13 Tutorial | 7 Hours
+https://www.youtube.com/watch?v=843nec-IvW0&t=13100s&ab_channel=DaveGray
+
+//Next.js Full Tutorial for Beginners | Next.js 13 Full Stack App Using App Router
+https://www.youtube.com/watch?v=VE8BkImUciY&ab_channel=LamaDev
+
+//Full tutorial   //23 video studied old videos
+https://www.youtube.com/playlist?list=PLC3y8-rFHvwgC9mj0qv972IO5DmD-H0ZH
+
+// Next js tutorial Bangla
+https://www.youtube.com/watch?v=2OSX-8rinWE&list=PLQvUYGXiwrskS_C3MOeW0rOVB5Ny2MCR2&index=19&ab_channel=FazleeRabbi
+
+// nextjs data show from api with axios //google searched
+https://www.youtube.com/watch?v=Gl-vOU7ZU9A&ab_channel=ThapaTechnical
+https://www.youtube.com/watch?v=O_yUe8qElYM&ab_channel=herdoycode
+https://www.youtube.com/watch?v=JGWD6rwxPjA&ab_channel=DeveloperResources
+
+
+// React JS CRUD Operations using JSON Server REST API
+https://www.youtube.com/watch?v=i3J8gyARN-Y&t=2010s&ab_channel=NihiraTechiees
+
+
+// React JS REDUX crud actions using JSON-SERVER API
+https://www.youtube.com/watch?v=MEtQTB_xyMc&ab_channel=NihiraTechiees
+
+//Modal popup nextjs  //popup modal using nextjs
+https://www.youtube.com/watch?v=GMaQPv5ZsR0&ab_channel=ThapaTechnical
+https://www.youtube.com/watch?v=0bxz-6yU4hE&ab_channel=Streamline

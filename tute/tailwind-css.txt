@@ -1,0 +1,49 @@
+https://www.youtube.com/watch?v=X7XbjwD6fVY&list=PLHiZ4m8vCp9P23SqlHL0QAqiwS_oCofV2&ab_channel=LearnwithSumit-LWS-Bangladesh  // Starting with basic bangla tute
+
+//simple admin dashboard nextjs tailwind css - google search
+//React admin dashboard using tailwind CSS -- Almost completed
+https://www.youtube.com/watch?v=yQCsnQw420Y&ab_channel=Frontenddev
+
+//Create a Responsive Shopping Website with Next.js and Tailwind | Tutorial  -- // Fully -done
+https://www.youtube.com/watch?v=KzqNLDMSdMc&t=3622s&ab_channel=TheBraveCoders
+
+//Collapsible Sidebar in Next.js
+https://www.youtube.com/watch?v=_ORPWeJFXwQ&ab_channel=TheBraveCoders
+
+//Building a dashboard - full list
+https://www.youtube.com/playlist?list=PLwHsNjmBZ-MJnVNyiaVYHW_dDA5n3mbVk
+
+https://www.youtube.com/watch?v=1T3GF6endl8&ab_channel=DailyTuition
+https://www.youtube.com/watch?v=S6dPnlSG86w&ab_channel=ShadeeMerhi   // make UI youtube
+https://www.youtube.com/watch?v=CMx51wpd7g4&ab_channel=CodeCommerce  // Portfolio Website 
+
+https://www.devwares.com/blog/how-to-create-react-forms-using-tailwind-css/
+https://larainfo.com/blogs/react-tailwind-css-table-example
+
+
+//CSS FlexBox Crash Course
+https://www.youtube.com/watch?v=VfwbhmtOrjs&ab_channel=ProcoderBD
+
+// Fix unknownAtRules in vscode Warnings From Tailwind CSS
+https://www.codeconcisely.com/posts/tailwind-css-unknown-at-rules/
+
+
+
+
+
+Tailwind css v3.0 - current version v3.3 -August 2023
+
+came with lot of improvements
+1. JIT (Just in time)
+2. Every color out of the box
+3. Colored box shadows
+4. Scroll snap API
+5. Multi column layout
+6. Native form control styling
+7. Print modifier
+8. Modern aspect ratio API
+9. Fancy underline styles
+10. Arbitary properties
+11. Play CDN
+
+Variants not needed

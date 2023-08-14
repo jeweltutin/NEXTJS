@@ -1,0 +1,1 @@
+https://isotropic.co/how-to-fix-the-property-does-not-exist-on-type-window-error-in-typescript/

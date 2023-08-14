@@ -1,0 +1,10 @@
+//Form Validation using Formik & Yup 
+https://www.youtube.com/watch?v=0S-pyTJ2ZvU&ab_channel=ThapaTechnical
+
+
+//formik next js tutorial -- google search
+https://www.makeuseof.com/nextjs-form-validation/
+
+
+//textarea
+https://gist.github.com/dbshanks/c1cb42d4066b2c382010c0cdaa615091

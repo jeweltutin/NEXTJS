@@ -1,0 +1,12 @@
+
+//Basic Redux playlist bangla
+https://www.youtube.com/watch?v=AdMcnSGiGC8&list=PLkyGuIcLcmx3enVND877-AHx7h1AytJAz&ab_channel=RabbilHasan
+
+
+
+// Redux Tutorial With Next JS 13 | Ecommerce Cart Project
+https://www.youtube.com/watch?v=pnXERmyJna4&ab_channel=simplyjs
+
+
+//Redux and NextJS 13 Tutorial | Redux Toolkit Tutorial With Next 13
+https://www.youtube.com/watch?v=Yokjzp91A4o&ab_channel=PedroTech
