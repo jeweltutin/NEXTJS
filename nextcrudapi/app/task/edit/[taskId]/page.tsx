@@ -2,45 +2,45 @@
 
 import { FormEventHandler, useState } from "react";
 import { useRouter } from 'next/navigation';
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import { editTodo, getTask } from "@/api";
 
-const handleSubmitEditTodo =  ( {params}:any ) => {
+const handleSubmitEditTodo = ({ params }: any) => {
     const router = useRouter();
-  
-  const [data,setData] = useState<any>([])
-//   const [task,setTask] = useState<any>({})
-  const id = params.taskId;
+
+    const [data, setData] = useState<any>([])
+    //   const [task,setTask] = useState<any>({})
+    const id = params.taskId;
 
 
 
-useEffect(()=>{
- const getData =async()=>{
-      const vtask = await getTask(id);
-    setData(vtask)
- }
- getData()
-},[])
-/* 
-useEffect(()=>{
-    if(data.length){
-        const task = data?.find((t:any)=>t.id === id)
-    setTask(task)
-    }
-},[data])
- */
+    useEffect(() => {
+        const getData = async () => {
+            const vtask = await getTask(id);
+            setData(vtask)
+        }
+        getData()
+    }, [])
+    /* 
+    useEffect(()=>{
+        if(data.length){
+            const task = data?.find((t:any)=>t.id === id)
+        setTask(task)
+        }
+    },[data])
+     */
 
     //const handleSubmitEditTodo: FormEventHandler<HTMLFormElement> = async (e) => {
-    const handleSubmitEditTodo = async (e: any) => {  
+    const handleSubmitEditTodo = async (e: any) => {
         e.preventDefault();
-     
+
         /*await editTodo({
             id: task.id,
             text: task.text,
             time: task.time
         });*/
-         console.log('here')
-   await editTodo({
+        console.log('here')
+        await editTodo({
             _id: id,
             task: e.target.task.value,
             time: e.target.time.value,
@@ -60,7 +60,7 @@ useEffect(()=>{
                         <label className="label">
                             <span className="label-text">What is the task?</span>
                         </label>
-                        <input type="text" name="task" defaultValue={data.task}  placeholder="Type here" className="input input-bordered w-full max-w-xs mb-4" />
+                        <input type="text" name="task" defaultValue={data.task} placeholder="Type here" className="input input-bordered w-full max-w-xs mb-4" />
                         <label className="label">
                             <span className="label-text">Time period:</span>
                         </label>
