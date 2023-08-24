@@ -1,0 +1,10 @@
+https://www.youtube.com/watch?v=PfR88Eeugy4&t=470s&ab_channel=codedamn
+https://www.youtube.com/watch?v=YIqLzP0sVdc&list=PL8p2I9GklV44sj_Ikp8jQSvwD-m9htnHT&ab_channel=CodeStepByStep
+https://www.youtube.com/watch?v=psU13XU1gDY&ab_channel=CodeWithViju
+
+
+https://medium.com/@tgknapp11/simple-next-js-authentication-method-3cd2ae2f339c
+https://www.geeksforgeeks.org/how-to-log-out-user-from-app-using-reactjs/
+https://nextjs.org/docs/pages/building-your-application/data-fetching/building-forms
+
+https://github.com/VulcanWM/login-signup-nextjs
