@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
 
-import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
@@ -23,7 +23,7 @@ export default function RootLayout({
     // <html lang="en" className="dark">
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
-      {children}
+        {children}
       </body>
     </html>
   )
