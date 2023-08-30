@@ -1,9 +1,12 @@
 'use client'
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FaEnvelope, FaRegBell, FaSearch } from 'react-icons/fa'
 
 const Header = ( {authData}:any ) => {
+    const router = useRouter();
+
     const [open, setOpen] = useState(false);
 
     const showProfile = () => {
@@ -13,6 +16,8 @@ const Header = ( {authData}:any ) => {
 
     const logout = () => {
         localStorage.removeItem('userInfo');
+        //router.refresh(); // Not working
+        router.push('/login/v1');
     };
 
     return (

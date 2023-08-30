@@ -24,14 +24,18 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
         []);*/
 
     const router = useRouter();
-    const authData = JSON.parse(localStorage.getItem("userInfo") as string);
-    useEffect(() => {
+    
+    const [authData, setAuthData] = useState("");
 
+    //const authData = JSON.parse(localStorage.getItem("userInfo") as string); //error ReferenceError: localStorage is not defined
+    useEffect(() => {
+        let authData;
+        authData= JSON.parse(localStorage.getItem("userInfo") as string) || "";
+        setAuthData(authData);
         if (authData?.role !== 'admin' && !authData) {
             router.push('/login/v1')
         }
-    },
-        []);
+        }, []);
 
     return (
         // <html lang="en" className="dark">
