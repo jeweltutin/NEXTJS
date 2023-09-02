@@ -55,7 +55,7 @@ const Login = () => {
         const userName = data.name;
         const role = data.role;
 
-        console.log(data.token);
+        //console.log(data.token);
 
         const UserData: any = {
             token,

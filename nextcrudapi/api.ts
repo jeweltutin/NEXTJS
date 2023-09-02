@@ -2,12 +2,25 @@ import { MyTask } from "./types/tasks";
 
 const baseUrl = 'http://localhost:5000';
 
-export const getAllTasks = async () => {
+/*  export const getAllTasks = async () => {
     //const res = await fetch(`${baseUrl}/tasks`);
     const res = await fetch(`${baseUrl}/api/tasks`, { cache: 'no-store' });
     //const res = await fetch('http://localhost:3001/tasks');
     if (!res.ok) throw new Error('failed to fetch data')
     const todos = res.json();
+    return todos;
+}  */
+
+export const getAllTasks = async (token:any) => {
+    console.log("Token From API:: " +token)
+    //const res = await fetch(`${baseUrl}/api/tasks`, { headers: {Authentication: `Bearer ${token}`, cache: 'no-store'} });
+    const res = await fetch(`${baseUrl}/api/tasks`, {  headers: { Accept: 'application/json', Authorization: `Bearer ${token}` } })
+    //.then(resp => resp.json())
+  
+
+    if (!res) throw new Error('failed to fetch data')
+    const todos = res.json();
+    //console.log(todos+'TaskList')
     return todos;
 }
 

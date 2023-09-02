@@ -37,7 +37,7 @@ const AdminTaskList = ({ allTasksList }: Props) => {
                                 <thead className="bg-gray-50">
                                     <tr>
                                         <th scope="col" className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase ">
-                                            ID
+                                            ID 
                                         </th>
                                         <th scope="col" className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase ">
                                             Job
