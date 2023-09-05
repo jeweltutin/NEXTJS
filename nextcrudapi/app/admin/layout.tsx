@@ -38,14 +38,19 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
         }
         }, []); */
 
-    const authData = useContext(UserContext);
+    const authData = useContext<any>(UserContext);
+    /* if (!authData.token) {
+        //return false;
+        router.push('/login/v1');
+    }  */
+    //console.log(authData.token);
     
   
 
     return (
         // <html lang="en" className="dark">
         <div>
-            {authData ? <div className="flex">
+             { authData.token ? <div className="flex">
                 <div className="basis-[12%] h-[100vh] border">
                     <Sidebar />
                     {/* {authData.userName} */}
@@ -56,7 +61,7 @@ export default function DashboardLayout({ children, }: { children: React.ReactNo
                         {children}
                     </div>
                 </div>
-            </div> : <strong>Authentication failed!</strong>}
+            </div> : 'Unauthorized!!' }
         </div>
     )
 }
