@@ -2,7 +2,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 
-
 type InitialState ={
     numOfCakes: number
 };
@@ -11,7 +10,8 @@ type InitialState ={
         numOfCakes: 10  
 }  */
 //or
-const initialState: InitialState = {
+
+const initialState = {
     numOfCakes: 10  
 } as InitialState
 
