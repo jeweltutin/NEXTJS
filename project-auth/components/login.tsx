@@ -4,9 +4,8 @@ import Image from 'next/image'
 const Login = () => {
     return (
         <div className='flex h-screen items-center justify-center'>
-            <div className=''>
+            <div>
                 <div className='container'>
-
                     <div className="flex justify-center items-center">
                         <Image
                             src='/assets/images/LoginIcon.png'
@@ -16,7 +15,7 @@ const Login = () => {
                             alt='Login'
                         ></Image>
                     </div>
-                    <div className='max-w-900 bggray-200 w-[400px] rounded-lg  py-4 px-4 shadow-md shadow-slate-400 text-center'>
+                    <div className='max-w-900 bggray-200 w-[300px] rounded-lg  py-4 px-4 shadow-md shadow-slate-400 text-center'>
                         <p className='text-subtitle font-semibold text-brand_bg'>
                             Login Now
                         </p>
@@ -43,7 +42,7 @@ const Login = () => {
                                 </div>
 
                                 <button
-                                    className='w-full cursor-pointer rounded-lg para hover:bg-brand_color hover:text-brand_bg border-[1px] font-semibold hover:border-brand_bg bg-brand_bg py-1 text-center subtitle text-brand_color shadow-md'
+                                    className='w-full cursor-pointer rounded-lg para hover:bg-brand_color hover:text-brand_bg border-[1px] font-semibold hover:border-brand_bg bg-sky-500 py-1 text-center subtitle text-white shadow-md'
                                     type='submit'>
                                     Log in
                                 </button>
