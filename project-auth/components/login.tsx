@@ -1,7 +1,14 @@
 
-import Image from 'next/image'
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import Image from 'next/image';
+import * as Yup from 'yup';
 
 const Login = () => {
+    const loginSchema = Yup.object({
+        email: Yup.string().email('Invalid email address').required('Email is required'),
+        password: Yup.string().required('Password not provided').min(3, 'Password is too short')
+    });
+
     return (
         <div className='flex h-screen items-center justify-center'>
             <div>
@@ -19,35 +26,54 @@ const Login = () => {
                         <p className='text-subtitle font-semibold text-brand_bg'>
                             Login Now
                         </p>
+                        <Formik
+                            initialValues={{
+                                email: '',
+                                password: ''
+                            }}
+                            validationSchema={loginSchema}
+                            onSubmit={(formData) => {
+                                //alert(JSON.stringify(formData))
 
-                        <form className=' text-center mt-8'>
-                            <div className='flex flex-col space-y-8 items-center justify-start'>
-                                <div className='relative w-full'>
-                                    <input
-                                        name='email'
-                                        type='text'
-                                        className='bg-gray-50 w-full text-black text-red border-[1px] border-gray-300 focus:border-blue-300 text-sm py-1 h-10  px-2 rounded-lg outline-none'
-                                        placeholder='Enter your email address'
-                                    />
-                                </div>
+                                // JSON.stringify(obj, replacer, space)
+                                alert(JSON.stringify(formData, null , 5))  /// *Insert 1-10 space characters for each white space:*/
+                            }}
+                        >
 
-                                <div className='relative w-full'>
-                                    <input
-                                        name='password'
-                                        type='password'
-                                        className='bg-gray-50 text-black text-red border-[1px] border-gray-300 focus:border-blue-300  text-sm py-1 h-10 w-full   px-2 rounded-lg outline-none'
-                                        placeholder='Enter your password' />
-                                    <div>
+                            <Form className=' text-center mt-8'>
+                                <div className='flex flex-col space-y-8 items-center justify-start'>
+                                    <div className='relative w-full'>
+                                        <Field
+                                            name='email'
+                                            type='text'
+                                            className='bg-gray-50 w-full text-black text-red border-[1px] border-gray-300 focus:border-blue-300 text-sm py-1 h-10  px-2 rounded-lg outline-none'
+                                            placeholder='Enter your email address' />
+                                        
+                                        <div className="text-left text-red-500 text-sm">
+                                            <ErrorMessage name="email" />
+                                        </div>                                      
                                     </div>
-                                </div>
 
-                                <button
-                                    className='w-full cursor-pointer rounded-lg para hover:bg-brand_color hover:text-brand_bg border-[1px] font-semibold hover:border-brand_bg bg-sky-500 py-1 text-center subtitle text-white shadow-md'
-                                    type='submit'>
-                                    Log in
-                                </button>
-                            </div>
-                        </form>
+                                    <div className='relative w-full'>
+                                        <Field
+                                            name='password'
+                                            type='password'
+                                            className='bg-gray-50 text-black text-red border-[1px] border-gray-300 focus:border-blue-300  text-sm py-1 h-10 w-full   px-2 rounded-lg outline-none'
+                                            placeholder='Enter your password' />
+
+                                        <div className="text-left text-red-500 text-sm">
+                                            <ErrorMessage name="password" />
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        className='w-full cursor-pointer rounded-lg para hover:bg-brand_color hover:text-brand_bg border-[1px] font-semibold hover:border-brand_bg bg-sky-500 py-1 text-center subtitle text-white shadow-md'
+                                        type='submit'>
+                                        Log in
+                                    </button>
+                                </div>
+                            </Form>
+                        </Formik>
 
                     </div>
                 </div>
