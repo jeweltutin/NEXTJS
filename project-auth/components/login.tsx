@@ -1,9 +1,16 @@
 
+import { userLogin } from '@/redux/slices/userSlice';
+import { AppDispatch } from '@/redux/store';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 const Login = () => {
+    //const dispatch = useDispatch();
+    const dispatch = useDispatch<AppDispatch>();
+    //const router = useRouter();
     const loginSchema = Yup.object({
         email: Yup.string().email('Invalid email address').required('Email is required'),
         password: Yup.string().required('Password not provided').min(3, 'Password is too short')
@@ -32,11 +39,25 @@ const Login = () => {
                                 password: ''
                             }}
                             validationSchema={loginSchema}
-                            onSubmit={(formData) => {
+                            /* onSubmit={(formData) => {
                                 //alert(JSON.stringify(formData))
-
                                 // JSON.stringify(obj, replacer, space)
-                                alert(JSON.stringify(formData, null , 5))  /// *Insert 1-10 space characters for each white space:*/
+                                alert(JSON.stringify(formData, null , 5))  /// Insert 1-10 space characters for each white space:
+                            }} */
+
+                            /* onSubmit={(values, { setSubmitting }) => {
+                                setTimeout(() => {
+                                  alert(JSON.stringify(values, null, 2));
+                                  setSubmitting(false);
+                                }, 400);
+                            }} */
+
+                            onSubmit={(formData) => {
+                                dispatch(userLogin({
+                                    email: formData.email,
+                                    password: formData.password
+                                }))
+                                //alert(JSON.stringify(formData.email))
                             }}
                         >
 
