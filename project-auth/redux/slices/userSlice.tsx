@@ -57,21 +57,25 @@ export const userLogin = createAsyncThunk('user/userLogin', async ({ email, pass
     }
 })
 
-export const getUserData: any = createAsyncThunk('user/getUserData', async (token: any) => {
+/* export const getUserData: any = createAsyncThunk('user/getUserData', async (token: any) => {
     const { data } = await axios.get('user/', {
         headers: { Authorization: `Bearer ${token}` },
     });
 
     return data;
-}
-);
+}); */
 
 const userSlice = createSlice({
     name: 'user',
     initialState,
-    reducers: {},
-    extraReducers: (builder) => {
-   
+    reducers: {
+        logout: (state:any) => {
+            state.userInfo = {},
+            state.success = false,
+            localStorage.removeItem('userInfo')
+        }
+    },
+    extraReducers: (builder) => {   
         builder.addCase(userLogin.fulfilled, (state, { payload }) => {
             state.success = true;
             state.status = 'success';
@@ -83,7 +87,7 @@ const userSlice = createSlice({
         });
 
 
-        builder.addCase(getUserData.pending, (state) => {
+/*         builder.addCase(getUserData.pending, (state) => {
             const getUserData = {
                 data: [],
                 status: 'loading',
@@ -103,8 +107,9 @@ const userSlice = createSlice({
                 status: 'failed'
             };
             state.getUserData = getUserData;
-        })
+        }) */
     }
 });
 
+export const { logout } = userSlice.actions;
 export default userSlice.reducer;
