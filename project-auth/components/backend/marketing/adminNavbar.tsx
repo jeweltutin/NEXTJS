@@ -5,9 +5,8 @@ import { CgMenu } from 'react-icons/cg';
 import { logout } from '@/redux/slices/userSlice';
 import { FiLogOut } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
+
 const AdminNavbar = ({ isMenuOpen, setIsMenuOpen }: any) => {
-
-
   const dispatch = useDispatch();
   const [dashboardOpen, setDashboardOpen] = useState(false);
 

@@ -1,16 +1,17 @@
 
+import { setPopup } from '@/redux/slices/popupSlice';
 import { userLogin } from '@/redux/slices/userSlice';
 import { AppDispatch } from '@/redux/store';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 
 const Login = () => {
     //const dispatch = useDispatch();
     const dispatch = useDispatch<AppDispatch>();
-    //const router = useRouter();
+    const router = useRouter();
     const loginSchema = Yup.object({
         email: Yup.string().email('Invalid email address').required('Email is required'),
         password: Yup.string().required('Password not provided').min(3, 'Password is too short')
@@ -21,13 +22,7 @@ const Login = () => {
             <div>
                 <div className='container'>
                     <div className="flex justify-center items-center">
-                        <Image
-                            src='/assets/images/LoginIcon.png'
-                            width={100}
-                            className='items-center justify-center'
-                            height={120}
-                            alt='Login'
-                        ></Image>
+                        <Image src='/assets/images/LoginIcon.png' width={100} className='items-center justify-center' height={120} alt='Login'></Image>
                     </div>
                     <div className='max-w-900 bggray-200 w-[300px] rounded-lg  py-4 px-4 shadow-md shadow-slate-400 text-center'>
                         <p className='text-subtitle font-semibold text-brand_bg'>
@@ -53,11 +48,44 @@ const Login = () => {
                             }} */
 
                             onSubmit={(formData) => {
+                                //alert(JSON.stringify(formData.email))
                                 dispatch(userLogin({
                                     email: formData.email,
                                     password: formData.password
-                                }))
-                                //alert(JSON.stringify(formData.email))
+                                })).then((res) => {
+                                    //console.log(res);
+                                    //alert(JSON.stringify(res));
+                                    if(res.type === 'user/userLogin/fulfilled'){
+                                        //alert('Success');
+                                        //console.log('Good Success');
+                                        dispatch(setPopup({
+                                            type: 'success',
+                                            message: 'login Success',
+                                            show: true
+                                        }));
+                                        /* if (res.payload.role === 'admin') {
+                                            router.push('marketing/dashboard')
+                                        } else {
+                                            //
+                                        } */
+                                        res?.payload?.role === 'admin' && router.push('marketing/dashboard');
+
+                                    }else {
+                                        dispatch(setPopup({
+                                            type: 'failed',
+                                            // message: 'login Failed',
+                                            message: res.payload.response.data,
+                                            show: true
+                                        }));
+                                      }
+                                })
+                                setTimeout(() => {
+                                    dispatch(setPopup({ 
+                                        show: false,
+                                        type: '',
+                                        message: ''
+                                     }));
+                                }, 15000)
                             }}
                         >
 

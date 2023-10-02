@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FiMenu, FiLinkedin, FiInstagram, FiFacebook } from 'react-icons/fi';
 
 const loginLayout = ({children}:any) => {
-  return (
+  return (    
     <div className='child_center w-full h-full '>
     <nav className='absolute top-0 left-0 h-20 z-100 w-screen bg-gray-700 flex justify-center items-center'>
       <div className='flex justify-between max-w-container side_padding items-center container'>

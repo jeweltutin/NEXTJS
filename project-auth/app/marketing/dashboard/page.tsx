@@ -3,7 +3,7 @@
 const MarketingDashboard = () => {
     return (
         <div>
-I am from home page Admin
+            I am from home page Admin
         </div>
     )
 }

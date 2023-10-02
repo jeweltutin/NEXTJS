@@ -87,7 +87,7 @@ const userSlice = createSlice({
         });
 
 
-/*         builder.addCase(getUserData.pending, (state) => {
+     /* builder.addCase(getUserData.pending, (state) => {
             const getUserData = {
                 data: [],
                 status: 'loading',
