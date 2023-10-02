@@ -54,9 +54,7 @@ const Protection = ({ children }: ProtectionProps) => {
 
     return (
         <>
-            {role === 'admin' ? (
-                { children }
-            ) : null}
+            {children}
         </>
     )
 }
