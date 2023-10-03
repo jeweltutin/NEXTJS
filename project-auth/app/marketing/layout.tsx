@@ -4,14 +4,27 @@ import Toast from '@/components/backend/toast';
 //import AdminNavbar from '@/components/backend/marketing/adminNavbar';  // react-hydration-error
 import dynamic from 'next/dynamic';
 const AdminNavbar = dynamic(() => import('@/components/backend/marketing/adminNavbar'), { ssr: false })
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Protection from './protection';
+import { useRouter } from 'next/navigation';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
     const [isMenuOpen, setIsMenuOpen] = useState(true);
+    const router = useRouter();
+    const role = useSelector((state: RootState) => state.userReducer.userInfo?.role);
+    
+    useEffect(() => {
+        if (role !== 'admin') {
+            router.push('/login');
+        }
+    }, [role, router])
+
     return (
         <>
             <Toast></Toast>
+            {role === 'admin' ? (
             <div className='bg-white text-black relative min-h-screen w-screen'>
                 <Protection>
                     <div className='flex'>
@@ -24,7 +37,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                         </div>
                     </div>
                 </Protection>
-            </div>
+            </div> ): null }
         </>
     )
 }

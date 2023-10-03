@@ -1,17 +1,24 @@
 
 import { setPopup } from '@/redux/slices/popupSlice';
 import { userLogin } from '@/redux/slices/userSlice';
-import { AppDispatch } from '@/redux/store';
+import { AppDispatch, RootState } from '@/redux/store';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 
 const Login = () => {
     //const dispatch = useDispatch();
     const dispatch = useDispatch<AppDispatch>();
     const router = useRouter();
+    const role = useSelector((state: RootState) => state.userReducer.userInfo?.role);
+    useEffect(() => {
+        role === 'marketing' && router.push('marketing/dashboard');
+        role === 'admin' && router.push('marketing/dashboard');
+    },[])
+
     const loginSchema = Yup.object({
         email: Yup.string().email('Invalid email address').required('Email is required'),
         password: Yup.string().required('Password not provided').min(3, 'Password is too short')
@@ -63,18 +70,18 @@ const Login = () => {
                                             message: 'login Success',
                                             show: true
                                         }));
-                                        /* if (res.payload.role === 'admin') {
+                                        if (res.payload.role === 'admin') {
                                             router.push('marketing/dashboard')
                                         } else {
                                             //
-                                        } */
-                                        res?.payload?.role === 'admin' && router.push('marketing/dashboard');
+                                        }
+                                        //res?.payload?.role === 'admin' && router.push('marketing/dashboard');
 
                                     }else {
                                         dispatch(setPopup({
                                             type: 'failed',
                                             // message: 'login Failed',
-                                            message: res.payload.response.data,
+                                            message: res.payload.response?.data,
                                             show: true
                                         }));
                                       }
@@ -85,7 +92,7 @@ const Login = () => {
                                         type: '',
                                         message: ''
                                      }));
-                                }, 15000)
+                                }, 10000)
                             }}
                         >
 
