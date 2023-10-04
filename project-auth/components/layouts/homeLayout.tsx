@@ -2,12 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import { FiLinkedin, FiInstagram, FiFacebook, FiMenu, FiYoutube, FiTwitter } from 'react-icons/fi';
-//import Footer from '../footer';
+import Footer from '../frontend/footer';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import dynamic from 'next/dynamic';
+//import dynamic from 'next/dynamic';
+
 //const Menu = dynamic(() => import('./menu'), { ssr: false });
 
 const HomeLayout = ({ data, children }: any) => {
@@ -72,6 +73,7 @@ const HomeLayout = ({ data, children }: any) => {
       </nav>
       <div className='w-screen h-full'>{children}</div>
       {/* <Footer data={data} /> */}
+      <Footer />
     </div>
   );
 };
