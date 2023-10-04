@@ -1,18 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import {
-  FiLinkedin,
-  FiInstagram,
-  FiFacebook,
-  FiMenu,
-  FiYoutube,
-  FiTwitter,
-} from 'react-icons/fi';
-import Footer from '../footer';
+import { FiLinkedin, FiInstagram, FiFacebook, FiMenu, FiYoutube, FiTwitter } from 'react-icons/fi';
+//import Footer from '../footer';
+
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import dynamic from 'next/dynamic';
-const Menu = dynamic(() => import('./menu'), { ssr: false });
+//const Menu = dynamic(() => import('./menu'), { ssr: false });
 
 const HomeLayout = ({ data, children }: any) => {
   return (
@@ -22,14 +18,8 @@ const HomeLayout = ({ data, children }: any) => {
           <Link href='/'>
             <div className='h-16 w-16'>
               {data?.logo ? (
-                <Image
-                  src={process.env.NEXT_PUBLIC_SERVER_HOST + data?.logo}
-                  width='80'
-                  className='object-cover h-16 w-16'
-                  height='80'
-                  alt='logo'
-                ></Image>
-              ) : null}
+                <Image src={process.env.NEXT_PUBLIC_SERVER_HOST + data?.logo} width='80' className='object-cover h-16 w-16' height='80' alt='logo'></Image>
+              ) : <Image src={'/assets/images/Vector.png'} width={80} className='object-cover h-16 w-16' height='80' alt='logo'></Image>}
             </div>
           </Link>
           <div>
@@ -75,13 +65,13 @@ const HomeLayout = ({ data, children }: any) => {
               ) : null}
             </div>
             <div className='md:hidden'>
-              <Menu data={data} />
+              {/* <Menu data={data} /> */}
             </div>
           </div>
         </div>
       </nav>
       <div className='w-screen h-full'>{children}</div>
-      <Footer data={data} />
+      {/* <Footer data={data} /> */}
     </div>
   );
 };

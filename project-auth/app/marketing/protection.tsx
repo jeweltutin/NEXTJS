@@ -2,7 +2,6 @@ import { setPopup } from "@/redux/slices/popupSlice";
 import { logout } from "@/redux/slices/userSlice";
 import { RootState } from "@/redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from 'react';
 import { useRouter } from "next/navigation";
 
 type ProtectionProps = {
@@ -12,7 +11,7 @@ type ProtectionProps = {
 const Protection = ({ children }: ProtectionProps) => {
 
     const token = useSelector((state: RootState) => state.userReducer.userInfo?.token);
-    const role = useSelector((state: RootState) => state.userReducer.userInfo?.role);
+    //const role = useSelector((state: RootState) => state.userReducer.userInfo?.role);
 
     const dispatch = useDispatch();
     const router = useRouter();
@@ -46,11 +45,11 @@ const Protection = ({ children }: ProtectionProps) => {
         }
     }
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (role !== 'admin') {
             router.push('/login');
         }
-    }, [role, router])
+    }, [role, router]) */
 
     return (
         <>

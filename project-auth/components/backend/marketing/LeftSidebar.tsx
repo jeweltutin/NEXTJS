@@ -74,22 +74,22 @@ const LeftSidebar = ({ isMenuOpen, setIsMenuOpen }: any) => {
 
     {
       name: 'Career',
-      subpath: [    
+      subpath: [
         {
           name: 'Landing',
           path: '/marketing/dashboard/career-content',
           icon: SiOnlyoffice,
         },
-         {
+        {
           name: 'DX Life',
           path: '/marketing/dashboard/career-gallery',
           icon: FiLifeBuoy,
         },
-           {
+        {
           name: 'Reviews',
           path: '/marketing/dashboard/career-reviews',
           icon: MdReviews,
-        },         
+        },
       ],
       icon: SiOnlyoffice,
     },
@@ -108,7 +108,7 @@ const LeftSidebar = ({ isMenuOpen, setIsMenuOpen }: any) => {
       path: '/marketing/dashboard/settings',
       icon: FcSettings,
     },
-      {
+    {
       name: 'Account',
       path: '/marketing/dashboard/account',
       icon: MdAccountCircle,
@@ -127,7 +127,7 @@ const LeftSidebar = ({ isMenuOpen, setIsMenuOpen }: any) => {
             <Image src={logo} alt='logo' className='h-12 w-min text-white left-2 -z-10'></Image>
           </Link>
           <div>
-            <CgMenu onClick={() => setIsMenuOpen(!isMenuOpen)} className='cursor-pointer text-white m-2'/>
+            <CgMenu onClick={() => setIsMenuOpen(!isMenuOpen)} className='cursor-pointer text-white m-2' />
           </div>
         </div>
         <div className=' menuDrawer h-screen text-start px-4'>
