@@ -21,6 +21,7 @@
     "formik": "^2.4.5",
     "next": "13.4.19",
     "postcss": "8.4.30",
+    "rc-pagination": "^3.6.1",
     "rc-table": "^7.34.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",

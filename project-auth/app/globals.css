@@ -732,8 +732,21 @@ body {
   margin-right: 20px;
 }
 
+/* pagination style */
 .rc-table-cell {
   padding: 12px 10px !important;
+}
+ul.rc-pagination.pagination-data {
+  padding-top: 30px;
+  text-align: right;
+}
+li.rc-pagination-prev {
+  padding: 5px;
+  border: 2px solid skyblue;
+}
+li.rc-pagination-next {
+  padding: 5px;
+  border: 2px solid skyblue;
 }
 
 .ql-editor {
@@ -811,3 +824,6 @@ border: 1px solid rgba( 255, 255, 255, 0.18 ); */
     0 10px 10px rgba(0, 0, 0, 0.2), 0 20px 20px rgba(0, 0, 0, 0.14902);
   margin: 0;
 }
+
+
+

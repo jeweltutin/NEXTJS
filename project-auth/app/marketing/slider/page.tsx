@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, type RootState } from '@/redux/store';
 import { getSliderData } from '@/redux/slices/sliderSlice';
 import Loader from "@/components/loader";
+import TablePagination from "@/components/backend/table/pagination";
 import { format } from "date-fns";
 
 
@@ -87,7 +88,19 @@ const Slider = () => {
   ];
 
   const { data, status } = sliderData;
-  const alldata = data;
+  const allData = data;
+
+
+  // Table - Pagination config
+  const [perPage, setPerPage] = useState(4);
+  const [size, setSize] = useState(perPage);
+  const [current, setCurrent] = useState(1);
+
+  const getData = (current: any, pageSize: any) => {
+    if (allData?.length > 0) {
+      return allData.slice((current - 1) * pageSize, current * pageSize);
+    } else return [];
+  };
 
   return (
     <div className='w-full h-full relative'>
@@ -137,24 +150,22 @@ const Slider = () => {
                 columns={columns}
                 className='w-full text-[14px] font-normal text-black landing_table'
                 rowClassName={({ isActive }) =>
-                  isActive
-                    ? 'p-2 border-b-[1px] border-brand_color'
-                    : 'p-2 border-b-[1px] border-brand_color bg-red-100'
+                  isActive ? 'p-2 border-b-[1px] border-brand_color' : 'p-2 border-b-[1px] border-brand_color bg-red-100'
                 }
                 emptyText={'Empty table data'}
-                //data={getData(current, size)}
-                data={alldata}
+                data={getData(current, size)}
+                //data={allData}
                 rowKey='_id'
                 scroll={{ x: true }}
               />
 
-              {/* <TablePagination
-                                current={current}
-                                size={size}
-                                setSize={setSize}
-                                setCurrent={setCurrent}
-                                data={allData}
-                            /> */}
+              <TablePagination
+                current={current}
+                size={size}
+                setSize={setSize}
+                setCurrent={setCurrent}
+                data={allData}
+              />
             </div>
           </Loader>
         </div>
