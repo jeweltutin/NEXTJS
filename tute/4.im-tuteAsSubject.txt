@@ -27,3 +27,9 @@ https://dev.to/collegewap/how-to-use-local-storage-in-nextjs-2l2j
 
 //How to Fix "localStorage is not defined" in Next.js
 https://developer.school/snippets/react/localstorage-is-not-defined-nextjs
+
+// How to remove node_modules from githib
+https://gist.github.com/lmcneel/45594e550a3403d589bdcaad38138a83
+
+// Notepad++ auto complete html tags
+https://www.youtube.com/watch?v=xcoZt13Lxts&t=19s&ab_channel=OneMinuteVideoTutorials

@@ -30,8 +30,8 @@ const LeftSidebar = ({ isMenuOpen, setIsMenuOpen }: any) => {
       icon: GrDashboard,
     },
     {
-      name: 'Cover',
-      path: '/marketing/dashboard/landing-banner',
+      name: 'Slider',
+      path: '/marketing/slider',
       icon: AiFillFileImage,
     },
 
