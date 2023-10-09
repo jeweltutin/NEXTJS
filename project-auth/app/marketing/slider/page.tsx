@@ -1,17 +1,24 @@
 'use client'
 import { useEffect, useState } from "react";
+import Table from "rc-table";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, type RootState } from '@/redux/store';
 import { getSliderData } from '@/redux/slices/sliderSlice';
+import Loader from "@/components/loader";
+import { format } from "date-fns";
 
 
 // react icons import
 import { RiArrowGoBackLine } from 'react-icons/ri';
 import { MdSettings } from 'react-icons/md';
 import { CgAdd } from 'react-icons/cg';
+import { FiEdit } from 'react-icons/fi';
+
+
 
 const Slider = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
@@ -20,28 +27,70 @@ const Slider = () => {
 
   useEffect(() => {
     dispatch(getSliderData());
-  }, [])
+  }, [dispatch])
   console.log(sliderData);
 
+  const columns = [
+    {
+      title: 'Heading One',
+      dataIndex: 'headingOne',
+      className: '',
+      key: 'headingOne',
+      align: 'left',
+    },
+    {
+      title: 'Heading Two',
+      dataIndex: 'headingTwo',
+      className: '',
+      key: 'headingTwo',
+      align: 'left',
+    },
+
+    {
+      title: 'Paragraph',
+      dataIndex: 'paragraph',
+      className: '',
+      key: 'paragraph',
+      align: 'left',
+      render: (paragraph: any) => <p>{paragraph?.slice(0, 40)}...</p>,
+    },
+    {
+      title: 'Last Updated',
+      dataIndex: 'updatedAt',
+      className: '',
+      key: 'updatedAt',
+      align: 'left',
+      render: (updatedAt: any, { updatedBy }: any) => (
+        <div>
+          <p> {format(new Date(updatedAt), 'Pp')}</p>
+          {/* <p className='text-[12px]'> by {updatedBy.name}</p> */}
+        </div>
+      ),
+    },
+    {
+      title: 'Action',
+      dataIndex: '_id',
+      className: '',
+      key: '_id',
+      align: 'left',
+      render: (_id: any, data: any) => (
+        <div className='justify_start space-x-2'>
+          <FiEdit className='text-blue-500 h-6 w-6 cursor-pointer'
+            onClick={() => {
+              setShowEditForm(!showEditForm);
+              // setLanding(data);
+            }}
+          />
+        </div>
+      ),
+    },
+  ];
+
+  const { data, status } = sliderData;
+  const alldata = data;
 
   return (
     <div className='w-full h-full relative'>
-      <table>
-        <tr>
-          <th>Id</th>
-          <th>Heading</th>
-          <th>Sub Heading</th>
-          <th>Image</th>
-        </tr>
-        {sliderData.data.map((mvar:any, index: number) => (
-          <tr className="border-solid border-2 border-indigo-600">
-            <td>{index+1}</td>
-            <td className="border-solid border-2 border-indigo-600">{mvar.headingOne}</td>
-            <td className="border-solid border-2 border-indigo-600">{mvar.headingTwo}</td>
-            <td className="border-solid border-2 border-indigo-600">{mvar.image}</td>
-          </tr>
-        ))}
-      </table>
       <div>
         <div className='dashboard_title font-semibold'>
           {showCreateForm ? 'Create New' : ''}
@@ -75,6 +124,49 @@ const Slider = () => {
             <MdSettings className='text-white' /> <p>settings</p>
           </button>
         ) : null}
+      </div>
+
+
+      {!showCreateForm && !showEditForm && !showSettings ? (
+        <div>
+          <Loader status={status}>
+            <div className='w-full h-full grid grid-cols-1'>
+
+              <Table
+                //@ts-ignore
+                columns={columns}
+                className='w-full text-[14px] font-normal text-black landing_table'
+                rowClassName={({ isActive }) =>
+                  isActive
+                    ? 'p-2 border-b-[1px] border-brand_color'
+                    : 'p-2 border-b-[1px] border-brand_color bg-red-100'
+                }
+                emptyText={'Empty table data'}
+                //data={getData(current, size)}
+                data={alldata}
+                rowKey='_id'
+                scroll={{ x: true }}
+              />
+
+              {/* <TablePagination
+                                current={current}
+                                size={size}
+                                setSize={setSize}
+                                setCurrent={setCurrent}
+                                data={allData}
+                            /> */}
+            </div>
+          </Loader>
+        </div>
+      ) : null}
+      <div className='my-4'>
+        {/* {showEditForm ? (
+                    <EditLanding
+                        setEditedData={setEditedData}
+                        setShowEditModal={setShowEditModal}
+                        selectedLanding={selectedLanding}
+                    />
+                ) : null} */}
       </div>
     </div>
   )
