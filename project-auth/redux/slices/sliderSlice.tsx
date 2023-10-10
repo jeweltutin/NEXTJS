@@ -40,6 +40,16 @@ export const getSliderData = createAsyncThunk('slider/getSliderData', async (tok
     return data;
  })
 
+ export const createNewSlide = createAsyncThunk('slider/createNewSlide', async({ slideData }: any) => {
+    console.log(slideData);
+    /* try {
+        const { data } = await axios.post('http://localhost:5000/api/slide/add',insertingSlideData);
+        return data;
+    } catch (error) {
+        console.log(error);
+    } */
+ })
+
  export const sliderSlice = createSlice({
     name: 'slider',
     initialState,

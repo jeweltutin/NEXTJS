@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import Table from "rc-table";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, type RootState } from '@/redux/store';
-import { getSliderData } from '@/redux/slices/sliderSlice';
+import { getSliderData, createNewSlide } from '@/redux/slices/sliderSlice';
 import Loader from "@/components/loader";
 import TablePagination from "@/components/backend/table/pagination";
+import CreateSlideForm from "@/components/backend/marketing/slider/createSlideForm";
 import { format } from "date-fns";
 
 
@@ -14,22 +15,37 @@ import { RiArrowGoBackLine } from 'react-icons/ri';
 import { MdSettings } from 'react-icons/md';
 import { CgAdd } from 'react-icons/cg';
 import { FiEdit } from 'react-icons/fi';
+import Modal from "@/components/backend/modal";
 
 
 
 const Slider = () => {
-  const [showCreateForm, setShowCreateForm] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
+
+  // Create Slide
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [slideData, setNewSlideData] = useState({});
+  const [showCreateForm, setShowCreateForm] = useState(false);
+
+  const handleCreate = () => {
+    //console.log("New slide Submitted");
+    //console.log(slideData);
+    dispatch(createNewSlide({ slideData }));
+  }
+
+
+
+
 
   const sliderData = useSelector((state: RootState) => state.sliderReducer.getSliderData);
 
   useEffect(() => {
     dispatch(getSliderData());
   }, [dispatch])
-  console.log(sliderData);
+  //console.log(sliderData);
 
   const columns = [
     {
@@ -138,6 +154,21 @@ const Slider = () => {
           </button>
         ) : null}
       </div>
+
+      {/* Create Slide */}
+      {showCreateForm ? (
+        <CreateSlideForm setNewSlideData={setNewSlideData} setShowCreateModal={setShowCreateModal} />
+      ) : null}
+      {showCreateModal ? (
+        <Modal
+          handleConfirm={handleCreate}
+          confirmText='Yes'
+          footer={true}
+          showModal={showCreateModal}
+          setShowModal={setShowCreateModal}
+          title='Are you sure you want to add?'
+        ></Modal>
+      ) : null}
 
 
       {!showCreateForm && !showEditForm && !showSettings ? (
