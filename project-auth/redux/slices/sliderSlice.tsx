@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios";
 
+const API_URL = "http://localhost:5000/api/";
+
 /* interface Data {
     headingOne: string,
     headingTwo: string,
@@ -41,13 +43,27 @@ export const getSliderData = createAsyncThunk('slider/getSliderData', async (tok
  })
 
  export const createNewSlide = createAsyncThunk('slider/createNewSlide', async({ slideData }: any) => {
-    console.log(slideData);
-    /* try {
-        const { data } = await axios.post('http://localhost:5000/api/slide/add',insertingSlideData);
-        return data;
+    //console.log(slideData);
+     try {
+        const { data } = await axios.post('http://localhost:5000/api/slide/add', slideData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });       
+        console.log(data.message);
+        return data.data;
     } catch (error) {
         console.log(error);
-    } */
+    }  
+ })
+
+ export const deleteSlide = createAsyncThunk('slider/deleteSlide', async( {id}:any ) => {
+    try {
+        const { data } = await axios.delete( API_URL + 'slide/' + id);
+        return data;
+    } catch (error) {
+        return error;
+    }
  })
 
  export const sliderSlice = createSlice({

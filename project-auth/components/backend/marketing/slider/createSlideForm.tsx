@@ -55,7 +55,8 @@ const createSlideForm = ({ setShowCreateModal, setNewSlideData }: any) => {
                                         headingTwo: values.headingTwo,
                                         link: values.link,
                                         paragraph: values.paragraph,
-                                        cover: values.image,
+                                        // image: 'myimage.jpg',
+                                        image: values.image
                                     };
                                     setNewSlideData(data);
                                     setShowCreateModal(true);

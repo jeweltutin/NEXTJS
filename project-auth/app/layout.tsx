@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className='font-garet container'>
+    <html lang="en" suppressHydrationWarning={true}>
+      <body className='font-garet container' suppressHydrationWarning={true}>
         <Provider store={store}>
           {children}
         </Provider>  

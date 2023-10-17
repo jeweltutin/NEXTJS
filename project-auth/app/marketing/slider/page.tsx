@@ -2,11 +2,13 @@
 import { useEffect, useState } from "react";
 import Table from "rc-table";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import { AppDispatch, type RootState } from '@/redux/store';
-import { getSliderData, createNewSlide } from '@/redux/slices/sliderSlice';
+import { getSliderData, createNewSlide, deleteSlide } from '@/redux/slices/sliderSlice';
 import Loader from "@/components/loader";
 import TablePagination from "@/components/backend/table/pagination";
 import CreateSlideForm from "@/components/backend/marketing/slider/createSlideForm";
+import { setPopup } from "@/redux/slices/popupSlice";
 import { format } from "date-fns";
 
 
@@ -14,12 +16,14 @@ import { format } from "date-fns";
 import { RiArrowGoBackLine } from 'react-icons/ri';
 import { MdSettings } from 'react-icons/md';
 import { CgAdd } from 'react-icons/cg';
-import { FiEdit } from 'react-icons/fi';
+import { FiDelete, FiEdit } from 'react-icons/fi';
 import Modal from "@/components/backend/modal";
+import dynamic from "next/dynamic";
 
 
 
 const Slider = () => {
+  const router = useRouter();
   const [showEditModal, setShowEditModal] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -33,12 +37,74 @@ const Slider = () => {
   const handleCreate = () => {
     //console.log("New slide Submitted");
     //console.log(slideData);
-    dispatch(createNewSlide({ slideData }));
+    dispatch(createNewSlide({ slideData })).then((res) => {
+      if (res.type === 'slider/createNewSlide/fulfilled') {
+        //router.push('/marketing/slider');
+        //router.refresh();
+        setShowCreateForm(false);
+        dispatch(
+          setPopup({
+            type: 'success',
+            message: 'New slide added!',
+            show: true
+          }));
+        setShowEditForm(false);
+
+      } else {
+        dispatch(
+          setPopup({
+            type: 'failed',
+            message: res.payload.response.data.message,
+            show: true,
+          }));
+      }
+    });
+
+    dispatch(getSliderData());
+    setTimeout(() => {
+      dispatch(setPopup({
+        show: false,
+        type: '',
+        message: ''
+      }))
+    }, 5000)
   }
 
+  // Delete Slide
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedSlide, setSelectedSlide] = useState<any>('');
 
+  const handleDelete = () => {
+    // console.log("Delete request");
+    const id = selectedSlide._id;
+    // console.log(id);
+    dispatch(deleteSlide({ id })).then((res) => {
+      //console.log(res);   // show detailed with error parameters
+      if (res.type === 'slider/deleteSlide/fulfilled') {
+        dispatch(setPopup({
+          type: 'success',
+          // message: 'Slide deleted!',
+          message: res.payload.data,
+          show: true
+        }));
+      } else {
+        dispatch(setPopup({
+          type: 'failed',
+          message: res.payload.response.data.message,
+          show: true
+        }));
+      }
+    });
 
-
+    dispatch(getSliderData());
+    setTimeout(() => {
+      dispatch(setPopup({
+        show: false,
+        type: '',
+        message: ''
+      }))
+    }, 5000)
+  }
 
   const sliderData = useSelector((state: RootState) => state.sliderReducer.getSliderData);
 
@@ -98,6 +164,12 @@ const Slider = () => {
               // setLanding(data);
             }}
           />
+          <FiDelete className='space-x-2 h-6 w-6 text-red-500 cursor-pointer'
+            onClick={() => {
+              setShowDeleteModal(true);
+              setSelectedSlide(data);
+            }}>
+          </FiDelete>
         </div>
       ),
     },
@@ -168,6 +240,18 @@ const Slider = () => {
           setShowModal={setShowCreateModal}
           title='Are you sure you want to add?'
         ></Modal>
+      ) : null}
+
+      {/* Delete Slide */}
+      {showDeleteModal ? (
+        <Modal
+          handleConfirm={handleDelete}
+          confirmText='Delete'
+          footer={true}
+          showModal={showDeleteModal}
+          setShowModal={setShowDeleteModal}
+          title='Are you sure you want to delete?'>
+        </Modal>
       ) : null}
 
 
