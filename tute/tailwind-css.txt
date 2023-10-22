@@ -47,3 +47,6 @@ came with lot of improvements
 11. Play CDN
 
 Variants not needed
+
+//Center elements with Tailwind CSS
+https://daily-dev-tips.com/posts/center-elements-with-tailwind-css/

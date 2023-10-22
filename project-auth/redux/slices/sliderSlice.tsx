@@ -37,7 +37,7 @@ const initialState: SliderState = {
 }
 
 export const getSliderData = createAsyncThunk('slider/getSliderData', async (token) => {
-    const { data } = await axios.get('http://localhost:5000/api/slide');
+    const { data } = await axios.get('http://localhost:5000/api/slide/all');
     //axios.get(`${process.env.NEXT_PUBLIC_API_URL}/customers`);
     return data;
  })
