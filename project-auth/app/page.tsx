@@ -5,6 +5,7 @@ import OurStory from "@/components/frontend/home/ourStory";
 import Service from "@/components/frontend/home/service";
 import { Metadata } from "next";
 import Retail from "@/components/frontend/home/retail";
+import Career from "@/components/frontend/home/career";
 
 // import HomeSliderStatic from "@/components/frontend/homeSliderStatic";
 
@@ -35,6 +36,7 @@ export default async function Home() {
                     <OurStory />
                     <Retail />
                     <Service />
+                    <Career />
                 </div>
             </HomeLayout>
         </main>
