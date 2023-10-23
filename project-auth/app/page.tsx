@@ -1,6 +1,7 @@
 import HomeLayout from "@/components/layouts/homeLayout";
 
 import HomeSlider from "@/components/frontend/homeSlider";
+import OurStory from "@/components/frontend/ourStory";
 // import HomeSliderStatic from "@/components/frontend/homeSliderStatic";
 
 
@@ -23,6 +24,7 @@ export default async function Home() {
                 <div className='h-full w-full  md:w-screen'>
                     <HomeSlider slides={all_slides} />
                     {/* <HomeSliderStatic /> */}
+                    <OurStory />
                 </div>
             </HomeLayout>
         </main>
