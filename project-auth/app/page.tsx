@@ -3,9 +3,14 @@ import HomeLayout from "@/components/layouts/homeLayout";
 import HomeSlider from "@/components/frontend/homeSlider";
 import OurStory from "@/components/frontend/home/ourStory";
 import Service from "@/components/frontend/home/service";
+import { Metadata } from "next";
 
 // import HomeSliderStatic from "@/components/frontend/homeSliderStatic";
 
+export const metadata: Metadata = {
+    title: 'Web Info',
+    description: 'This is a business website'
+}
 
 
 async function getSliderData() {
