@@ -1,4 +1,6 @@
+'use client'
 import Image from "next/image"
+import { CountUp } from "use-count-up"
 
 
 const Service = () => {
@@ -41,7 +43,7 @@ const Service = () => {
                                         Network Centers
                                     </h1>
                                     <p className='text-2xl md:text-[3.5rem] text-white font-garet_bold w-[150px] lg:w-[240px]'>
-                                        25
+                                        <CountUp  isCounting start={0} end={25} duration={3.2}/>
                                     </p>
                                 </div>
                                 <div className='flex flex-col items-start space-y-2 md:space-y-6'>
@@ -49,7 +51,8 @@ const Service = () => {
                                         CSAT Score
                                     </h1>
                                     <p className='text-2xl md:text-[3.5rem] text-white font-garet_bold w-[150px] lg:w-[240px]'>
-                                        95%
+                                        {/* 95% */}
+                                        <CountUp isCounting end={95} />%+
                                     </p>
                                 </div>
                                 <div className='flex flex-col items-start space-y-2 md:space-y-6'>
@@ -57,7 +60,7 @@ const Service = () => {
                                         Same Day Delivery
                                     </h1>
                                     <p className='text-2xl md:text-[3.5rem] text-white font-garet_bold w-[150px] lg:w-[240px]'>
-                                        90%
+                                        <CountUp isCounting end={90} />%+
                                     </p>
                                 </div>
                                 <div className='flex flex-col items-start space-y-2 md:space-y-6'>
@@ -65,7 +68,7 @@ const Service = () => {
                                         Bounce Rate
                                     </h1>
                                     <p className='text-2xl md:text-[3.5rem] text-white font-garet_bold w-[150px] lg:w-[240px]'>
-                                    <span >{`  <  `} </span> 3%
+                                    <span >{`  <  `} </span> <span><CountUp isCounting end={3} />%</span>
                                     </p>
                                 </div>
                            </div>
