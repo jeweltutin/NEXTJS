@@ -6,6 +6,7 @@ import Service from "@/components/frontend/home/service";
 import { Metadata } from "next";
 import Retail from "@/components/frontend/home/retail";
 import Career from "@/components/frontend/home/career";
+import Distribution from "@/components/frontend/home/distribution";
 
 // import HomeSliderStatic from "@/components/frontend/homeSliderStatic";
 
@@ -34,6 +35,7 @@ export default async function Home() {
                     <HomeSlider slides={all_slides} />
                     {/* <HomeSliderStatic /> */}
                     <OurStory />
+                    <Distribution />
                     <Retail />
                     <Service />
                     <Career />
