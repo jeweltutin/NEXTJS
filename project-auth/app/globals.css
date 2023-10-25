@@ -868,3 +868,19 @@ border: 1px solid rgba( 255, 255, 255, 0.18 ); */
   left: 30%;
   background-color: #7F7F7F !important;
 }
+
+
+/* added the following to give the background color of the arrows as red for visibility, the default which can be found in the slick-theme.css was white */
+/* .slick-prev:before, .slick-next:before {
+  color: #09529b !important;
+} */
+.slick-next {
+  right: 33px!important;
+}
+.slick-prev {
+  left: 33px!important;
+  z-index: 60!important;
+}
+.slick-dots {
+  bottom: -7px!important;
+}

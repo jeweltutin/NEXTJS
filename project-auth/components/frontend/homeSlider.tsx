@@ -6,6 +6,7 @@ import Slider from "react-slick";
 const HomeSlider = ({ slides }: any) => {
   const settings = {
     dots: true,
+    arrows:true,
     infinite: true,
     speed: 3000,
     autoplayspeed: 5000,
