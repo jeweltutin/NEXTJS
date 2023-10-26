@@ -8,6 +8,7 @@ import Retail from "@/components/frontend/home/retail";
 import Career from "@/components/frontend/home/career";
 import Distribution from "@/components/frontend/home/distribution";
 import Featured from "@/components/frontend/home/featured";
+import Newsroom from "@/components/frontend/home/newsRoom";
 
 // import HomeSliderStatic from "@/components/frontend/homeSliderStatic";
 
@@ -40,6 +41,7 @@ export default async function Home() {
                     <Distribution />
                     <Retail />
                     <Service />
+                    <Newsroom />
                     <Career />
                 </div>
             </HomeLayout>

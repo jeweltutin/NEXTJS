@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -241,8 +240,32 @@ body {
   line-height: 30px;
 }
 
+/* .stories_para {
+  font-size: .6rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .stories_para {
+    font-size: 0.4rem;
+  }
+} */
+
 .stories_para h2 {
   text-align: left !important;
+  margin: .75rem !important
+}
+
+@media only screen and (max-width: 600px) {
+  .stories_para h2 {
+    font-size: 1.1rem;
+    line-height: 20px;
+    margin: 5px 0
+  }
+
+  .stories_para p {
+    font-size: .8rem;
+    margin: 0
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -732,8 +755,8 @@ input[type='date']::-webkit-calendar-picker-indicator {
 .apply_btn {
   margin: 20px 0;
   padding: 10px 12px;
-  color: #ffde59;
-  background: #38748c;
+  color: white;
+  background: #289928;
   border-radius: 12px;
 }
 
@@ -874,7 +897,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 ); */
 /* .slick-prev:before, .slick-next:before {
   color: #09529b !important;
 } */
-.slick-next {
+/* .slick-next {
   right: 33px!important;
 }
 .slick-prev {
@@ -883,4 +906,4 @@ border: 1px solid rgba( 255, 255, 255, 0.18 ); */
 }
 .slick-dots {
   bottom: -7px!important;
-}
+} */
