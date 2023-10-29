@@ -17,7 +17,7 @@ import { RiArrowGoBackLine } from 'react-icons/ri';
 import { MdSettings } from 'react-icons/md';
 import { CgAdd } from 'react-icons/cg';
 import { FiDelete, FiEdit } from 'react-icons/fi';
-import Modal from "@/components/backend/modal";
+import Modal from "@/components/modal";
 import dynamic from "next/dynamic";
 
 
