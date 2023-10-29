@@ -9,6 +9,7 @@ import Career from "@/components/frontend/home/career";
 import Distribution from "@/components/frontend/home/distribution";
 import Featured from "@/components/frontend/home/featured";
 import Newsroom from "@/components/frontend/home/newsRoom";
+import Leadership from "@/components/frontend/home/leadership";
 
 // import HomeSliderStatic from "@/components/frontend/homeSliderStatic";
 
@@ -42,6 +43,7 @@ export default async function Home() {
                     <Retail />
                     <Service />
                     <Newsroom />
+                    <Leadership />
                     <Career />
                 </div>
             </HomeLayout>
