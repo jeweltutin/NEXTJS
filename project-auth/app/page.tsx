@@ -10,6 +10,7 @@ import Distribution from "@/components/frontend/home/distribution";
 import Featured from "@/components/frontend/home/featured";
 import Newsroom from "@/components/frontend/home/newsRoom";
 import Leadership from "@/components/frontend/home/leadership";
+import Partners from "@/components/frontend/home/partners";
 
 // import HomeSliderStatic from "@/components/frontend/homeSliderStatic";
 
@@ -42,6 +43,7 @@ export default async function Home() {
                     <Distribution />
                     <Retail />
                     <Service />
+                    <Partners />
                     <Newsroom />
                     <Leadership />
                     <Career />
