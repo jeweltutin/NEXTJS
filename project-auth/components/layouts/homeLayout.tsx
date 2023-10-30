@@ -6,9 +6,9 @@ import Footer from '../frontend/footer';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import MobileNav from '../frontend/mobileNav';
 
 //import dynamic from 'next/dynamic';
-
 //const Menu = dynamic(() => import('./menu'), { ssr: false });
 
 const HomeLayout = ({ data, children }: any) => {
@@ -25,14 +25,10 @@ const HomeLayout = ({ data, children }: any) => {
           </Link>
           <div>
             <div className='md:flex font-garet justify-center items-center space-x-4 text-white hidden'>
-              <Link href='/our-stories' className='text-red'>
-                Our Stories
-              </Link>
+              <Link href='/our-stories' className='text-red'>Our Stories</Link>
               <Link href='/brands'>Brands</Link>
               <Link href='/newsroom'>Newsroom</Link>
-              <Link href='/contact' className=''>
-                Contact
-              </Link>
+              <Link href='/contact' className=''>Contact</Link>
 
               {data?.socialMedia ? (
                 <div className='flex justify-center items-center space-x-2'>
@@ -52,7 +48,7 @@ const HomeLayout = ({ data, children }: any) => {
                       <FiLinkedin className='icons' />
                     </a>
                   )}
-                    {data.socialMedia?.twitter && (
+                  {data.socialMedia?.twitter && (
                     <a href={data.socialMedia?.twitter} target='_blank'>
                       <FiTwitter className='icons' />
                     </a>
@@ -67,6 +63,7 @@ const HomeLayout = ({ data, children }: any) => {
             </div>
             <div className='md:hidden'>
               {/* <Menu data={data} /> */}
+              <MobileNav data={data}/>
             </div>
           </div>
         </div>
