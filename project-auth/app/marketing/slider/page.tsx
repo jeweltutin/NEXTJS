@@ -4,7 +4,7 @@ import Table from "rc-table";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { AppDispatch, type RootState } from '@/redux/store';
-import { getSliderData, createNewSlide, deleteSlide } from '@/redux/slices/sliderSlice';
+import { getSliderData, createNewSlide, deleteSlide, updateSlide } from '@/redux/slices/sliderSlice';
 import Loader from "@/components/loader";
 import TablePagination from "@/components/backend/table/pagination";
 import CreateSlideForm from "@/components/backend/marketing/slider/createSlideForm";
@@ -19,13 +19,13 @@ import { CgAdd } from 'react-icons/cg';
 import { FiDelete, FiEdit } from 'react-icons/fi';
 import Modal from "@/components/modal";
 import dynamic from "next/dynamic";
+import SlideEditForm from "@/components/backend/marketing/slider/slideEditForm";
 
 
 
 const Slider = () => {
   const router = useRouter();
-  const [showEditModal, setShowEditModal] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
+
   const [showSettings, setShowSettings] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -70,9 +70,26 @@ const Slider = () => {
     }, 5000)
   }
 
+  // Edit Slide
+  const [selectedSlide, setSelectedSlide] = useState<any>('');
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [editedSlideData, setEditedSlideData] = useState({});
+
+  const handleEditSlideData = () => {
+    //alert("hello");
+    //console.log("Updated data");
+    //console.log(editedSlideData);
+
+    // dispatch(updateSlide({ id: selectedSlide._id, editedSlideData }));
+    dispatch(updateSlide({ id: selectedSlide._id, editedSlideData })).then((res:any) => {
+      console.log('Successfully Updated');
+    })
+  }
+
   // Delete Slide
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedSlide, setSelectedSlide] = useState<any>('');
+  
 
   const handleDelete = () => {
     // console.log("Delete request");
@@ -161,7 +178,7 @@ const Slider = () => {
           <FiEdit className='text-blue-500 h-6 w-6 cursor-pointer'
             onClick={() => {
               setShowEditForm(!showEditForm);
-              // setLanding(data);
+              setSelectedSlide(data);
             }}
           />
           <FiDelete className='space-x-2 h-6 w-6 text-red-500 cursor-pointer'
@@ -177,6 +194,7 @@ const Slider = () => {
 
   const { data, status } = sliderData;
   const allData = data;
+  //console.log(data);
 
 
   // Table - Pagination config
@@ -227,7 +245,7 @@ const Slider = () => {
         ) : null}
       </div>
 
-      {/* Create Slide */}
+      {/* Create Slide Form*/}
       {showCreateForm ? (
         <CreateSlideForm setNewSlideData={setNewSlideData} setShowCreateModal={setShowCreateModal} />
       ) : null}
@@ -241,6 +259,23 @@ const Slider = () => {
           title='Are you sure you want to add?'
         ></Modal>
       ) : null}
+
+      {/* Edit Slide */}
+      <div className='my-4'>
+        {showEditForm ? (
+          <SlideEditForm setEditedSlideData={setEditedSlideData} setShowEditModal={setShowEditModal} selectedSlide={selectedSlide}/>
+        ) : null}
+      </div>
+      {showEditModal ? (
+        <Modal
+          handleConfirm={handleEditSlideData}
+          confirmText="Update"
+          footer={true}
+          showModal={ showEditModal }
+          setShowModal={setShowEditModal}
+          title='Are you sure you want to update?'
+        ></Modal>
+      ): null}
 
       {/* Delete Slide */}
       {showDeleteModal ? (
@@ -285,15 +320,6 @@ const Slider = () => {
           </Loader>
         </div>
       ) : null}
-      <div className='my-4'>
-        {/* {showEditForm ? (
-                    <EditLanding
-                        setEditedData={setEditedData}
-                        setShowEditModal={setShowEditModal}
-                        selectedLanding={selectedLanding}
-                    />
-                ) : null} */}
-      </div>
     </div>
   )
 }

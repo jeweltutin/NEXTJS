@@ -62,7 +62,6 @@ const HomeLayout = ({ data, children }: any) => {
               ) : null}
             </div>
             <div className='md:hidden'>
-              {/* <Menu data={data} /> */}
               <MobileNav data={data}/>
             </div>
           </div>

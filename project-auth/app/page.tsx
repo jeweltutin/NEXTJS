@@ -1,6 +1,6 @@
 import HomeLayout from "@/components/layouts/homeLayout";
 
-import HomeSlider from "@/components/frontend/homeSlider";
+import HomeSlider from "@/components/frontend/home/homeSlider";
 import OurStory from "@/components/frontend/home/ourStory";
 import Service from "@/components/frontend/home/service";
 import { Metadata } from "next";
@@ -12,7 +12,7 @@ import Newsroom from "@/components/frontend/home/newsRoom";
 import Leadership from "@/components/frontend/home/leadership";
 import Partners from "@/components/frontend/home/partners";
 
-// import HomeSliderStatic from "@/components/frontend/homeSliderStatic";
+// import HomeSliderStatic from "@/components/frontend/home/homeSliderStatic";
 
 export const metadata: Metadata = {
     title: 'Web Info',

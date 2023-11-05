@@ -57,6 +57,21 @@ export const getSliderData = createAsyncThunk('slider/getSliderData', async (tok
     }  
  })
 
+ export const updateSlide = createAsyncThunk('slider/updateSlide', async ({ id, editedSlideData}:any, { rejectWithValue } ) => {
+    //console.log(editedSlideData);
+    try{
+        const { data } = await axios.put(`${process.env.NEXT_PUBLIC_SERVER_HOST}/api/slide/` +id, editedSlideData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+        console.log(data);
+        return data;
+    }catch(error){
+        return rejectWithValue(error);
+    }
+ })
+
  export const deleteSlide = createAsyncThunk('slider/deleteSlide', async( {id}:any ) => {
     try {
         const { data } = await axios.delete( API_URL + 'slide/' + id);
@@ -94,5 +109,5 @@ export const getSliderData = createAsyncThunk('slider/getSliderData', async (tok
         });
     }
  })
-
+ // export const {} = sliderSlice.actions;
  export default sliderSlice.reducer;
