@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning={true}>
-      <body className='font-garet container' suppressHydrationWarning={true}>
+      <body className='font-garet' suppressHydrationWarning={true}>
         <Provider store={store}>
           {children}
         </Provider>  
