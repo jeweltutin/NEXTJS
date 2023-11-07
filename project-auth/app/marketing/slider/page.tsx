@@ -83,14 +83,40 @@ const Slider = () => {
 
     // dispatch(updateSlide({ id: selectedSlide._id, editedSlideData }));
     dispatch(updateSlide({ id: selectedSlide._id, editedSlideData })).then((res:any) => {
-      console.log('Successfully Updated');
-    })
+      //console.log('Successfully Updated');
+      console.log(res);
+      if (res.type === 'slider/updateSlide/fulfilled') {
+        dispatch(setPopup({
+          type: 'success',
+          message: 'Successfully Updated!',
+          show: true
+        }));
+        dispatch(getSliderData());
+        setShowEditForm(false);
+        
+      } else {
+        dispatch(setPopup({
+          type: 'failed',
+          // message: 'Something went wrong',
+          message: res.payload.response.data,
+          show: true
+        })) 
+      }
+    });
+
+    setTimeout(() => {
+      dispatch(setPopup({
+        show: false,
+        type: '',
+        message: ''
+      }));
+    }, 5000);
+    
   }
 
   // Delete Slide
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   
-
   const handleDelete = () => {
     // console.log("Delete request");
     const id = selectedSlide._id;
