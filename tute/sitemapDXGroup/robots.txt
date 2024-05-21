@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /product-category/dx-pharma/
+Disallow: /product-category/smart-phones/
+Disallow: /dashboard/
+
+Sitemap: https://www.dx.com.bd/sitemap.xml

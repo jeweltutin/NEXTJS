@@ -1,0 +1,19 @@
+C:\Users\admin>node -v
+v16.18.0C:\Users\admin>node -v
+v16.18.0
+
+Prerequisites: for Nuxt 2
+node - We recommend you have either 16.x or 14.x installed.
+A text editor, we recommend VS Code with the Volar extension or WebStorm .
+
+For next latest version.
+Installation
+System Requirements:
+
+Node.js 18.17 or later.
+
+// This version is working with Nuxt2 and also Next latest version
+New installed 20/05/2024
+C:\Users\admin>node -v
+v18.18.1
+

@@ -1,0 +1,28 @@
+//why need JSON.stringify
+https://www.geeksforgeeks.org/javascript-json-stringify-method/
+
+https://www.tutorialspoint.com/difference-between-local-storage-session-storage-and-cookies-in-javascript
+
+https://www.w3schools.com/react/react_useeffect.asp
+
+
+https://nextjs.org/docs/app/building-your-application/routing/loading-ui-and-streaming
+
+https://blog.logrocket.com/create-loading-component-next-js-13-react-suspense/
+
+https://nextjs.org/docs/pages/building-your-application/data-fetching/incremental-static-regeneration
+
+https://www.linkedin.com/pulse/10-must-have-vs-code-extension-nodejs-developer-chandan-thakur
+
+https://nextjs.org/docs/messages/react-hydration-error
+
+//CRUD APP - Redux Toolkit #8 - Final Video
+https://www.youtube.com/watch?v=NYuCiytr1FU&list=PLtFbQRDJ11kHPsrZ_jZHrGGpwtS7Ngrl8&index=31&ab_channel=UniqueCoderzAcademy
+
+https://nextjs.org/docs/app/api-reference/functions/fetch
+
+https://www.learnbestcoding.com/post/144/hostname-is-not-configured-under-images-in-your-nextconfigjs
+
+//package for popup and quill
+https://www.npmjs.com/package/reactjs-popup
+https://www.npmjs.com/package/react-quill

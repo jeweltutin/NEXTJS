@@ -33,3 +33,6 @@ https://gist.github.com/lmcneel/45594e550a3403d589bdcaad38138a83
 
 // Notepad++ auto complete html tags
 https://www.youtube.com/watch?v=xcoZt13Lxts&t=19s&ab_channel=OneMinuteVideoTutorials
+
+//What is CSR SSR SSG and ISR
+https://www.youtube.com/watch?v=YkxrbxoqHDw&ab_channel=HiteshChoudhary

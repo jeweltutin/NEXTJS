@@ -1,0 +1,1 @@
+https://nextjs.org/learn-pages-router/basics/deploying-nextjs-app/deploy

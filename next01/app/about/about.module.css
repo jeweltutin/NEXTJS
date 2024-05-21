@@ -3,4 +3,10 @@
     display: grid;
     place-content: center;
     background-color: lightcoral;
+    padding: 20px;
+}
+.para {
+    color: #eeeeee;
+    font-size: 14px;
+    font-weight: normal;
 }
