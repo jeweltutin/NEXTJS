@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import styles from './page.module.css'
-import Link from 'next/link'
+import styles from './page.module.css';
+import Carousel from '@/components/carousel';
 
 export default function Home() {
   return (
@@ -12,75 +12,76 @@ export default function Home() {
         Hello! from bootstrap
       </h3> */}
 
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">Navbar</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <li className="nav-item">
-                {/* <a className="nav-link active" aria-current="page" href="#">Home</a> */}
-                <Link className="nav-link active" href="/" >Home</Link>
-              </li>
-              <li className="nav-item">
-                {/* <a className="nav-link" href="#">Link</a> */}
-                <Link className="nav-link" href="/about">About</Link>
-              </li>
-              <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul className="dropdown-menu">
-                  <li><a className="dropdown-item" href="#">Action</a></li>
-                  <li><a className="dropdown-item" href="#">Another action</a></li>
-                  <li><Link className="dropdown-item" href="/users">Users</Link></li>
-                  <li><hr className="dropdown-divider" /></li>
-                  <li><a className="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
-            </ul>
-            <form className="d-flex" role="search">
-              <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-              <button className="btn btn-outline-success" type="submit">Search</button>
-            </form>
+
+      <Carousel />
+
+      <div className="container marketing">
+        {/* Three columns of text below the carousel  */}
+        <div className="row">
+          <div className="col-lg-4">
+            <svg className="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)" /></svg>
+            <h2 className="fw-normal">Heading</h2>
+            <p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+            <p><a className="btn btn-secondary" href="#">View details &raquo;</a></p>
+          </div>
+          <div className="col-lg-4">
+            <svg className="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)" /></svg>
+            <h2 className="fw-normal">Heading</h2>
+            <p>Another exciting bit of representative placeholder content. This time, we've moved on to the second column.</p>
+            <p><a className="btn btn-secondary" href="#">View details &raquo;</a></p>
+          </div>
+          <div className="col-lg-4">
+            <svg className="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)" /></svg>
+            <h2 className="fw-normal">Heading</h2>
+            <p>And lastly this, the third column of representative placeholder content.</p>
+            <p><a className="btn btn-secondary" href="#">View details &raquo;</a></p>
           </div>
         </div>
-      </nav>
 
 
-      <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
-        <div className="carousel-inner">
-          <div className="carousel-item active">
-            <Image src='/assets/images/img01.jpg' width="1100" height='500' className="d-block w-100" alt="slide01" />
+        {/* START THE FEATURETTES  */}
+
+        <hr className="featurette-divider" />
+
+        <div className="row featurette">
+          <div className="col-md-7">
+            <h2 className="featurette-heading fw-normal lh-1">First featurette heading. <span className="text-body-secondary">It’ll blow your mind.</span></h2>
+            <p className="lead">Some great placeholder content for the first featurette here. Imagine some exciting prose here.</p>
           </div>
-          <div className="carousel-item">
-            <Image src="/assets/images/img02.jpg" width="1100" height='500' className="d-block w-100" alt="slide02" />
-          </div>
-          <div className="carousel-item">
-            <Image src="/assets/images/img03.jpg" width="1100" height='500' className="d-block w-100" alt="slide02" />
-          </div>
-          <div className="carousel-item">
-            <Image src="/assets/images/img04.jpg" width="1100" height='500' className="d-block w-100" alt="slide02" />
+          <div className="col-md-5">
+            <svg className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg>
           </div>
         </div>
-        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-          <span className="carousel-control-next-icon" aria-hidden="true"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
-      </div>
 
-      <div>
-        <hr />
-      </div>
+        <hr className="featurette-divider" />
+
+        <div className="row featurette">
+          <div className="col-md-7 order-md-2">
+            <h2 className="featurette-heading fw-normal lh-1">Oh yeah, it’s that good. <span className="text-body-secondary">See for yourself.</span></h2>
+            <p className="lead">Another featurette? Of course. More placeholder content here to give you an idea of how this layout would work with some actual real-world content in place.</p>
+          </div>
+          <div className="col-md-5 order-md-1">
+            <svg className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg>
+          </div>
+        </div>
+
+        <hr className="featurette-divider" />
+
+        <div className="row featurette">
+          <div className="col-md-7">
+            <h2 className="featurette-heading fw-normal lh-1">And lastly, this one. <span className="text-body-secondary">Checkmate.</span></h2>
+            <p className="lead">And yes, this is the last block of representative placeholder content. Again, not really intended to be actually read, simply here to give you a better view of what this would look like with some actual content. Your content.</p>
+          </div>
+          <div className="col-md-5">
+            <svg className="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto" width="500" height="500" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 500x500" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-bg)" /><text x="50%" y="50%" fill="var(--bs-secondary-color)" dy=".3em">500x500</text></svg>
+          </div>
+        </div>
+
+        <hr className="featurette-divider" />
+
+        {/* /END THE FEATURETTES  */}
+
+      </div> {/* /END THE Container  */}
 
       <div className="accordion" id="accordionExample">
         <div className="accordion-item">

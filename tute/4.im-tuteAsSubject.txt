@@ -1,3 +1,7 @@
+// useState basic
+https://www.youtube.com/watch?v=ww8Gbi0nckg&ab_channel=DeveloperResources
+https://www.youtube.com/watch?v=-e0834TnoAQ&list=PL0wCCp4kCP9xajus_5fiDKpHEOI_vMVqk&index=6&ab_channel=DeveloperResources
+
 //React-toastify
 https://www.npmjs.com/package/react-toastify
 https://fkhadra.github.io/react-toastify/introduction/

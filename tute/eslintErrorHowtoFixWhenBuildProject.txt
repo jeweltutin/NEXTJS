@@ -1,0 +1,16 @@
+https://stackoverflow.com/questions/43177074/how-can-i-fix-this-violation-of-this-react-no-unescaped-entitie-of-an-eslint-r
+
+
+// How can I fix this violation of this 'react/no-unescaped-entitie' of an ESLint rule?
+
+I had the same issue with next.js. I opened the .eslintrc.json and added the following:
+
+{
+  "rules": { "react/no-unescaped-entities": 0 }
+}
+Now my .eslintrc.json will look as follows:
+
+{
+  "extends": "next/core-web-vitals",
+  "rules": { "react/no-unescaped-entities": 0 }
+}

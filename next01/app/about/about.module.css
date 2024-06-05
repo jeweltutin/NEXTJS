@@ -1,12 +1,13 @@
 .main{
-    min-height: 100vh;
+    /* min-height: 100vh; */
     display: grid;
     place-content: center;
-    background-color: lightcoral;
+    /* background-color: lightcoral; */
+    background-color: #eee;
     padding: 20px;
 }
 .para {
-    color: #eeeeee;
+    color: #555;
     font-size: 14px;
     font-weight: normal;
 }
