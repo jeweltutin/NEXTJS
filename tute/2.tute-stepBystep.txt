@@ -1,5 +1,8 @@
-// NextJS Masterclass in Bangla - Next JS Tutorial Bangla // First started
+// NextJS Masterclass in Bangla - Next JS Tutorial Bangla // First started Old but completed
 https://www.youtube.com/watch?v=I4O9Of7rFSM&ab_channel=IstiaqHasan
+
+//Next JS 14 Crash Course - Next.js Bangla Tutorial 2024  // The best for starting completed 10-06-24
+https://www.youtube.com/watch?v=NgrljB7UU34&t=1323s&ab_channel=LearnwithSumit-LWS-Bangladesh
 
 // Installation
 https://nextjs.org/docs/getting-started/installation

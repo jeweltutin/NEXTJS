@@ -4,7 +4,6 @@ import getPost from '@/lib/getPost';
 import getPostComments from '@/lib/getPostComments';
 import Comments from '@/components/comments';
 import { Suspense } from "react";
-import getAllPosts from "@/lib/getAllPosts";
 
 
 export async function generateMetadata({ params }) {
@@ -44,12 +43,5 @@ async function BlogPageDetails({ params }) {
     );
 }
 
-export async function generateStaticParams(){
-    const posts = await getAllPosts();
-
-    return posts.map((post) => ({
-        id: post.id.toString()
-    }))
-}
 
 export default BlogPageDetails;

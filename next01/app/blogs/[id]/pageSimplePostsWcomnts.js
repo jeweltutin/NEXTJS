@@ -2,9 +2,6 @@
 import { notFound } from "next/navigation";
 import getPost from '@/lib/getPost';
 import getPostComments from '@/lib/getPostComments';
-import Comments from '@/components/comments';
-import { Suspense } from "react";
-import getAllPosts from "@/lib/getAllPosts";
 
 
 export async function generateMetadata({ params }) {
@@ -21,35 +18,38 @@ export async function generateMetadata({ params }) {
 async function BlogPageDetails({ params }) {
     const { id } = params;
     if (Number.isNaN(parseInt(id))) notFound(); // if parameter is not a number not found page will show
-    const post = await getPost(id);
-    const commentsPromise = getPostComments(id);
+    const data = await getPost(id);
+    const postComments = await getPostComments(id);
 
     return (
         <div>
             <h2>Blog page details</h2>
             <h4>Blog id is: {id}</h4>
             <h3>
-                {post.title}
+                {data.title}
             </h3>
             <p>
-                {post.body}
+                {data.body}
             </p>
             {/* {console.log(postComments)} */}
-            <h4>Comments of {post.title}</h4>
-            <Suspense fallback= {<h5 className="text-primary">Loading ...</h5>}>
-                <Comments cmtPromise={ commentsPromise } />
-            </Suspense>
-          
+            <h4>Comments of {data.title}</h4>
+
+             {
+                postComments.map((comments) => (
+                    <div className="p-4" key={comments.id}>                       
+                        <p>
+                            Name: {comments.name}<br />
+                            Email: {comments.email}<br />
+                            {comments.body}<br />
+                        </p>
+                    </div>
+                ))
+            }  
+
+
         </div>
     );
 }
 
-export async function generateStaticParams(){
-    const posts = await getAllPosts();
-
-    return posts.map((post) => ({
-        id: post.id.toString()
-    }))
-}
 
 export default BlogPageDetails;

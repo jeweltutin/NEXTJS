@@ -2,9 +2,6 @@
 import { notFound } from "next/navigation";
 import getPost from '@/lib/getPost';
 import getPostComments from '@/lib/getPostComments';
-import Comments from '@/components/comments';
-import { Suspense } from "react";
-import getAllPosts from "@/lib/getAllPosts";
 
 
 export async function generateMetadata({ params }) {
@@ -21,8 +18,10 @@ export async function generateMetadata({ params }) {
 async function BlogPageDetails({ params }) {
     const { id } = params;
     if (Number.isNaN(parseInt(id))) notFound(); // if parameter is not a number not found page will show
-    const post = await getPost(id);
+    const postPromise = getPost(id);
     const commentsPromise = getPostComments(id);
+    //parallel request
+    const [post, comments] = await Promise.all([postPromise, commentsPromise]);
 
     return (
         <div>
@@ -36,20 +35,23 @@ async function BlogPageDetails({ params }) {
             </p>
             {/* {console.log(postComments)} */}
             <h4>Comments of {post.title}</h4>
-            <Suspense fallback= {<h5 className="text-primary">Loading ...</h5>}>
-                <Comments cmtPromise={ commentsPromise } />
-            </Suspense>
-          
+
+             {
+                comments.map((comment) => (
+                    <div className="p-4" key={comment.id}>                       
+                        <p>
+                            Name: {comment.name}<br />
+                            Email: {comment.email}<br />
+                            {comment.body}<br />
+                        </p>
+                    </div>
+                ))
+            }  
+
+
         </div>
     );
 }
 
-export async function generateStaticParams(){
-    const posts = await getAllPosts();
-
-    return posts.map((post) => ({
-        id: post.id.toString()
-    }))
-}
 
 export default BlogPageDetails;
