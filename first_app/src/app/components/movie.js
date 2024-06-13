@@ -2,13 +2,13 @@
 import styles from "@/app/styles/common.module.css"
 import Image from "next/image";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 
 
 const Movie = () => {
-  // const router = useRouter()
+  const router = useRouter()
   const [isDelete, setIsDelete] = useState([])
   const [data, setData] = useState([])
   useEffect(() => {
@@ -29,6 +29,7 @@ const Movie = () => {
     const data = await response.json();
     setIsDelete(true)
     // router.push('/movies/syx')
+    //router.reload();
   }
 
   return (

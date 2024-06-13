@@ -23,7 +23,7 @@ const Header = () => {
                                 Dropdown
                             </a>
                             <ul className="dropdown-menu">
-                                <li><a className="dropdown-item" href="#">Action</a></li>
+                                <li><Link className="dropdown-item" href="/blogs">Blogs</Link></li>
                                 <li><a className="dropdown-item" href="#">Another action</a></li>
                                 <li><Link className="dropdown-item" href="/users">Users</Link></li>
                                 <li><hr className="dropdown-divider" /></li>

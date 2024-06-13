@@ -15,6 +15,14 @@ const nextConfig = {
           {
             protocol: 'http',
             hostname: 'localhost'
+          },
+          {
+            protocol: 'https',
+            hostname: 'lumiere-a.akamaihd.net'
+          },
+          {
+            protocol: 'https',
+            hostname: 'images2.alphacoders.com'
           }
         ],
       },

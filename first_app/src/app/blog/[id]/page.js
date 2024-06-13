@@ -1,5 +1,5 @@
 const BlogPostDetails = ({params}) => {
-    const {id} = params;
+    const { id } = params;
     return (
         <div>
             <h2>Blog single page</h2>

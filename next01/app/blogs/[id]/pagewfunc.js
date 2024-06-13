@@ -21,8 +21,6 @@ async function BlogPageDetails({params}) {
     // Not worked
     /* const router = useRouter();
     const {bid} = router.query; */  
-    
-    //const { id } = params;
 
     return ( 
         <div>

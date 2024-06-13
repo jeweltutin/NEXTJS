@@ -1,20 +1,29 @@
-
+"use client";
 import styles from "@/app/styles/common.module.css"
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
-const Movie = async () => {
-    const getAllMoviesApi = 'http://localhost:5000/api/movies';
-    const res = await fetch(getAllMoviesApi);
-    const data = await res.json();
-    //console.log(data);
+const Movie = () => {
+    const [data, setData] = useState([]);
+    
+    useEffect(() => {
+        const getData = async () => {
+            const getAllMoviesApi = 'http://localhost:5000/api/movies';
+            const res = await fetch(getAllMoviesApi);
+            const data = await res.json();
+            setData(data);
+        }
+        getData();
+        console.log("List: ", data);
+    },[])
+ 
     return (
         <section className={styles.movieSection}>
             <div className={styles.container}>
-                <h2>Movie List</h2>
+                <h2>Movie List Hello</h2>
                 <div className={styles.card_section}>
                     {
                         data.map((movData) => (
-
                             <div className={styles.card} >
                                 <div className={styles.card_image} >
                                     {/* <Image src={thumbnail} alt={title} width={100} height={148} /> */}
@@ -27,7 +36,6 @@ const Movie = async () => {
                                     <p>{movData.description}</p>
                                 </div>
                             </div>
-
                         ))
                     }
 

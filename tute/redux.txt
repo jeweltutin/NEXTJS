@@ -1,6 +1,9 @@
 //Best tutorial - completed
 https://www.youtube.com/watch?v=0awA5Uw6SJE&list=PLC3y8-rFHvwiaOAuTtVXittwybYIorRB3&index=1&ab_channel=Codevolution
 
+//React Redux Crash Course Bangla with Redux Toolkit
+https://www.youtube.com/watch?v=qhll3DXuLHI&ab_channel=LearnwithSumit-LWS-Bangladesh
+
 //Basic Redux playlist bangla
 https://www.youtube.com/watch?v=AdMcnSGiGC8&list=PLkyGuIcLcmx3enVND877-AHx7h1AytJAz&ab_channel=RabbilHasan
 

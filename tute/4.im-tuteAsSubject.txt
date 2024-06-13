@@ -40,3 +40,6 @@ https://www.youtube.com/watch?v=xcoZt13Lxts&t=19s&ab_channel=OneMinuteVideoTutor
 
 //What is CSR SSR SSG and ISR
 https://www.youtube.com/watch?v=YkxrbxoqHDw&ab_channel=HiteshChoudhary
+
+//Power of Console - Five things browser console can do other than just logging
+https://www.youtube.com/watch?v=QkZoqLlewPM&ab_channel=LearnwithSumit-LWS-Bangladesh

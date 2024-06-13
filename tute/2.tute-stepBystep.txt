@@ -6,6 +6,10 @@ https://www.youtube.com/watch?v=NgrljB7UU34&t=1323s&ab_channel=LearnwithSumit-LW
 
 // Installation
 https://nextjs.org/docs/getting-started/installation
+
+//Use state Nextjs playlist - very good
+https://www.youtube.com/playlist?list=PL0wCCp4kCP9xajus_5fiDKpHEOI_vMVqk
+
 // Next.js 13.4 Tutorial in Hindi-NextJS, React Server Comp. & MongoDB // First started with next install & continueing
 https://www.youtube.com/watch?v=lpsLAP4x-tk&t=820s&ab_channel=ThapaTechnical
 
