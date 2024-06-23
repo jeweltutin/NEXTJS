@@ -1,5 +1,6 @@
 export interface MyTask {
-    id: string,
-    text: string,
+    _id: string,
+    // text: string,
+    task: string,
     time: string
 }

@@ -6,17 +6,17 @@ import { useRouter } from 'next/navigation';
 
 const addTask = () => {
     const router = useRouter();
-    //const [newTaskValue, setNewTaskValue] = useState<string>("");
+    const [newTaskValue, setNewTaskValue] = useState<string>("");
     const [taskDescription, setTaskDescription] = useState("");
     const [time, setTime] = useState("");
     const [message, setMessage] = useState("");
     //const handleSubmitNewTodo = (e: any) => {
     const handleSubmitNewTodo: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        //console.log(newTaskValue);
+        console.log(newTaskValue);
         const insertData = await addTodo({
-            id: "74",
-            text: taskDescription,
+            _id: "95",
+            task: taskDescription,
             time: time
         });
 

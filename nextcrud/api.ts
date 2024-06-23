@@ -1,6 +1,6 @@
 import { MyTask } from "./types/tasks";
 
-const baseUrl = 'http://localhost:3001';
+const baseUrl = 'http://localhost:5000/api';
 
 export const getAllTodos = async () => {
     //const res = await fetch(`${baseUrl}/tasks`);
@@ -21,7 +21,7 @@ export const getAllTodos = async () => {
 
 export const addTodo = async (todo: MyTask) => {
     try {
-        const res = await fetch(`${baseUrl}/tasks`, {
+        const res = await fetch(`${baseUrl}/tasks/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ export const addTodo = async (todo: MyTask) => {
 }
 
 export const editTodo = async (todo: MyTask) => {
-    const res = await fetch(`${baseUrl}/tasks/${todo.id}`, {
+    const res = await fetch(`${baseUrl}/tasks/${todo._id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
