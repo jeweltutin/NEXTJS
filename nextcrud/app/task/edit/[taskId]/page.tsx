@@ -18,7 +18,7 @@ const handleSubmitEditTodo = ({ params }: any) => {
         const getData = async () => {
             const data = await getAllTodos()
             setData(data);
-            console.log(data);
+            //console.log(data);
         }
         getData()
     }, [])
@@ -69,8 +69,8 @@ const handleSubmitEditTodo = ({ params }: any) => {
         router.push('/')
         //router.refresh();
     }
-    console.log(mytask)
-    console.log({ ...mytask })
+    //console.log(mytask)
+    //console.log({ ...mytask })
 
     return (
         <main className="max-w-4xl mx-auto ">

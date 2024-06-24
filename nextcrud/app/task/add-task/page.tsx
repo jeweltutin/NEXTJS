@@ -6,30 +6,34 @@ import { useRouter } from 'next/navigation';
 
 const addTask = () => {
     const router = useRouter();
-    const [newTaskValue, setNewTaskValue] = useState<string>("");
+    //const [newTaskValue, setNewTaskValue] = useState<string>("");
     const [taskDescription, setTaskDescription] = useState("");
     const [time, setTime] = useState("");
     const [message, setMessage] = useState("");
     //const handleSubmitNewTodo = (e: any) => {
     const handleSubmitNewTodo: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        console.log(newTaskValue);
-        const insertData = await addTodo({
-            _id: "95",
-            task: taskDescription,
-            time: time
-        });
-
-        if (insertData !=='Failed') {
-            setTaskDescription("");
-            setTime("");
-            setMessage("User created successfully");
-        } 
-        if(insertData ==='Failed'){
-            setMessage('Failed to create todo')
+        //console.log(newTaskValue);
+        if (taskDescription!="" && time!="") { 
+            const insertData = await addTodo({
+                _id: "95",
+                task: taskDescription,
+                time: time
+            });
+    
+            if (insertData !=='Failed') {
+                setTaskDescription("");
+                setTime("");
+                setMessage("User created successfully");
+                router.push('/');
+            } 
+            if(insertData ==='Failed'){
+                setMessage('Failed to create todo')
+            }
+        }else{
+            setMessage('Need to fillup the fields!');
         }
-
-
+        
     }
 
     return (

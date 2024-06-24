@@ -19,8 +19,8 @@ const AddTask = () => {
     e.preventDefault();
     console.log(newTaskValue);
     addTodo({
-      id: "8",
-      text: newTaskValue,
+      _id: "8",
+      task: newTaskValue,
       time: ".5 hour"
     });
     setNewTaskValue("");
