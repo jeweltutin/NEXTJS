@@ -1,0 +1,7 @@
+https://nextjs.org/learn/dashboard-app/adding-authentication
+
+https://next-auth.js.org/getting-started/example
+https://authjs.dev/getting-started
+
+
+https://www.youtube.com/watch?v=AxciMCBL7rM&ab_channel=ProgrammingwithUmair

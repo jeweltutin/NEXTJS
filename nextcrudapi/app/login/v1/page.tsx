@@ -48,7 +48,7 @@ const Login = () => {
             body: JSON.stringify({ email, password })
         };
 
-        const data = await fetch('http://localhost:5000/api/user/Login', config)
+        const data = await fetch('http://localhost:5000/api/user/login', config)
             .then((uInfo) => uInfo.json());
 
         const token = data.token;
