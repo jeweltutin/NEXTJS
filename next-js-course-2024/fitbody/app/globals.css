@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply font-roboto;
+    }
+    h1,h2,h3,h4,h5,h6{
+        @apply font-oswald font-bold uppercase;
+    }
+    .h1{
+        @apply text-white text-7xl lg:text-[128px] tracking-[-3px];
+    }
+    .h2{
+        @apply text-[36px];
+    }
+    .h3{
+        @apply text-[32px];
+    }
+    .h4{
+        @apply text-[26px];
+    }
+    .h5{
+        @apply text-[22px];
+    } 
+}
+
+.active{
+    @apply text-accent;
+}
+.achievement-sec{
+    background-image: url('/assets/img/gold-feel.png');
+    /* background-image: url(https://jutebag.com.bd/wp-content/uploads/2024/02/gold-feel.png); */
+    background-color: #556;
+    filter: alpha(opacity=90);
+    /* IE */
+    -moz-opacity: 0.9;
+    /* Mozilla */
+    opacity: 0.9;
+    /* CSS3 */
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 40% auto;
+}
