@@ -1,5 +1,22 @@
 https://www.youtube.com/watch?v=X7XbjwD6fVY&list=PLHiZ4m8vCp9P23SqlHL0QAqiwS_oCofV2&ab_channel=LearnwithSumit-LWS-Bangladesh  // Starting with basic bangla tute
 
+
+//Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.
+https://ui.shadcn.com/docs
+
+//Top quality open-source UI Kit
+https://tw-elements.com/docs/standard/navigation/footer/
+
+//Flowbite - Tailwind CSS component library
+//Get started with the most popular open-source library of interactive UI components built with the utility classes from Tailwind CSS
+https://flowbite.com/docs/components/footer/
+
+//tailwind video nextjs
+https://nextjs.org/docs/app/building-your-application/optimizing/videos
+
+
+
+
 //simple admin dashboard nextjs tailwind css - google search
 //React admin dashboard using tailwind CSS -- Almost completed
 https://www.youtube.com/watch?v=yQCsnQw420Y&ab_channel=Frontenddev

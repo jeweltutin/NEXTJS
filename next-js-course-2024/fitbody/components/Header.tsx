@@ -5,12 +5,14 @@ import MobileNav from "./MobileNav";
 import Nav from "./Nav";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { MdMenu } from "react-icons/md";
 
 
 
 const Header = () => {
   const [headerActive, setHeaderActive] = useState(false);
-  
+  const [openNav, setOpenNav] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setHeaderActive(window.scrollY > 50)
@@ -20,8 +22,8 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     }
-   }, []);
-   console.log(headerActive);
+  }, []);
+  console.log(headerActive);
 
   return (
     <header className={`${headerActive ? 'h-[100px]' : 'h-[124px]'} fixed max-w-[1920px] left-0 top-0 w-full bg-primary-200 h-[100px] transition-all`}>
@@ -29,8 +31,16 @@ const Header = () => {
         <Link href="/">
           <Image src={'/assets/img/logo.png'} width={117} height={55} alt="logo"></Image>
         </Link>
-        {/* <MobileNav ContainerStyles="flex flex-col text-center gap-8 fixed bg-primary-200 w-full left-0 top-[124px] text-base uppercase font-medium lg:hidden text-white"/> */}
-        <Nav containerStyles='flex gap-4 hidden lg:flex text-white' />
+        <MobileNav ContainerStyles=
+          {`${headerActive ? 'top-[90px]' : 'top-[124px]'} 
+          ${openNav ? 'max-h-max pt-8 pb-10 border-t border-white/10' : 'max-h-0 pt-0 pb-0 overflow-hidden border-white/0'}
+          flex flex-col text-center gap-8 fixed bg-primary-200 w-full left-0 text-base uppercase font-medium text-white transition-all md:hidden`} />
+        <Nav containerStyles='flex gap-4 hidden md:flex text-white' />
+        <div className="md:hidden">
+          <button onClick={() => setOpenNav(!openNav)} className="text-white ">
+            <MdMenu className="text-4xl"></MdMenu>
+          </button>
+        </div>
       </div>
     </header>
   )
