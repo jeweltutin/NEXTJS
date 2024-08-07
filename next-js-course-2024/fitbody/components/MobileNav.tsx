@@ -1,6 +1,9 @@
 'use client';
+
 //import Link from "next/link";
 import { Link as ScrollLink } from 'react-scroll';
+import { useMediaQuery } from 'usehooks-ts';
+
 
 const links = [
     { name: 'home', target: 'home', offset: -100  },
@@ -14,12 +17,13 @@ const links = [
 ]
 
 const MobileNav = ({ContainerStyles} : {ContainerStyles: string}) => {
+  const isMobile = useMediaQuery('(min-width: 640px)')
   return (
       <nav className={`${ContainerStyles}`}>
         {
             links.map((link, index) => {
                 //return <Link key={index} href={"#"+link.target}>{ link.name }</Link>
-                return <ScrollLink key={index} offset={link.offset} to={link.target} smooth spy activeClass="active" className="cursor-pointer hover:text-accent transition-all">{link.name}</ScrollLink>              
+                return <ScrollLink key={index} offset={link.offset} to={link.target} smooth spy activeClass={`${!isMobile && 'active'}`} className="cursor-pointer hover:text-accent transition-all">{link.name}</ScrollLink>              
             })
         } 
       </nav>

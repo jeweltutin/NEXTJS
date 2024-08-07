@@ -1,0 +1,32 @@
+// Building Your Nextjs Profile Site with Google Sheets as a CMS
+
+https://www.youtube.com/watch?v=kOOs7h9YL_g&ab_channel=CodeRadiance   // Worked idea used
+https://www.youtube.com/watch?v=K6Vcfm7TA5U&ab_channel=Fireship
+
+// Online store googlesheet
+https://www.youtube.com/watch?v=mkuDsc84SqY&list=PLmA3URVkjqnneH6bzeFia7HXaZh4ehSAL&ab_channel=DesiCodes  
+
+* First we need to create an account on google cloud console
+-> google cloud console
+https://cloud.google.com/cloud-console/
+
+* After account creation need to create a project
+* Then need to create a service account
+Left navigation menu
+IAM & Admin > Service accounts
+Tab > Create service account > Enter name and then > create and continue
+The assing a role to service account
+Click the newly created sheet for key
+Go to keys tab > create new key > key type json > create
+
+go to the sheet and share the sheet with the needed email  
+try
+
+https://medium.com/@prithvi128717/using-google-sheets-as-a-free-cms-in-next-js-13-4-4c5d2af0a536  // Worked with this code
+https://levelup.gitconnected.com/using-google-sheets-as-another-database-in-your-next-js-app-ab1b2c6d8f1a
+
+https://medium.com/@kewinf271/next-14-google-sheets-integration-5225f8e9b7c8
+https://andreaskeller.name/blog/nextjs-google-sheets-cms
+ 
+
+
