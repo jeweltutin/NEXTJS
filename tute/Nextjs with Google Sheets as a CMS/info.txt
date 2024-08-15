@@ -27,6 +27,8 @@ https://levelup.gitconnected.com/using-google-sheets-as-another-database-in-your
 
 https://medium.com/@kewinf271/next-14-google-sheets-integration-5225f8e9b7c8
 https://andreaskeller.name/blog/nextjs-google-sheets-cms
+
+https://stackoverflow.com/questions/61735240/fetching-spreadsheet-data-does-not-update-on-client-when-new-values-are-inserted
  
 
 

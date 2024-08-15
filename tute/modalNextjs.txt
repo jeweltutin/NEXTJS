@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/74197810/modal-always-open-with-the-last-value-of-the-array
