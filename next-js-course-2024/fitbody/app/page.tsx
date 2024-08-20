@@ -14,6 +14,7 @@ export default function Home() {
       <Hero />
       {/* <Achievements /> */}
       <About />
+      <Achievements />
       <Classes />
       <Team />
       <Membership />
