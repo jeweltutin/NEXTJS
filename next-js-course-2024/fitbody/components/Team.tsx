@@ -102,7 +102,8 @@ const Team = () => {
           initial="hidden"
           whileInView={"show"}
           viewport={{ once: false, amount: 0.2 }}
-          className="h2 text-center mb-6">Our trainers</motion.h2>
+          className="h2 text-center mb-6">Our trainers
+        </motion.h2>
         <motion.div 
           variants={fadeIn('up', 0.6)}
           initial="hidden"
@@ -138,7 +139,7 @@ const Team = () => {
         </motion.div>
 
         <motion.div
-         variants={fadeIn('up', 0.6)}
+         variants={fadeIn('up', 0.8)}
          initial="hidden"
          whileInView={"show"}
          viewport={{ once: false, amount: 0.2 }}
