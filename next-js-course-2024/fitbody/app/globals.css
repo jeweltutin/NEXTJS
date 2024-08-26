@@ -43,3 +43,9 @@
     background-repeat: no-repeat;
     background-size: 40% auto;
 }
+
+/* swiper pagination styles */
+.swiper-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet,
+.swiper-horizontal.swiper-pagination-bullets .swiper-pagination-bullet{
+    @apply bg-accent;
+}
