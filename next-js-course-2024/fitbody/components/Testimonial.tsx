@@ -10,8 +10,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css/pagination";
 import "swiper/css/autoplay"; */
 
-
-
 const testimonialData = [
   {
     img: "/assets/img/testimonial/lucy.jpg",
@@ -90,7 +88,7 @@ const Testimonial = () => {
             {testimonialData.map((person, index) => {
               return (
                 <SwiperSlide key={index} className="h-full">
-                  <div className="flex flex-col justify-center items-center gap-6 text-center h-full">
+                  <div className="flex flex-col justify-center items-center gap-6 text-center h-full pb-11">
                     <Image src={person.img} width={90} height={90} alt="" className="rounded-full border-2 border-accent" />
                     <div className="flex flex-col justify-center items-center">
                       <FaQuoteLeft className="text-2xl text-gray-300" />
