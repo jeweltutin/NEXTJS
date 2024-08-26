@@ -1,12 +1,14 @@
 "use client";
+import { fadeIn } from "@/lib/variants";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaQuoteLeft } from "react-icons/fa6";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import "swiper/css";
+/* import "swiper/css";
 import "swiper/css/pagination";
-import "swiper/css/autoplay";
+import "swiper/css/autoplay"; */
 
 
 
@@ -47,16 +49,26 @@ const Testimonial = () => {
   return (
     <section className="py-12 xl:py-28" id="testimonial">
       <div className="container mx-auto">
-        <h2 className="h2 text-center">
+        <motion.h2
+         variants={fadeIn('up', 0.4)}
+         initial="hidden"
+         whileInView={"show"}
+         viewport={{ once: false, amount: 0.2 }}
+         className="h2 text-center">
           Our Testimonials
-        </h2>
-        <div>
+        </motion.h2>
+        <motion.div
+          variants={fadeIn('up', 0.6)}
+          initial="hidden"
+          whileInView={"show"}
+          viewport={{ once: false, amount: 0.2 }}
+        >
           <Swiper
             slidesPerView={1}
             spaceBetween={30}
             modules={[Pagination, Autoplay]}
             autoplay={{
-              delay: 3000,
+              delay: 5000,
               pauseOnMouseEnter: true,
               disableOnInteraction: false
             }}
@@ -91,11 +103,9 @@ const Testimonial = () => {
                     </div>
                   </div>
                 </SwiperSlide>
-              )
-            })}
+              )})}
           </Swiper>
-        </div>
-
+        </motion.div>
       </div>
     </section>
   )
