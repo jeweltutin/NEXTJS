@@ -4,7 +4,7 @@ import { google } from "googleapis";
 import Link from "next/link";
 
 export default async function Products() {
-    const range = `bags!A:G`;
+    const range = `demo!A:G`;
     const sheetId = "1qqy3h9jITsTyO88HTjrFyF-YJamLi-lM1jBoi42Y0Ps";
     const posts = await getGoogleSheetsData(sheetId, range);
     //console.log(posts);
