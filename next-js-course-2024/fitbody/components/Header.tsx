@@ -24,7 +24,7 @@ const Header = () => {
   //console.log(headerActive);
 
   return (
-    <header className={`${headerActive ? 'h-[100px]' : 'h-[124px]'} fixed max-w-[1920px] left-0 top-0 w-full bg-primary-200 h-[100px] transition-all z-10`}>
+    <header className={`${headerActive ? 'h-[100px]' : 'h-[124px]'} fixed max-w-[1920px] left-0 top-0 w-full bg-primary-200 h-[100px] transition-all z-40`}>
       <div className="container mx-auto h-full flex items-center justify-between">
         <Link href="/">
           <Image src={'/assets/img/logo.png'} width={117} height={55} alt="logo"></Image>
