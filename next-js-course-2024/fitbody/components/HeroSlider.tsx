@@ -25,7 +25,7 @@ const HeroSlider = () => {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
                         className="h1 text-center lg:text-left mb-2">
-                        <span>Where hard</span> work meets success
+                        <span className="text-accent">Where hard</span> work meets success
                     </motion.h1>
                     <p className="text-white italic text-center lg:text-left mb-4">
                         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga
