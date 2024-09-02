@@ -1,3 +1,12 @@
+// CSS loader used in loading.js
+https://www.w3schools.com/howto/howto_css_loader.asp
+
+// Tailwind CSS 404 Pages
+https://tailwindui.com/components/marketing/feedback/404-pages
+
+//Table design - Tailwind CSS Table - Flowbite
+https://flowbite.com/docs/components/tables/
+
 // useState basic
 https://www.youtube.com/watch?v=ww8Gbi0nckg&ab_channel=DeveloperResources
 https://www.youtube.com/watch?v=-e0834TnoAQ&list=PL0wCCp4kCP9xajus_5fiDKpHEOI_vMVqk&index=6&ab_channel=DeveloperResources
@@ -12,6 +21,9 @@ https://www.npmjs.com/package/react-native-flash-message
 //Data table
 https://react-data-table-component.netlify.app/?path=/docs/getting-started-examples--page
 
+// Create a responsive navbar with React and CSS
+https://blog.logrocket.com/create-responsive-navbar-react-css/
+https://www.youtube.com/watch?v=pxxthSFvXFA  //Responsive Navbar With Next.js(reactjs) And Tailwind CSS In 7minutes
 
 //Text content does not match server-rendered HTML
 Why This Error Occurred

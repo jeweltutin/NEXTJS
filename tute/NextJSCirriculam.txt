@@ -1,0 +1,34 @@
+Next js full Cirriculam
+-------------------------
+1.  Create a next js project and folder structure
+2.  Create page.js file
+3.  Client and server components
+4.  nested routes
+5.  Dyanamic routes
+6.  Catch all routes
+7.  Navigating using link component
+8.  Navigating using useRouter hook
+9.  redirect in server componenets
+10. useParam, usePathName and useSearchParams hook
+11. Params and searchParams in server component
+12. Show loading UI
+13. Custom 404 / not found page
+14. Data fetching in server componenet using fetch
+15. Caching and revalidating
+16. Data fetching in client component using useEffect and swr
+17. Project 01: Recipe App Project
+18. Project 02: Blog app
+19: Server actions in server components
+20. Project 03: user management app using server actions
+21. Project 04: User ragistration and login with middleware
+22. Project 05: Next Auth with Redux Toolkit
+23. Project 06: Full Stack Job Portal App
+ 
+
+
+
+
+
+
+// Next.js Full Course 2024 | Learn Next.js 14 In One Video | 14 Hours
+https://www.youtube.com/watch?v=mQnWCmVErnw

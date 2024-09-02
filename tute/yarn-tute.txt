@@ -1,3 +1,17 @@
 https://classic.yarnpkg.com/lang/en/docs/getting-started/
 
 https://www.knowledgehut.com/blog/web-development/yarn-vs-npm#frequently-asked-questions
+
+
+https://classic.yarnpkg.com/en/docs/install#windows-stable
+
+
+https://classic.yarnpkg.com/lang/en/docs/cli/self-update/
+Updates Yarn to the latest version.
+
+yarn self-update
+Important: self-update is not available. See policies for enforcing versions within a project
+
+In order to update your version of Yarn, you can run one of the following commands:
+
+npm install --global yarn - if you’ve installed Yarn via npm (recommended)

@@ -4,6 +4,15 @@ https://www.youtube.com/watch?v=I4O9Of7rFSM&ab_channel=IstiaqHasan
 //Next JS 14 Crash Course - Next.js Bangla Tutorial 2024  // The best for starting completed 10-06-24
 https://www.youtube.com/watch?v=NgrljB7UU34&t=1323s&ab_channel=LearnwithSumit-LWS-Bangladesh
 
+//A Gym Website Using Next JS, Typescript, Tailwind CSS And Framer Motion   // Completed this project as fitbody
+https://www.youtube.com/watch?v=eN6jk-W1_1I
+
+// Build and Deploy a Modern Burger Shop Website with Next.js 14, React, TypeScript, and Tailwind CSS
+https://www.youtube.com/watch?v=3scvP4_JHJ4
+
+// E-Commerce Website Using Next.js 14, React, Tailwind CSS, Sanity CMS, Stripe
+https://www.youtube.com/watch?v=-bXrG6ZCmy0&list=PLne3gcjQSCokHqXvowWkGXLKj1Rvb4W7N
+
 // Installation
 https://nextjs.org/docs/getting-started/installation
 
