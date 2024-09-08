@@ -1,0 +1,8 @@
+// react-paginate implemented in Recipe app
+https://www.npmjs.com/package/react-paginate
+https://codepen.io/monsieurv/pen/abyJQWQ
+https://codepen.io/jamesscreen/pen/qLdBdz // for css design
+
+// My Updated Way of Adding Pagination w/ Next.js 14, Tailwind CSS and shadcn/ui 
+// This way I don't want to use
+https://www.youtube.com/watch?v=1DtJDGwdMQs&t=980s&ab_channel=HosnaQasmei

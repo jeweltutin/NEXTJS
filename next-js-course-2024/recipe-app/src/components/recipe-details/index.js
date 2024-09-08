@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function RecipeDetailsItem({ getRecipeDetails }) {
     return (
         <div>
-            <div className="mb-8 text-gray-600 font-serif border-b-2 border-indigo-500 p-2" >
+            <div className="mb-8 text-gray-600 font-serif border-b-2 border-indigo-500 p-2 sticky top-0 bg-white/80" >
                 <Link href={"/recipe-list"}>Go to recipe list</Link>
             </div>
             <div className="p-6 lg:max-w-6xl max-w-2xl mx-auto">
