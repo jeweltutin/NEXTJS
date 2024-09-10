@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Button } from "../ui/button";
 import { Label } from "@radix-ui/react-label";
+import Link from "next/link";
+import DetailsModal from "../blog-details-modal";
 
 const initialBlogFormData = {
     title: "",
@@ -24,6 +26,8 @@ function BlogOverview({ blogList }) {
     const [blogFormData, setBlogFormData] = useState(initialBlogFormData);
     const [currentEditedBlogID, setCurrentEditedBlogID] = useState(null);
     //console.log(blogFormData);
+    const [showModal, setShowModal] = useState(false);
+    const [singleBlogData, setSingleBlogData] = useState([]);
 
     const router = useRouter();
 
@@ -88,6 +92,13 @@ function BlogOverview({ blogList }) {
         }
     }
 
+    async function handleShowABlogById(getCurrentID) {
+        const apiResponse = await fetch(`/api/get-blog/${getCurrentID}`);
+        setShowModal(true);     
+        const singleBlog = await apiResponse.json();
+        setSingleBlogData(singleBlog);
+    }
+
     return (
         <div className="min-h-screen flex flex-col gap-10 bg-gradient-to-r from-purple-500 to-blue-600 p-6">
             <AddNewBlog
@@ -112,6 +123,8 @@ function BlogOverview({ blogList }) {
                                     <div className="mt-5 flex gap-3">
                                         <Button onClick={() => handleEdit(blogItem)} className="btn btn-sm">Edit</Button>
                                         <Button onClick={() => handleDeleteBlogByID(blogItem._id)} variant="destructive">Delete</Button>
+                                        <Button onClick={() => handleShowABlogById(blogItem._id)}>Details</Button>
+                                        <Link className="bg-green-700 px-5 py-2 text-white rounded" href={`/blogs/${blogItem._id}`}>Show</Link>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -119,6 +132,7 @@ function BlogOverview({ blogList }) {
                         : <Label className="text-6xl font-extrabold">No Blog found! Please add one</Label>
                 }
             </div>
+            <DetailsModal setShowModal={setShowModal} showModal={showModal} singleBlogData={singleBlogData} />
         </div>
     );
 }
