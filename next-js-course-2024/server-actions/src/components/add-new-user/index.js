@@ -1,5 +1,5 @@
 "use client";
-import { addNewUserActions } from '@/actions';
+import { addNewUserActions, editUserAction } from '@/actions';
 //rfce
 
 import { Button } from '../ui/button';
@@ -15,12 +15,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { addNewUserFormControls, addNewUserFormInitialState } from '@/utils';
-import { use, useState } from 'react';
+import { use, useContext, useState } from 'react';
+import { UserContext } from '@/context';
 
 
 function AddNewUser() {
-    const [openDialog, setDialog] = useState(false);
-    const [addNewUserFormData, setAddNewUserFormData] = useState(addNewUserFormControls);
+    //const [openDialog, setDialog] = useState(false);
+    //const [addNewUserFormData, setAddNewUserFormData] = useState(addNewUserFormInitialState);
+
+    const {currentEditedId, setCurrentEditedId, openDialog, setDialog, addNewUserFormData, setAddNewUserFormData} = useContext(UserContext);
 
     //console.log(addNewUserFormData);
 
@@ -31,10 +34,11 @@ function AddNewUser() {
     }
 
     async function handleAddNewUserAction() {
-        const result = await addNewUserActions(addNewUserFormData, "/user-management");
+        const result = currentEditedId !== null ? editUserAction(currentEditedId, addNewUserFormData, "/user-management") : await addNewUserActions(addNewUserFormData, "/user-management");
         console.log(result);
         setDialog(false);
         setAddNewUserFormData(addNewUserFormInitialState);
+        setCurrentEditedId(null);
     }
 
     return (
@@ -42,12 +46,13 @@ function AddNewUser() {
             <Button onClick={() => setDialog(true)}>Add New User</Button>
 
             <Dialog open={openDialog} onOpenChange={() => {
-                setDialog(false)
-                setAddNewUserFormData(addNewUserFormInitialState)
+                setDialog(false);
+                setAddNewUserFormData(addNewUserFormInitialState);
+                setCurrentEditedId(null);
             }}>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
-                        <DialogTitle>Add New User</DialogTitle>
+                        <DialogTitle>{ currentEditedId !== null ? "Edit User" : "Add New User" }</DialogTitle>
                         <DialogDescription>
                             Fillup the form for new user for manging user. Click save when you're done.
                         </DialogDescription>

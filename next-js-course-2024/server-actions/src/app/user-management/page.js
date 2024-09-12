@@ -6,7 +6,7 @@ import SingleUserCard from "@/components/single-user-card";
 
 async function UserManagement() {
     const getListOfUsers = await fetchUsersAction();
-    console.log(getListOfUsers);
+    //console.log(getListOfUsers);
 
     return (
         <div className="p-20 w-full">

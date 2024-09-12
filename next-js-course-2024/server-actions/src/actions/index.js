@@ -42,8 +42,8 @@ export async function fetchUsersAction() {
         if (listOfUsers) {
             return {
                 success: true,
-                users: listOfUsers
-                //users: JSON.parse(JSON.stringify(listOfUsers))
+                //users: listOfUsers
+                users: JSON.parse(JSON.stringify(listOfUsers))
             }
         } else {
             return {
@@ -58,6 +58,40 @@ export async function fetchUsersAction() {
             message: "Something went wrong!"
         }
     }
+}
+
+export async function editUserAction(currentUserId, formData, pathToRevalidate) {
+    await connectToDB();
+    try {
+        const { name, email, phone, address } = formData;
+        const updateUser = await User.findByIdAndUpdate(
+            {
+                _id: currentUserId
+            },
+            { name, email, phone, address },
+            { new: true }
+        )
+        if (updateUser) {
+            revalidatePath(pathToRevalidate);
+            return {
+                success: true,
+                message: "User updated successfully!"
+            }
+        } else {
+            return {
+                success: false,
+                message: "Not able to update the user! Please try again"
+            }
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            success: false,
+            message: "Something went wrong!"
+        }
+    }
+
+
 }
 
 export async function deleteUserAction(currentUserId, pathToRevalidate) {
