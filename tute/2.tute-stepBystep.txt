@@ -7,6 +7,18 @@ https://www.youtube.com/watch?v=NgrljB7UU34&t=1323s&ab_channel=LearnwithSumit-LW
 //A Gym Website Using Next JS, Typescript, Tailwind CSS And Framer Motion   // Completed this project as fitbody
 https://www.youtube.com/watch?v=eN6jk-W1_1I
 
+//Master Redux Toolkit in Next.js 14+ with Shopping Cart Project (2024 Guide)  // Completed project name: redux-starter 23-08-24
+https://www.youtube.com/watch?v=OarGSbe6te8
+
+//Next.js Full Course 2024 | Learn Next.js 14 In One Video | 14 Hours  // Completed -shopping-cart 6:48:00 for now. 02-08-24 
+https://www.youtube.com/watch?v=mQnWCmVErnw&ab_channel=SangamMukherjee
+
+// Build & Deploy Full Stack Next.Js Online Grocery React App Store | React, Strapi, Tailwindcss // Started
+https://www.youtube.com/watch?v=7NN56jsaj6w&ab_channel=TubeGuruji
+
+// Multi-Vendor Ecommerce | Online Store App With Next js 14: Kickstarting with Dashboard 
+https://www.youtube.com/watch?v=KY1t_AvyD-0&list=PLDn5_2K0bUmfREsFv1nSHDbmHEX5oqI3Z&index=2&ab_channel=JBWEBDEVELOPER
+
 // Build and Deploy a Modern Burger Shop Website with Next.js 14, React, TypeScript, and Tailwind CSS
 https://www.youtube.com/watch?v=3scvP4_JHJ4
 
