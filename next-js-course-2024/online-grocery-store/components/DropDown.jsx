@@ -24,7 +24,7 @@ function DropDown() {
      */
     const getCategoryList = () => {
         GlobalApi.getCategories().then(resp => {
-            console.log("CategoryList Resp:", resp);
+            //console.log("CategoryList Resp:", resp);
             setCategoryList(resp.data.data);
         })
     }
