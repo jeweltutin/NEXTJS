@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import { Outfit } from 'next/font/google';
 import "./globals.css";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
       <body className={outfit.className}>
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

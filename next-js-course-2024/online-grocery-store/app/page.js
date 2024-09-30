@@ -9,12 +9,15 @@ export default async function Home() {
   const sliderList = await GlobalApi.getSliders();
   const categoryList = await GlobalApi.getCategoryList();
   const productList = await GlobalApi.getAllProducts();
-  
+
   return (
-    <div className="p-5 md:px-15 px-16">
+    <div className="p-10 px-5 md:px-16">
       <Slider sliderList={sliderList} />
       <CategorySection categoryList={categoryList} />
       <ProductList productList={productList} />
+      <div>
+        <Image src="/images/delivery-img.png" width={1000} height={300} alt="delivery-banner" className="w-full lg:h-[400px] object-contain"  />
+      </div>
     </div>
   );
 }

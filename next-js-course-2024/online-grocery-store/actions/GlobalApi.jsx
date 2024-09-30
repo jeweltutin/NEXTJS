@@ -27,9 +27,32 @@ const getAllProducts = () => {
     )
 }
 
+const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][name][$in]='+category+'&populate=*').then(resp => {
+    //console.log("cat:", category);
+    //console.log("Products:", resp.data.data);
+    return resp.data.data;
+})
+
 export default {
     getCategories,
     getSliders,
     getCategoryList,
-    getAllProducts
+    getAllProducts,
+    getProductsByCategory
 }
+
+
+
+
+
+// products filter api by category: 
+// http://localhost:1337/api/products?filters[categories][name][$in]=Fruits
+
+// Select fields name , mrp and description
+//http://localhost:1337/api/products?fields=name,mrp,description
+
+// Select where product id = 6
+//http://localhost:1337/api/products?filters[id][$eq]=6
+
+// Select fields name , mrp and description Select where product id = 6
+//http://localhost:1337/api/products?fields=name,mrp,description&filters[id][$eq]=6

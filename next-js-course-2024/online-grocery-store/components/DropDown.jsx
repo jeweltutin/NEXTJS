@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { LayoutGrid } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 function DropDown() {
@@ -39,12 +40,14 @@ function DropDown() {
                 <DropdownMenuLabel>Browse Category</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {categoryList.map((category, index) => (
-                    <DropdownMenuItem key={index} className="flex gap-4 items-center cursor-pointer">
-                        <Image src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + category?.icon[0]?.url} unoptimized={true} alt="icon" width={30} height={30} />
-                        <h4 className="text-lg">
-                            {category.name}
-                        </h4>
-                    </DropdownMenuItem>
+                    <Link href={"/category/"+ category.name}>
+                        <DropdownMenuItem key={index} className="flex gap-4 items-center cursor-pointer">
+                            <Image src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + category?.icon[0]?.url} unoptimized={true} alt="icon" width={30} height={30} />
+                            <h4 className="text-lg">
+                                {category.name}
+                            </h4>
+                        </DropdownMenuItem>
+                    </Link>
                 ))}
             </DropdownMenuContent>
         </DropdownMenu>
