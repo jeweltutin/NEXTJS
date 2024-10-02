@@ -40,7 +40,7 @@ function DropDown() {
                 <DropdownMenuLabel>Browse Category</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {categoryList.map((category, index) => (
-                    <Link href={"/category/"+ category.name}>
+                    <Link href={"/category/"+ category.name} key={index}>
                         <DropdownMenuItem key={index} className="flex gap-4 items-center cursor-pointer">
                             <Image src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + category?.icon[0]?.url} unoptimized={true} alt="icon" width={30} height={30} />
                             <h4 className="text-lg">

@@ -27,18 +27,38 @@ const getAllProducts = () => {
     )
 }
 
-const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][name][$in]='+category+'&populate=*').then(resp => {
+const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][slug][$in]='+category+'&populate=*').then(resp => {
     //console.log("cat:", category);
     //console.log("Products:", resp.data.data);
     return resp.data.data;
 })
+
+const testfunc = (username, email, phone) => {
+    console.log(phone);
+}
+
+const registerUser = (username, email, password) => axiosClient.post('/auth/local/register',{
+    username: username,
+    email: email,
+    //phone: phome,
+    password: password
+});
+
+const signIn = (email, password) => axiosClient.post('/auth/local', {
+    identifier: email,
+    password: password
+})
+
 
 export default {
     getCategories,
     getSliders,
     getCategoryList,
     getAllProducts,
-    getProductsByCategory
+    getProductsByCategory,
+    registerUser,
+    testfunc,
+    signIn 
 }
 
 
