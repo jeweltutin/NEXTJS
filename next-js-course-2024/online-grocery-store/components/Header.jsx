@@ -1,5 +1,5 @@
 "use client";
-import { CircleUserRound, Search, ShoppingBag } from "lucide-react";
+import { CircleUserRound, Search, ShoppingBag, ShoppingBasket } from "lucide-react";
 import Image from "next/image"
 import { Button } from "./ui/button";
 import DropDown from "./DropDown";
@@ -12,17 +12,35 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
-  
+import { useEffect, useState } from "react";
+import GlobalApi from "@/actions/GlobalApi";
+
 
 function Header() {
     const isLoggedIn = sessionStorage.getItem("jwt") ? true : false;
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    const token = sessionStorage.getItem("jwt");
+    const [totalCartItem, setTotalCartItem] = useState(0);
     const router = useRouter();
+
+    useEffect(() => {
+        getCartItems();
+    }, []);
 
     const onSignOut = () => {
         sessionStorage.clear();
         router.push("/sign-in");
+    }
+
+    /**
+     * Used to get Total cart Item
+     */
+    const getCartItems = async () => {
+        const cartItemList = await GlobalApi.getCartItems(user.id, token);
+        console.log(cartItemList);
+        setTotalCartItem(cartItemList?.length);
     }
 
     return (
@@ -38,7 +56,10 @@ function Header() {
                 </div>
             </div>
             <div className="flex gap-5 items-center">
-                <h4 className="flex gap-2 items-center"><ShoppingBag /> 0</h4>
+                <h4 className="flex gap-2 items-center">
+                    <ShoppingBasket className="h-7 w-7" />
+                    <span className="bg-primary text-white px-2 rounded-full">{totalCartItem}</span>
+                </h4>
                 {!isLoggedIn ?
                     <Link href="/sign-in">
                         <Button>Login</Button>
@@ -55,7 +76,7 @@ function Header() {
                             <DropdownMenuItem onClick={() => onSignOut()}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                } 
+                }
             </div>
         </div>
     )

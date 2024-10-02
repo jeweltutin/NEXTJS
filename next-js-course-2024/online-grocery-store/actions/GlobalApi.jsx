@@ -49,6 +49,20 @@ const signIn = (email, password) => axiosClient.post('/auth/local', {
     password: password
 })
 
+const addToCart = (data, token) => axiosClient.post('/user-carts', data, {
+    headers: {
+        Authorization: "Bearer "+token
+    }
+}) 
+
+const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]='+userId+'&populate=*',{
+    headers: {
+        Authorization: "Bearer "+token
+    }
+}).then(resp => {
+    return resp.data.data;
+})
+
 
 export default {
     getCategories,
@@ -58,7 +72,9 @@ export default {
     getProductsByCategory,
     registerUser,
     testfunc,
-    signIn 
+    signIn,
+    addToCart,
+    getCartItems
 }
 
 
@@ -76,3 +92,6 @@ export default {
 
 // Select fields name , mrp and description Select where product id = 6
 //http://localhost:1337/api/products?fields=name,mrp,description&filters[id][$eq]=6
+
+// get products from cart for the selected user
+//http://localhost:1337/api/user-carts?filters[userId][$eq]=9&populate=*
