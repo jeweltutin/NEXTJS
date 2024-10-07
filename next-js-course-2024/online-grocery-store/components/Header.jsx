@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetDescription,
     SheetHeader,
@@ -71,7 +72,7 @@ function Header() {
      * Used to get Total cart Item
      */
     const getCartItems = async () => {
-        const cartList = await GlobalApi.getCartItems(user.id, token);
+        const cartList = await GlobalApi.getCartItems(user?.id, token);
         console.log(cartList);
         setTotalCartItem(cartList?.length);
         setCartItemList(cartList);
@@ -84,6 +85,16 @@ function Header() {
             getCartItems();
         })
     }
+
+    const [subTotal, setSubTotal] = useState(0);
+
+    useEffect(() => {
+        let total = 0;
+        cartItemList.forEach(element => {
+            total = total + element.amount
+        });
+        setSubTotal(total.toFixed(2));
+    }, [cartItemList]);
 
     return (
         <div className="flex p-5 shadow-md justify-between">
@@ -109,9 +120,15 @@ function Header() {
                         <SheetHeader>
                             <SheetTitle className="bg-primary text-white font-bold text-lg p-2">My Cart</SheetTitle>
                             <SheetDescription>
-                                <CartItemList  cartItemList={cartItemList} onDeleteItem={onDeleteItem} />
+                                <CartItemList cartItemList={cartItemList} onDeleteItem={onDeleteItem} />
                             </SheetDescription>
                         </SheetHeader>
+                        <SheetClose asChild>
+                            <div className="absolute w-[90%] bottom-6 flex flex-col">
+                                <h2 className="text-lg font-bold flex justify-between">Subtotal <span>Tk {subTotal}</span></h2>
+                                <Button onClick={() => router.push(token ? '/checkout' : '/sign-in')} >Checkout</Button>
+                            </div>
+                        </SheetClose>
                     </SheetContent>
                 </Sheet>
 
