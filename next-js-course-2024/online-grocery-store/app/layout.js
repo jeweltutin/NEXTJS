@@ -6,6 +6,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { usePathname } from "next/navigation";
+import { UpdateCartContext } from "./context/UpdateCartContext";
+import { useState } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,15 +31,19 @@ const outfit = Outfit({
 
 export default function RootLayout({ children }) {
   const urlcheck = usePathname();
-  const showHeader = urlcheck == "/sign-in" || urlcheck == "/create-account"  ? false : true;
+  const showHeader = urlcheck == "/sign-in" || urlcheck == "/create-account" ? false : true;
+
+  const [updateCart, setUpdateCart] = useState(false);
   return (
     <html lang="en">
       {/* <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}> */}
       <body className={outfit.className}>
-        {showHeader && <Header />}
-        {children}
-        {showHeader && <Footer />}
-        <Toaster />
+        <UpdateCartContext.Provider value={{updateCart, setUpdateCart}}>
+          {showHeader && <Header />}
+          {children}
+          {showHeader && <Footer />}
+          <Toaster />
+        </UpdateCartContext.Provider>
       </body>
     </html>
   );

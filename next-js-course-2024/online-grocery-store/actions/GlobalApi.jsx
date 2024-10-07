@@ -27,7 +27,7 @@ const getAllProducts = () => {
     )
 }
 
-const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][slug][$in]='+category+'&populate=*').then(resp => {
+const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][slug][$in]=' + category + '&populate=*').then(resp => {
     //console.log("cat:", category);
     //console.log("Products:", resp.data.data);
     return resp.data.data;
@@ -37,7 +37,7 @@ const testfunc = (username, email, phone) => {
     console.log(phone);
 }
 
-const registerUser = (username, email, password) => axiosClient.post('/auth/local/register',{
+const registerUser = (username, email, password) => axiosClient.post('/auth/local/register', {
     username: username,
     email: email,
     //phone: phome,
@@ -51,17 +51,50 @@ const signIn = (email, password) => axiosClient.post('/auth/local', {
 
 const addToCart = (data, token) => axiosClient.post('/user-carts', data, {
     headers: {
-        Authorization: "Bearer "+token
+        Authorization: "Bearer " + token
     }
-}) 
+})
 
-const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]='+userId+'&populate=*',{
+/* const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]='+userId+'&populate=*',{
     headers: {
         Authorization: "Bearer "+token
     }
 }).then(resp => {
     return resp.data.data;
+}) */
+
+const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]=' + userId + '&[populate][products][populate][images]=*', {
+    headers: {
+        Authorization: "Bearer " + token
+    }
+}).then(resp => {
+    const data = resp.data.data;
+    const cartItemsList = data.map((item, index) => ({
+        name: item.products[0].name,
+        quantity: item.quantity,
+        amount: item.amount,
+        image: item.products[0].images[0].url,
+        actualPrice: item.products[0].mrp,
+        id: item.documentId
+    }))
+    return cartItemsList;
 })
+
+const deleteCartItem = (id, token) => axiosClient.delete('/user-carts/' +id,{
+    headers: {
+        Authorization: "Bearer " + token
+    }
+}).then(resp => {
+    console.log(resp.data.data)
+}).catch(error => console.error(error));
+
+/* const deleteCartItem = (id,token) => {
+    alert(token);
+}; */
+
+
+
+
 
 
 export default {
@@ -74,14 +107,15 @@ export default {
     testfunc,
     signIn,
     addToCart,
-    getCartItems
+    getCartItems,
+    deleteCartItem
 }
 
 
 
 
 
-// products filter api by category: 
+// products filter api by category:
 // http://localhost:1337/api/products?filters[categories][name][$in]=Fruits
 
 // Select fields name , mrp and description
@@ -95,3 +129,6 @@ export default {
 
 // get products from cart for the selected user
 //http://localhost:1337/api/user-carts?filters[userId][$eq]=9&populate=*
+
+// Select cart with products and images
+//http://localhost:1337/api/user-carts?[populate][products][populate][images]=*

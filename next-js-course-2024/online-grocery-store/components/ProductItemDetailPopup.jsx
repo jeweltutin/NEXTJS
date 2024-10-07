@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import { Button } from './ui/button';
 import { LoaderCircle, ShoppingBasket } from 'lucide-react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import GlobalApi from '@/actions/GlobalApi';
 import { toast } from 'sonner';
+import { UpdateCartContext } from '@/app/context/UpdateCartContext';
 
 function ProductItemDetailPopup({ product }) {
     const token = sessionStorage.getItem("jwt");
@@ -16,6 +17,8 @@ function ProductItemDetailPopup({ product }) {
     const [quantity, setQuantity] = useState(1);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+
+    const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
 
     const AddingCart = () => {
         setLoading(true);
@@ -37,6 +40,7 @@ function ProductItemDetailPopup({ product }) {
         GlobalApi.addToCart(data, token).then(resp => {
             console.log(resp);
             toast("Added to Cart");
+            setUpdateCart(!updateCart);
             setLoading(false);
         }, (e) => {
             console.log(e);
