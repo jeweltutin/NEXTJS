@@ -9,6 +9,7 @@ import { usePathname } from "next/navigation";
 import { UpdateCartContext } from "./context/UpdateCartContext";
 import { useState } from "react";
 
+
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",

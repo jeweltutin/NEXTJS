@@ -1,15 +1,13 @@
 "use client";
 import { CircleUserRound, Search, ShoppingBag, ShoppingBasket } from "lucide-react";
-import Image from "next/image"
+import Image from "next/image";
 import { Button } from "./ui/button";
 import DropDown from "./DropDown";
 import Link from "next/link";
-
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import GlobalApi from "@/actions/GlobalApi";
 import { UpdateCartContext } from "@/app/context/UpdateCartContext";
-
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -30,69 +28,56 @@ import {
 import CartItemList from "./CartItemList";
 import { toast } from "sonner";
 
-
 function Header() {
-    //const [isLoggedIn, setIsLoggedIn] = useState(null);
-    //const [user, setUser] = useState("");
-    //const [token, setToken] = useState("");
-    const isLoggedIn = sessionStorage.getItem("jwt") ? true : false;
-    const user = JSON.parse(sessionStorage.getItem('user'));
-    const token = sessionStorage.getItem("jwt");
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(null);
     const [totalCartItem, setTotalCartItem] = useState(0);
     const router = useRouter();
-
-    const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
+    const { updateCart } = useContext(UpdateCartContext);
     const [cartItemList, setCartItemList] = useState([]);
-
-    useEffect(() => {
-        getCartItems();
-    }, [updateCart]);
-
-    /*     useEffect(() => {
-            const isLoggedIn = window.sessionStorage.getItem("jwt") ? true : false;
-            setIsLoggedIn(isLoggedIn);
-        }, []);
-    
-        useEffect(() => {
-            const token = window.sessionStorage.getItem("jwt");
-            setToken(token);
-        }, []);
-    
-        useEffect(() => {
-            const user = window.JSON.parse(sessionStorage.getItem('user'));
-            setUser(user);
-        }, []); */
-
-    const onSignOut = () => {
-        sessionStorage.clear();
-        router.push("/sign-in");
-    }
-
-    /**
-     * Used to get Total cart Item
-     */
-    const getCartItems = async () => {
-        const cartList = await GlobalApi.getCartItems(user?.id, token);
-        console.log(cartList);
-        setTotalCartItem(cartList?.length);
-        setCartItemList(cartList);
-    }
-
-    const onDeleteItem = (id) => {
-        //alert(token);
-        GlobalApi.deleteCartItem(id, token).then(resp => {
-            toast('Item removed !');
-            getCartItems();
-        })
-    }
-
     const [subTotal, setSubTotal] = useState(0);
 
     useEffect(() => {
-        let total = 0;
-        cartItemList.forEach(element => {
-            total = total + element.amount
+        const jwt = sessionStorage.getItem("jwt");
+        const userData = JSON.parse(sessionStorage.getItem("user"));
+
+        if (jwt) {
+            setIsLoggedIn(true);
+            setToken(jwt);
+            setUser(userData);
+        }
+    }, []);
+
+    useEffect(() => {
+        getCartItems();
+    }, [updateCart, user, token]);
+
+    const onSignOut = () => {
+        sessionStorage.clear();
+        setIsLoggedIn(false);
+        setUser(null);
+        setToken(null);
+        router.push("/sign-in");
+    }
+
+    const getCartItems = async () => {
+        if (user && token) {
+            const cartList = await GlobalApi.getCartItems(user.id, token);
+            setTotalCartItem(cartList?.length);
+            setCartItemList(cartList);
+        }
+    }
+
+    const onDeleteItem = (id) => {
+        GlobalApi.deleteCartItem(id, token).then(() => {
+            toast('Item removed!');
+            getCartItems();
         });
+    }
+
+    useEffect(() => {
+        const total = cartItemList.reduce((sum, element) => sum + element.amount, 0);
         setSubTotal(total.toFixed(2));
     }, [cartItemList]);
 
@@ -119,7 +104,7 @@ function Header() {
                     <SheetContent>
                         <SheetHeader>
                             <SheetTitle className="bg-primary text-white font-bold text-lg p-2">My Cart</SheetTitle>
-                            <SheetDescription>
+                            <SheetDescription asChild>
                                 <CartItemList cartItemList={cartItemList} onDeleteItem={onDeleteItem} />
                             </SheetDescription>
                         </SheetHeader>
@@ -132,10 +117,11 @@ function Header() {
                     </SheetContent>
                 </Sheet>
 
-                {!isLoggedIn ?
+                {!isLoggedIn ? (
                     <Link href="/sign-in">
                         <Button>Login</Button>
-                    </Link> :
+                    </Link>
+                ) : (
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <CircleUserRound className="h-10 w-10 bg-green-100 text-primary p-2 rounded-full cursor-pointer" />
@@ -145,13 +131,13 @@ function Header() {
                             <DropdownMenuSeparator />
                             <DropdownMenuItem>Profile</DropdownMenuItem>
                             <DropdownMenuItem>My Order</DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => onSignOut()}>Logout</DropdownMenuItem>
+                            <DropdownMenuItem onClick={onSignOut}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                }
+                )}
             </div>
         </div>
-    )
+    );
 }
 
 export default Header;
