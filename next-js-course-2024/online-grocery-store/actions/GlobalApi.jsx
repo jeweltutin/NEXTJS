@@ -75,12 +75,27 @@ const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[use
         amount: item.amount,
         image: item.products[0].images[0].url,
         actualPrice: item.products[0].mrp,
-        id: item.documentId
+        id: item.documentId,
+        product: item.products[0].id
     }))
     return cartItemsList;
 })
 
-const deleteCartItem = (id, token) => axiosClient.delete('/user-carts/' +id,{
+const getCartItemsForOrder = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]=' + userId + '&[populate][products]=*', {
+    headers: {
+        Authorization: "Bearer " + token
+    }
+}).then(resp => {
+    const data = resp.data.data;
+    const cartItemsList = data.map((item, index) => ({
+        quantity: item.quantity,
+        amount: item.amount,
+        product: item.products[0].id
+    }))
+    return cartItemsList;
+})
+
+const deleteCartItem = (id, token) => axiosClient.delete('/user-carts/' + id, {
     headers: {
         Authorization: "Bearer " + token
     }
@@ -88,12 +103,20 @@ const deleteCartItem = (id, token) => axiosClient.delete('/user-carts/' +id,{
     console.log(resp.data.data)
 }).catch(error => console.error(error));
 
-/* const deleteCartItem = (id,token) => {
-    alert(token);
-}; */
+
+const createOrder = (alldata, token) => axiosClient.post('/orders', alldata, {
+    headers: {
+        Authorization: "Bearer " + token
+    }
+}).then(resp => {
+    //console.log(resp.data.data)
+}).catch(error => console.error(error));
 
 
-
+/* const createOrder = (alldata, token) => {
+    console.log(alldata);
+}
+ */
 
 
 
@@ -108,7 +131,9 @@ export default {
     signIn,
     addToCart,
     getCartItems,
-    deleteCartItem
+    deleteCartItem,
+    getCartItemsForOrder,
+    createOrder
 }
 
 
