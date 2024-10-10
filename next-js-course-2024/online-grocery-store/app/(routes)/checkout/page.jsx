@@ -86,10 +86,22 @@ function Checkout() {
             
         }
 
-        console.log(cartItemList);
+        //console.log(cartItemList);
         GlobalApi.createOrder(orderData, token).then(resp => {
             //console.log(resp);
             toast("Order places successfully !");
+            cartItemList.forEach((item, index) => {
+                try {
+                    GlobalApi.deleteCartItem(item.id, token).then(resp => {
+                        //
+                    })
+                    
+                } catch (error) {
+                    console.log(error);
+                }
+                getCartItems();
+                router.replace("/order-confirmation");
+            })
         }) 
     }
 
@@ -120,7 +132,7 @@ function Checkout() {
                         <h2 className="flex justify-between">Tax (2%): <span>tk 10</span></h2>
                         <hr></hr>
                         <h2 className="flex justify-between">Total: <span>tk {calculateTotalAmount()}</span></h2>
-                        <Button onClick={() => placeOrder()}>Place Order <ArrowBigRight /> </Button>
+                        <Button onClick={() => placeOrder()} disabled={!(userName&&email&&phone&&address)} >Place Order <ArrowBigRight /> </Button>
                     </div>
                 </div>
             </div>

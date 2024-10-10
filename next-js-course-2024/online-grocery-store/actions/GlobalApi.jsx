@@ -90,7 +90,8 @@ const getCartItemsForOrder = (userId, token) => axiosClient.get('/user-carts?fil
     const cartItemsList = data.map((item, index) => ({
         quantity: item.quantity,
         amount: item.amount,
-        product: item.products[0].id
+        product: item.products[0].id,
+        id: item.documentId
     }))
     return cartItemsList;
 })
@@ -112,11 +113,22 @@ const createOrder = (alldata, token) => axiosClient.post('/orders', alldata, {
     //console.log(resp.data.data)
 }).catch(error => console.error(error));
 
+const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$eq]="+userId+"&populate[orderItemList][populate][product][populate][images]=*", {
+    headers: {
+        Authorization: "Bearer " + token
+    }
+}).then(resp => {
+    const response = resp.data.data;
+    const orderList = response.map(item => ({
+        id: item.id,
+        totalAmount: item.totalAmount,
+        paymentId: item.paymentId,
+        orderItemList: item.orderItemList,
+        createdAt: item.createdAt
+    }));
 
-/* const createOrder = (alldata, token) => {
-    console.log(alldata);
-}
- */
+    return orderList;
+})
 
 
 
@@ -133,7 +145,8 @@ export default {
     getCartItems,
     deleteCartItem,
     getCartItemsForOrder,
-    createOrder
+    createOrder,
+    getMyOrder
 }
 
 
