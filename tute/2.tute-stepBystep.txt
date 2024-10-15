@@ -13,7 +13,7 @@ https://www.youtube.com/watch?v=OarGSbe6te8
 //Next.js Full Course 2024 | Learn Next.js 14 In One Video | 14 Hours  // Completed -shopping-cart 6:48:00 for now. 02-08-24 
 https://www.youtube.com/watch?v=mQnWCmVErnw&ab_channel=SangamMukherjee
 
-// Build & Deploy Full Stack Next.Js Online Grocery React App Store | React, Strapi, Tailwindcss // Started
+// Build & Deploy Full Stack Next.Js Online Grocery React App Store | React, Strapi, Tailwindcss // Completed 15-10-24 - online-grocery-store
 https://www.youtube.com/watch?v=7NN56jsaj6w&ab_channel=TubeGuruji
 
 // Multi-Vendor Ecommerce | Online Store App With Next js 14: Kickstarting with Dashboard 

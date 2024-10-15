@@ -21,6 +21,12 @@ https://www.npmjs.com/package/react-native-flash-message
 //Data table
 https://react-data-table-component.netlify.app/?path=/docs/getting-started-examples--page
 
+//NextJS conditional CSS?
+This should work, and it works as same as React. Only you didn't escape the values correctly.
+
+<div className={`${styles.navbar} ${reactState ? styles.expanded : styles.collapsed}`}>...</div>
+https://stackoverflow.com/questions/73345626/nextjs-conditional-css
+
 // Create a responsive navbar with React and CSS
 https://blog.logrocket.com/create-responsive-navbar-react-css/
 https://www.youtube.com/watch?v=pxxthSFvXFA  //Responsive Navbar With Next.js(reactjs) And Tailwind CSS In 7minutes
@@ -52,6 +58,22 @@ https://www.youtube.com/watch?v=xcoZt13Lxts&t=19s&ab_channel=OneMinuteVideoTutor
 
 //What is CSR SSR SSG and ISR
 https://www.youtube.com/watch?v=YkxrbxoqHDw&ab_channel=HiteshChoudhary
+
+//How to detect string which contains only spaces?
+if(!str.trim()){
+  console.log('string is empty or only contains spaces');
+}
+String#trim() removes the whitespace at the start and end of the string. If the string contained only whitespace, it would be empty after trimming, and the empty string is falsey in JavaScript.
+https://stackoverflow.com/questions/10261986/how-to-detect-string-which-contains-only-spaces
+
+//Check if a string has white space
+function hasWhiteSpace(s) {
+  return (/\s/).test(s);
+}
+
+console.log(hasWhiteSpace("Hello World!"));
+console.log(hasWhiteSpace("HelloWorld!"));
+https://stackoverflow.com/questions/1731190/check-if-a-string-has-white-space
 
 //Power of Console - Five things browser console can do other than just logging
 https://www.youtube.com/watch?v=QkZoqLlewPM&ab_channel=LearnwithSumit-LWS-Bangladesh

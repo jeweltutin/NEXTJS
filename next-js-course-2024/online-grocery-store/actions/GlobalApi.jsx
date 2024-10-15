@@ -113,7 +113,7 @@ const createOrder = (alldata, token) => axiosClient.post('/orders', alldata, {
     //console.log(resp.data.data)
 }).catch(error => console.error(error));
 
-const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$eq]="+userId+"&populate[orderItemList][populate][product][populate][images]=*", {
+const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$eq]="+userId+"&sort[0]=createdAt:desc&populate[orderItemList][populate][product][populate][images]=*", {
     headers: {
         Authorization: "Bearer " + token
     }
@@ -124,6 +124,7 @@ const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$
         totalAmount: item.totalAmount,
         paymentId: item.paymentId,
         orderItemList: item.orderItemList,
+        status: item.orderStatus,
         createdAt: item.createdAt
     }));
 
