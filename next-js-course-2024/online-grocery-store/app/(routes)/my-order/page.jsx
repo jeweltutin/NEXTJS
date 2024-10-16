@@ -7,6 +7,7 @@ import moment from "moment";
 import MyOrderItem from "@/components/MyOrderItem";
 import { Button } from "@/components/ui/button";
 import { ChevronsUpDown } from "lucide-react";
+import Link from "next/link";
 
 function MyOrder() {
     const router = useRouter();
@@ -71,13 +72,18 @@ function MyOrder() {
                                         {/* <div className="grid grid-cols-3 border p-2 bg-slate-100"> */}
                                         <h2 className="w-[45%]"><span className="font-bold mr-2">Order Date:</span> {moment(item?.createdAt).format("DD/MMM/yyyy")}</h2>
                                         <h3 className="w-[35%]"><span className="font-bold mr-2">Total Amount:</span> {item.totalAmount}</h3>
-                                        <h3 className="w-[35%] md:flex"><span className="font-bold">
-                                            {/* Status:</span> {item.status == "Completed" ? item.status : "N/A"}  */}
-                                            Status:</span> 
-                                            <p className={`font-medium pl-2 rounded-md ${item.status == "Completed" ? "text-green-600"  : item.status == "Canceled" ? "text-red-600" : item.status == "Processing" ? "text-yellow-600" : ""}`}>
-                                                { item.status } 
+                                        <h3 className="w-[35%] md:flex">
+                                            <span className="font-bold">
+                                                {/* Status:</span> {item.status == "Completed" ? item.status : "N/A"}  */}
+                                                Status:
+                                            </span>
+                                            <p className={`font-medium pl-2 rounded-md ${item.status == "Completed" ? "text-green-600" : item.status == "Canceled" ? "text-red-600" : item.status == "Processing" ? "text-yellow-600" : ""}`}>
+                                                {item.status}
                                             </p>
                                         </h3>
+                                        <div className="w-[30%] pt-[5px] hidden md:block">
+                                            <Link href={"/invoice/" + item.id} className="bg-slate-600 text-white rounded py-[3px] px-[8px]">Invoice Generate</Link>
+                                        </div>
                                         <Button variant="ghost" size="sm" className="w-9 p-0">
                                             <ChevronsUpDown className="h-4 w-4" />
                                             <span className="sr-only">Toggle</span>

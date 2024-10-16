@@ -40,7 +40,6 @@ function Invoice() {
                                     <path d="M5 26V13.16C5 8.65336 8.58172 5 13 5C17.4183 5 21 8.65336 21 13.16C21 17.6666 17.4183 21.32 13 21.32H12" className="stroke-blue-600 dark:stroke-white" stroke="currentColor" stroke-width="2" />
                                     <circle cx="13" cy="13.0214" r="5" fill="currentColor" className="fill-blue-600 dark:fill-white" />
                                 </svg>
-
                                 <h1 className="mt-2 text-lg md:text-xl font-semibold text-blue-600 dark:text-white">Preline Inc.</h1>
                             </div>
 

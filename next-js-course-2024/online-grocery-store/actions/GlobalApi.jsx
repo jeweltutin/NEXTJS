@@ -113,14 +113,14 @@ const createOrder = (alldata, token) => axiosClient.post('/orders', alldata, {
     //console.log(resp.data.data)
 }).catch(error => console.error(error));
 
-const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$eq]="+userId+"&sort[0]=createdAt:desc&populate[orderItemList][populate][product][populate][images]=*", {
+const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$eq]=" + userId + "&sort[0]=createdAt:desc&populate[orderItemList][populate][product][populate][images]=*", {
     headers: {
         Authorization: "Bearer " + token
     }
 }).then(resp => {
     const response = resp.data.data;
     const orderList = response.map(item => ({
-        id: item.id,
+        id: item.documentId,
         totalAmount: item.totalAmount,
         paymentId: item.paymentId,
         orderItemList: item.orderItemList,
@@ -129,6 +129,17 @@ const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$
     }));
 
     return orderList;
+})
+
+//const getSingleOrder = (orderId, token) => axiosClient.get("/orders?filters[documentId][$eq]=" + orderId, {
+const getSingleOrder = (orderId, token) => axiosClient.get("/orders?filters[documentId][$eq]=" + orderId + "&populate[orderItemList][populate][product][populate][images]=*", {
+    headers: {
+        Authorization: "Bearer " + token
+    }
+}).then(resp => {
+    const response = resp.data.data;
+
+    return response;
 })
 
 
@@ -147,7 +158,8 @@ export default {
     deleteCartItem,
     getCartItemsForOrder,
     createOrder,
-    getMyOrder
+    getMyOrder,
+    getSingleOrder
 }
 
 

@@ -63,11 +63,11 @@ function Checkout() {
     }
 
     const placeOrder = () => {
-
         const orderData = {
             data: {
                 paymentId: "pay00087",
                 userId: user.id,
+                subTotal: subTotal,
                 totalAmount: calculateTotalAmount(),
                 username: userName,
                 email: email,
@@ -82,8 +82,7 @@ function Checkout() {
                     }
                 ]     */      
                 orderItemList:  cartItemList 
-            }
-            
+            }            
         }
 
         //console.log(cartItemList);
