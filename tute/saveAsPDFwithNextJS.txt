@@ -1,0 +1,5 @@
+https://www.npmjs.com/package/html2pdf.js/v/0.9.0    // used in grocery-shopping project
+https://blog.stackademic.com/the-ultimate-guide-to-generating-pdfs-with-next-js-a-professionals-perspective-using-html2pdf-d97a5f84b69e   //followed the instruction
+
+https://www.geeksforgeeks.org/how-to-download-pdf-file-on-button-click-using-javascript/
+https://www.npmjs.com/package/react-to-print  // not tested

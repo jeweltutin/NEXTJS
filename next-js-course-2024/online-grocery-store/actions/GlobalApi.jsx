@@ -33,6 +33,10 @@ const getProductsByCategory = (category) => axiosClient.get('/products?filters[c
     return resp.data.data;
 })
 
+const getSingleProduct = (productSlug) => axiosClient.get("/products?filters[slug][$eq]=" + productSlug + "&populate=*").then(resp => {
+    return resp.data.data;
+})
+
 const testfunc = (username, email, phone) => {
     console.log(phone);
 }
@@ -149,6 +153,7 @@ export default {
     getSliders,
     getCategoryList,
     getAllProducts,
+    getSingleProduct,
     getProductsByCategory,
     registerUser,
     testfunc,
@@ -183,3 +188,10 @@ export default {
 
 // Select cart with products and images
 //http://localhost:1337/api/user-carts?[populate][products][populate][images]=*
+
+// get a product equalsto product-slug with image
+//http://localhost:1337/api/products?filters[slug][$eq]=red-carrot&[populate][images]=*
+
+
+// get a product equalsto product-slug with image and categories
+//http://localhost:1337/api/products?filters[slug][$eq]=red-carrot&populate=*

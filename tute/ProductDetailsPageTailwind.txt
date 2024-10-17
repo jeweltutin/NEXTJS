@@ -1,0 +1,8 @@
+Product details page
+Beautiful product detail page with
+-multiple images
+-color options
+-quantity selection
+-buy now and add to wishlist buttons
+
+https://tailwindflex.com/@dika99/product-details-page     // used in online-grocery-store project -nice
