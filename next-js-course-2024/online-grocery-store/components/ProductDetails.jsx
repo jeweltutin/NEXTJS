@@ -46,7 +46,7 @@ function ProductDetails({ theProduct }) {
 
     const AddingCart = () => {
         setLoading(true);
-         if (!token) {
+        if (!token) {
             router.push("/sign-in");
             setLoading(false);
             return;
@@ -71,7 +71,7 @@ function ProductDetails({ theProduct }) {
             console.log(e);
             toast("Error! while adding to cart");
             setLoading(false);
-        }) 
+        })
     }
 
     return (
@@ -147,9 +147,22 @@ function ProductDetails({ theProduct }) {
                         </div>
                     </div>
 
-                    <div className="mb-6">
+                    <div className="mb-6 flex gap-3">
                         <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">Quantity:</label>
                         <input type="number" onChange={(e) => setQuantity(e.target.value)} min="1" defaultValue="1" className="w-12 text-center rounded-md border-gray-300  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                        <p className="text-sm">
+                            {theProduct[0].stock > 0 ?
+                                <span className="text-green-600">
+                                    Available Stock: {theProduct[0].stock}
+                                </span> : theProduct[0].stock < 15 ?
+                                    <span className="text-yellow-500">
+                                        {"Limited Stock"}
+                                    </span> :
+                                    <span className="text-red-600">
+                                        {"Out of Stock"}
+                                    </span>
+                            }
+                        </p>
                     </div>
 
                     <div className="flex space-x-4 mb-6">
