@@ -7,7 +7,7 @@ import GlobalApi from '@/actions/GlobalApi';
 import { toast } from 'sonner';
 import { UpdateCartContext } from '@/app/context/UpdateCartContext';
 
-function ProductItemDetailPopup({ product }) {
+function ProductItemDetailPopup({ product, setOPenDialog }) {
     const token = sessionStorage.getItem("jwt");
     const user = JSON.parse(sessionStorage.getItem('user'));
 
@@ -33,15 +33,17 @@ function ProductItemDetailPopup({ product }) {
                 amount: (quantity * productPrice).toFixed(2),
                 products: product.id,
                 users_permissions_user: user.id,
-                userId: user.id
+                userId: user.id,
+                productId: product.id
             }
         }
         console.log(data);
-        GlobalApi.addToCart(data, token).then(resp => {
+        GlobalApi.addToCart(user.id, product.id, productPrice, data, token).then(resp => {
             console.log(resp);
             toast("Added to Cart");
             setUpdateCart(!updateCart);
             setLoading(false);
+            setOPenDialog(false);
         }, (e) => {
             console.log(e);
             toast("Error! while adding to cart");

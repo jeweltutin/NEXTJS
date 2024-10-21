@@ -53,11 +53,162 @@ const signIn = (email, password) => axiosClient.post('/auth/local', {
     password: password
 })
 
-const addToCart = (data, token) => axiosClient.post('/user-carts', data, {
+// Worked Add To Cart function
+/* const addToCart = (userId, data, token) => axiosClient.post('/user-carts', data, {
     headers: {
         Authorization: "Bearer " + token
     }
-})
+}) */
+
+    async function addToCart(userId, pId, productPrice, data, token) {
+        try {
+            const theItem = await axiosClient.get(`/user-carts?filters[userId][$eq]=${userId}&filters[productId][$eq]=${pId}`);
+    
+            if (theItem.data.data.length === 0) {
+                console.log("Not Exists");
+                await axiosClient.post('/user-carts', data, {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                });
+            } else {
+                console.log("Exists");
+                const checkItem = theItem.data.data;
+                const cartId = checkItem[0]?.documentId;
+    
+                if (cartId) {
+                    const existingQuantity = Number(checkItem[0].quantity);
+                    const newQuantity = Number(data.data.quantity);
+                    const totalQuantity = existingQuantity + newQuantity;
+    
+                    const productCurrentPrice = productPrice; // Ensure this is a number
+                    console.log("Product Current Price:", productCurrentPrice);
+    
+                    const totalAmount = productCurrentPrice * totalQuantity;
+                    console.log("Calculating Total Amount: ", productCurrentPrice, "*", totalQuantity, "=", totalAmount);
+    
+                    console.log("Existing Quantity:", existingQuantity);
+                    console.log("New Quantity to Add:", newQuantity);
+                    console.log("Total Quantity:", totalQuantity);
+                    console.log("Total Amount:", totalAmount);
+    
+                    // Update the cart with the new quantity and amount
+                    await axiosClient.put(`/user-carts/${cartId}`, { data: { amount: totalAmount, quantity: totalQuantity } }, {
+                        headers: {
+                            Authorization: "Bearer " + token
+                        }
+                    });
+                } else {
+                    console.log("Cart ID not found");
+                }
+            }
+        } catch (error) {
+            console.error("Error adding to cart:", error);
+        }
+    }
+    
+
+/* async function addToCart(userId, productId, data, token) {
+    // Fetch the user's cart and populate the products
+    const getCartItems = await axiosClient.get(`/user-carts?filters[userId][$eq]=${userId}&populate=products`);
+
+    // Assuming getCartItems.data.data is an array of carts
+    const cartItems = getCartItems.data.data;
+    //console.log(cartItems);
+
+    // Flag to check if the product exists
+    let productExists = false;
+
+    // Iterate over all carts
+    cartItems.forEach(cart => {
+        const productsInCart = cart.products;
+        //console.log(productsInCart);
+        console.log(cart.id);
+
+        // Check if the productId exists in the current cart's products
+        if (productsInCart.some(product => product.documentId === productId)) {
+            productExists = true;
+            //const cartId = 
+        }
+    });
+
+    if (productExists) {
+        console.log(`Product with ID ${productId} already exists in the cart.`);
+        // You can return or handle this case as needed
+        return;
+    } else {
+        console.log(`Product with ID ${productId} does not exist in any cart. Adding to cart.`);
+        // Here, you would add the product to the cart (implement that logic)
+        axiosClient.post('/user-carts', data, {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        })
+    }
+
+    if (cartItems.length === 0) {
+        console.log("No cart found for the user. Creating a new cart.");
+        // Here, you would create a new cart and add the product
+    }
+}
+ */
+
+
+/* async function addToCart(userId, productId, data, token) {
+    // Fetch the user's cart and populate the products
+    const getCartItems = await axiosClient.get(`/user-carts?filters[userId][$eq]=${userId}&populate=products`);
+
+    // Assuming getCartItems.data.data is an array of carts
+    const cartItems = getCartItems.data.data;
+
+    // Flag to check if the product exists
+    let productExists = false;
+
+    // Iterate over all carts
+    for (const cart of cartItems) {
+        const productsInCart = cart.products;
+
+        // Check if the productId exists in the current cart's products
+        const product = productsInCart.find(product => product.documentId === productId);
+        if (product) {
+            productExists = true;
+            // Update the quantity of the product
+            product.quantity += data.quantity; // Assuming `data.quantity` is the amount to add
+            console.log(`Updated quantity of product ID ${productId} to ${product.quantity}.`);
+
+            // Call the API to update the cart
+            await axiosClient.put(`/user-carts/${cart.id}`, { products: productsInCart }, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
+            return;
+        }
+    }
+
+    if (!productExists) {
+        console.log(`Product with ID ${productId} does not exist in any cart. Adding to cart.`);
+        
+        // If no cart found, create a new one
+        if (cartItems.length === 0) {
+            console.log("No cart found for the user. Creating a new cart.");
+            await axiosClient.post('/user-carts', data, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            })
+        } else {
+            // Add the product to the existing cart
+            const cartId = cartItems[0].id; // You might want to adjust which cart to add to
+            await axiosClient.put(`/user-carts/${cartId}`, { products: [...cartItems[0].products, { documentId: productId, quantity: data.quantity }] }, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
+        }
+    }
+} */
+
 
 /* const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]='+userId+'&populate=*',{
     headers: {
@@ -74,13 +225,13 @@ const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[use
 }).then(resp => {
     const data = resp.data.data;
     const cartItemsList = data.map((item, index) => ({
-        name: item.products[0].name,
+        name: item?.products[0]?.name,
         quantity: item.quantity,
         amount: item.amount,
-        image: item.products[0].images[0].url,
-        actualPrice: item.products[0].mrp,
+        image: item?.products[0]?.images[0]?.url,
+        actualPrice: item?.products[0]?.mrp,
         id: item.documentId,
-        product: item.products[0].id
+        product: item?.products[0]?.id
     }))
     return cartItemsList;
 })
@@ -195,3 +346,7 @@ export default {
 
 // get a product equalsto product-slug with image and categories
 //http://localhost:1337/api/products?filters[slug][$eq]=red-carrot&populate=*
+
+//const getCartItems = await axiosClient.get("/user-carts?filters[userId][$eq]="+userId+"&fields[0]=quantity&fields[1]=amount&populate[products][fields][0]=name&populate[products][fields][1]=mrp");
+//const getCartItems = await axiosClient.get("/user-carts?filters[userId][$eq]="+userId+"&populate[products][fields][0]=id");
+//const getCartItems = await axiosClient.get("/user-carts?filters[userId][$eq]="+userId+"&populate[products][filters][id][$eq]=45");

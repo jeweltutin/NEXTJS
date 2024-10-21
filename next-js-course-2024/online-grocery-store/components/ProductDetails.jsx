@@ -1,7 +1,12 @@
 "use client";
-import { useState } from "react";
+import GlobalApi from "@/actions/GlobalApi";
+import { UpdateCartContext } from "@/app/context/UpdateCartContext";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
+import { toast } from "sonner";
 
 function ProductDetails({ theProduct }) {
+    const router = useRouter();
     //const defaultImageUrl = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxfHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080";
     const defaultImageUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL + theProduct[0].images[0].url;
     const item1ImageUrl = "https://images.unsplash.com/photo-1505751171710-1f6d0ace5a85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMnx8aGVhZHBob25lfGVufDB8MHx8fDE3MjEzMDM2OTB8MA&ixlib=rb-4.0.3&q=80&w=1080";
@@ -11,7 +16,18 @@ function ProductDetails({ theProduct }) {
 
     const [showImage, setShowImage] = useState(defaultImageUrl);
 
-    console.log(theProduct);
+    const token = sessionStorage.getItem("jwt");
+    const user = JSON.parse(sessionStorage.getItem('user'));
+
+    const [loading, setLoading] = useState(false);
+    const [quantity, setQuantity] = useState(1);
+    const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
+
+    const [productPrice, setProductTotalPrice] = useState(
+        theProduct[0].sellingPrice ? theProduct[0].sellingPrice : theProduct[0].mrp
+    )
+
+    //console.log("The Product:", theProduct);
 
     function changeImage(src, whichImage) {
         //document.getElementById('mainImage').src = src;
@@ -28,8 +44,34 @@ function ProductDetails({ theProduct }) {
         }
     }
 
-    function addToCart(){
-        alert("Add To Cart");
+    const AddingCart = () => {
+        setLoading(true);
+         if (!token) {
+            router.push("/sign-in");
+            setLoading(false);
+            return;
+        }
+        const data = {
+            data: {
+                quantity: quantity,
+                amount: (quantity * productPrice),
+                products: theProduct[0].documentId,
+                users_permissions_user: user.id,
+                userId: user.id,
+                productId: theProduct[0].id
+            }
+        }
+        //console.log(data);
+        GlobalApi.addToCart(user.id, theProduct[0].id, productPrice, data, token).then(resp => {
+            //console.log(resp);
+            toast("Added to Cart");
+            setUpdateCart(!updateCart);
+            setLoading(false);
+        }, (e) => {
+            console.log(e);
+            toast("Error! while adding to cart");
+            setLoading(false);
+        }) 
     }
 
     return (
@@ -107,11 +149,11 @@ function ProductDetails({ theProduct }) {
 
                     <div className="mb-6">
                         <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">Quantity:</label>
-                        <input type="number" id="quantity" name="quantity" min="1" defaultValue="1" className="w-12 text-center rounded-md border-gray-300  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                        <input type="number" onChange={(e) => setQuantity(e.target.value)} min="1" defaultValue="1" className="w-12 text-center rounded-md border-gray-300  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
                     </div>
 
                     <div className="flex space-x-4 mb-6">
-                        <button onClick={() => addToCart()} className="bg-indigo-600 flex gap-2 items-center text-white px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        <button onClick={() => AddingCart()} className="bg-indigo-600 flex gap-2 items-center text-white px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 strokeWidth="1.5" stroke="currentColor" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round"

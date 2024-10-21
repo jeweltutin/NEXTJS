@@ -32,7 +32,7 @@ function ProductItem({ product }) {
                     </div>
                 </div>
             </Link>
-            <Button onClick={() => setOPenDialog(true)} variant="outline" className="text-primary hover:text-white hover:bg-primary">Add to cart</  Button>
+            <Button onClick={() => setOPenDialog(true)} variant="outline" className="text-primary hover:text-white hover:bg-primary">View</  Button>
             <Dialog open={openDialog} onOpenChange={() => {
                 setOPenDialog(false)
             }}>
@@ -44,7 +44,7 @@ function ProductItem({ product }) {
                     <DialogHeader>
                         <DialogTitle className="hidden">Are you absolutely sure?</DialogTitle>
                         <DialogDescription asChild>
-                            <ProductItemDetailPopup product={product} />
+                            <ProductItemDetailPopup product={product} setOPenDialog={setOPenDialog} />
                         </DialogDescription>
                     </DialogHeader>
                 </DialogContent>
