@@ -8,6 +8,7 @@ import PopUpModal from "./PopUpModal";
 
 function ProductDetails({ theProduct }) {
     const router = useRouter();
+    const [isOpen, setIsOpen] = useState(false);
     //const defaultImageUrl = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxfHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080";
     const defaultImageUrl = process.env.NEXT_PUBLIC_BACKEND_BASE_URL + theProduct[0].images[0].url;
     const item1ImageUrl = "https://images.unsplash.com/photo-1505751171710-1f6d0ace5a85?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxMnx8aGVhZHBob25lfGVufDB8MHx8fDE3MjEzMDM2OTB8MA&ixlib=rb-4.0.3&q=80&w=1080";
@@ -30,6 +31,13 @@ function ProductDetails({ theProduct }) {
 
     //console.log("The Product:", theProduct);
 
+    let [headingText, setHeadingText] = useState("");
+    let [popUpImage, setPopUpImage] = useState("");
+
+    let num = 314340;
+    console.log(new Intl.NumberFormat().format(num));
+    num = new Intl.NumberFormat('en-IN').format(num);
+
     function changeImage(src, whichImage) {
         //document.getElementById('mainImage').src = src;
         if (whichImage == 1) {
@@ -51,6 +59,24 @@ function ProductDetails({ theProduct }) {
             router.push("/sign-in");
             setLoading(false);
             return;
+        }
+        if (theProduct[0].stock <= 0) {
+            // No stock available
+            setHeadingText("This product is temporarily out of stock.");
+            setPopUpImage("/images/out-of-stock.jpg");
+            setIsOpen(true);
+            return false;
+        } else if (theProduct[0].stock < quantity) {
+            // Insufficient stock
+            setHeadingText(`Only ${theProduct[0].stock} items left in stock!`);
+            setPopUpImage("/images/insufficient.jpg");
+            setIsOpen(true);
+            return false;
+        } else {
+            // Enough stock available
+            setPopUpImage("/images/addtocartIcon.png");
+            setHeadingText("Product added to cart successfully!");
+            setIsOpen(true);
         }
         const data = {
             data: {
@@ -104,6 +130,11 @@ function ProductDetails({ theProduct }) {
                 <div className="w-full md:w-1/2 px-4">
                     <h2 className="text-3xl font-bold mb-2">{theProduct[0].name}</h2>
                     <p className="text-gray-600 mb-4">SKU: WH1000XM4</p>
+                    <p className="text-gray-600 mb-4">
+                        {
+                            num
+                        }
+                    </p>
                     <div className="mb-4">
                         <span className="text-2xl font-bold mr-2">Tk {theProduct[0].sellingPrice ? theProduct[0].sellingPrice : theProduct[0].mrp}</span>
                         <span className="text-gray-500 line-through">{theProduct[0].sellingPrice ? "Tk " + theProduct[0].mrp : ""}</span>
@@ -152,20 +183,18 @@ function ProductDetails({ theProduct }) {
                         <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-1">Quantity:</label>
                         <input type="number" onChange={(e) => setQuantity(e.target.value)} min="1" defaultValue="1" className="w-12 text-center rounded-md border-gray-300  shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
                         <p className="text-sm">
-                            {theProduct[0].stock > 0 ?
+                            {theProduct[0].stock <= 0 ? (
+                                <span className="text-red-600">{"Out of Stock"}</span>
+                            ) : theProduct[0].stock < 15 ? (
+                                <span className="text-yellow-500">{"Limited Stock"}</span>
+                            ) : (
                                 <span className="text-green-600">
                                     Available Stock: {theProduct[0].stock}
-                                </span> : theProduct[0].stock < 15 ?
-                                    <span className="text-yellow-500">
-                                        {"Limited Stock"}
-                                    </span> :
-                                    <span className="text-red-600">
-                                        {"Out of Stock"}
-                                    </span>
-                            }
+                                </span>
+                            )}
                         </p>
                         <div>
-                            <PopUpModal />
+                            <PopUpModal setIsOpen={setIsOpen} isOpen={isOpen} heading={headingText} popUpImage={popUpImage} />
                         </div>
                     </div>
 
