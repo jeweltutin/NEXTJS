@@ -4,6 +4,7 @@ import { UpdateCartContext } from "@/app/context/UpdateCartContext";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { toast } from "sonner";
+import PopUpModal from "./PopUpModal";
 
 function ProductDetails({ theProduct }) {
     const router = useRouter();
@@ -163,6 +164,9 @@ function ProductDetails({ theProduct }) {
                                     </span>
                             }
                         </p>
+                        <div>
+                            <PopUpModal />
+                        </div>
                     </div>
 
                     <div className="flex space-x-4 mb-6">
