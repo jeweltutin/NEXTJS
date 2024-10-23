@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-export default function ModalComponent({ isOpen, setIsOpen, heading, popUpImage }) {
+export default function PopUpModal({ isOpen, setIsOpen, heading, popUpImage }) {
     const toggleModal = () => {
         setIsOpen(!isOpen);
     };

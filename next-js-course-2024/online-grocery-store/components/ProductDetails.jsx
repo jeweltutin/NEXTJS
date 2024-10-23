@@ -130,11 +130,7 @@ function ProductDetails({ theProduct }) {
                 <div className="w-full md:w-1/2 px-4">
                     <h2 className="text-3xl font-bold mb-2">{theProduct[0].name}</h2>
                     <p className="text-gray-600 mb-4">SKU: WH1000XM4</p>
-                    <p className="text-gray-600 mb-4">
-                        {
-                            num
-                        }
-                    </p>
+                    {/* <p className="text-gray-600 mb-4">{ num }</p> */}
                     <div className="mb-4">
                         <span className="text-2xl font-bold mr-2">Tk {theProduct[0].sellingPrice ? theProduct[0].sellingPrice : theProduct[0].mrp}</span>
                         <span className="text-gray-500 line-through">{theProduct[0].sellingPrice ? "Tk " + theProduct[0].mrp : ""}</span>

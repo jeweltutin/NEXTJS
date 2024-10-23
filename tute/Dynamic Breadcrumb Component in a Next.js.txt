@@ -1,0 +1,2 @@
+// worked implemented in grocery shop project
+https://medium.com/@kcabading/creating-a-breadcrumb-component-in-a-next-js-app-router-a0ea24cdb91a    
