@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function PopUpModal({ isOpen, setIsOpen, heading, popUpImage }) {
@@ -32,15 +33,16 @@ export default function PopUpModal({ isOpen, setIsOpen, heading, popUpImage }) {
                                 </svg> */}
 
                                 <div className="flex items-center justify-center py-5">
-
-                                    <Image src={popUpImage} width={200} height={115} alt='Out of Stock' />
+                                    <Image src={popUpImage} width={110} height={95} alt='Out of Stock' />
                                 </div>
                                 <h3 className="mb-5 text-lg font-normal text-gray-500">{heading ? heading : "Are you sure you want to delete this product?"}</h3>
-                                <button type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5">
-                                    Ok
-                                </button>
+                                <Link href={"/"}>
+                                    <button type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5">
+                                        Go to Cart
+                                    </button>
+                                </Link>
                                 <button onClick={closeModal} type="button" className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700">
-                                    No, cancel
+                                    Continue Shopping
                                 </button>
                             </div>
                         </div>

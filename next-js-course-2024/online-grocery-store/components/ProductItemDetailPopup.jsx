@@ -8,6 +8,21 @@ import { toast } from 'sonner';
 import { UpdateCartContext } from '@/app/context/UpdateCartContext';
 import PopUpModal from './PopUpModal';
 
+/* import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"; */
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+
+
 function ProductItemDetailPopup({ product, setOPenDialog }) {
     const token = sessionStorage.getItem("jwt");
     const user = JSON.parse(sessionStorage.getItem('user'));
@@ -21,9 +36,9 @@ function ProductItemDetailPopup({ product, setOPenDialog }) {
 
     const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
 
-    const [isOpen, setIsOpen] = useState(false);
-    let [headingText, setHeadingText] = useState("");
-    let [popUpImage, setPopUpImage] = useState("");
+    //const [isOpen, setIsOpen] = useState(false);
+    //let [headingText, setHeadingText] = useState("");
+    //let [popUpImage, setPopUpImage] = useState("");
 
     const AddingCart = () => {
         setLoading(true);
@@ -34,32 +49,39 @@ function ProductItemDetailPopup({ product, setOPenDialog }) {
         }
         if (product.stock <= 0) {
             // No stock available
-            setHeadingText("This product is temporarily out of stock.");
-            setPopUpImage("/images/out-of-stock.jpg");
+            //setHeadingText("This product is temporarily out of stock.");
+            //setPopUpImage("/images/out-of-stock.jpg");
             setLoading(false);
-            setIsOpen(true);
-            setTimeout(() => {
+            //setIsOpen(true);
+            /* setTimeout(() => {
                 setOPenDialog(false);
-            }, 3000);                     
+            }, 3000);  */
+
+            alert("This product is temporarily out of stock.");
+            setOPenDialog(false);
             return false;
         } else if (product.stock < quantity) {
             // Insufficient stock
-            setHeadingText(`Only ${product.stock} items left in stock!`);
+            /* setHeadingText(`Only ${product.stock} items left in stock!`);
             setPopUpImage("/images/insufficient.jpg");
-            setLoading(false);
             setIsOpen(true);
             setTimeout(() => {
                 setOPenDialog(false);
-            }, 3000); 
+            }, 3000);  */
+            setLoading(false);
+            alert(`Only ${product.stock} items left in stock!`);
+            setOPenDialog(false);
             return false;
         } else {
             // Enough stock available
-            setPopUpImage("/images/addtocartIcon.png");
+            /* setPopUpImage("/images/addtocartIcon.png");
             setHeadingText("Product added to cart successfully!");
             setIsOpen(true);
             setTimeout(() => {
                 setOPenDialog(false);
-            }, 3000); 
+            }, 3000); */
+            //alert("Added to cart successfully!");
+            toast("Added to Cart");
         }
         const data = {
             data: {
@@ -74,11 +96,11 @@ function ProductItemDetailPopup({ product, setOPenDialog }) {
         console.log(data);
         GlobalApi.addToCart(user.id, product.id, productPrice, data, token).then(resp => {
             console.log(resp);
-            toast("Added to Cart");
+            //toast("Added to Cart");
             setUpdateCart(!updateCart);
             setLoading(false);
-            //setOPenDialog(false);
-            setIsOpen(true);
+            setOPenDialog(false);
+            //setIsOpen(true);
         }, (e) => {
             console.log(e);
             toast("Error! while adding to cart");
@@ -116,9 +138,9 @@ function ProductItemDetailPopup({ product, setOPenDialog }) {
                     <h3><span className="font-bold">Category: </span>{product.categories[0].name}</h3>
                 </div>
             </div>
-            <div>
+            {/* <div>
                 <PopUpModal setIsOpen={setIsOpen} isOpen={isOpen} heading={headingText} popUpImage={popUpImage} />
-            </div>
+            </div> */}
         </div>
     )
 }

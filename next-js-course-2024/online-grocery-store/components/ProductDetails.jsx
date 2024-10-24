@@ -75,7 +75,7 @@ function ProductDetails({ theProduct }) {
         } else {
             // Enough stock available
             setPopUpImage("/images/addtocartIcon.png");
-            setHeadingText("Product added to cart successfully!");
+            setHeadingText(`${theProduct[0].name } added to cart successfully!`);
             setIsOpen(true);
         }
         const data = {
