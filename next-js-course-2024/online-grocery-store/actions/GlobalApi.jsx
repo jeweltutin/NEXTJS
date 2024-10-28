@@ -33,6 +33,7 @@ const getProductsByCategory = (category) => axiosClient.get('/products?filters[c
     return resp.data.data;
 })
 
+//http://localhost:1337/api/products?populate=colors&populate=images&populate=categories
 const getSingleProduct = (productSlug) => axiosClient.get("/products?filters[slug][$eq]=" + productSlug + "&populate=*").then(resp => {
     return resp.data.data;
 })

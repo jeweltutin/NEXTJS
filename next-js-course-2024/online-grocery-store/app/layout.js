@@ -42,17 +42,19 @@ export default function RootLayout({ children }) {
       <body className={outfit.className}>
         <UpdateCartContext.Provider value={{ updateCart, setUpdateCart }}>
           {showHeader && <Header />}
-          <NextBreadcrumb
-            homeElement={'Home'}
-            separator={<span> / </span>}
-            activeClasses='text-amber-500'
-            // containerClasses='flex py-5 bg-gradient-to-r from-purple-600 to-blue-600'
-            containerClasses='flex p-4 bg-white'
-            listClasses='hover:underline mx-2'
-            capitalizeLinks
-          />
-          {children}
-          {showHeader && <Footer />}
+          <div className="mt-24">
+            <NextBreadcrumb
+              homeElement={'Home'}
+              separator={<span> / </span>}
+              activeClasses='text-amber-500'
+              // containerClasses='flex py-5 bg-gradient-to-r from-purple-600 to-blue-600'
+              containerClasses='flex p-2 bg-white'
+              listClasses='hover:underline mx-2'
+              capitalizeLinks
+            />
+            {children}
+            {showHeader && <Footer />}
+          </div>
           <Toaster />
         </UpdateCartContext.Provider>
       </body>

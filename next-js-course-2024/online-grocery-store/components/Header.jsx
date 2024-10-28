@@ -82,7 +82,7 @@ function Header() {
     }, [cartItemList]);
 
     return (
-        <div className="flex p-5 shadow-md justify-between">
+        <div className="flex p-5 shadow-md justify-between fixed top-0 left-0 right-0 bg-white z-10">
             <div className="flex items-center gap-8">
                 <Link href={"/"}>
                     <Image src="/images/logo.png" alt="logo" width={150} height={150} />

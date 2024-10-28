@@ -20,7 +20,7 @@ const NextBreadcrumb = ({ homeElement, separator, containerClasses, listClasses,
     //console.log("Path Name", pathNames);
 
     return (
-        <div>
+        <div className="container mx-auto pl-10 mt-3">
             {pathNames.length > 0 ?
                 <ul className={containerClasses}>
                     <li className={listClasses}>
