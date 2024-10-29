@@ -103,6 +103,7 @@ function ProductDetails({ theProduct }) {
             data: {
                 quantity: quantity,
                 amount: (quantity * productPrice),
+                color: selectedColor,
                 products: theProduct[0].documentId,
                 users_permissions_user: user.id,
                 userId: user.id,

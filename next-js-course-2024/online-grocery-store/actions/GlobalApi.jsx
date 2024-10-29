@@ -61,53 +61,53 @@ const signIn = (email, password) => axiosClient.post('/auth/local', {
     }
 }) */
 
-    async function addToCart(userId, pId, productPrice, data, token) {
-        try {
-            const theItem = await axiosClient.get(`/user-carts?filters[userId][$eq]=${userId}&filters[productId][$eq]=${pId}`);
-    
-            if (theItem.data.data.length === 0) {
-                console.log("Not Exists");
-                await axiosClient.post('/user-carts', data, {
+async function addToCart(userId, pId, productPrice, data, token) {
+    try {
+        const theItem = await axiosClient.get(`/user-carts?filters[userId][$eq]=${userId}&filters[productId][$eq]=${pId}`);
+
+        if (theItem.data.data.length === 0) {
+            console.log("Not Exists");
+            await axiosClient.post('/user-carts', data, {
+                headers: {
+                    Authorization: "Bearer " + token
+                }
+            });
+        } else {
+            console.log("Exists");
+            const checkItem = theItem.data.data;
+            const cartId = checkItem[0]?.documentId;
+
+            if (cartId) {
+                const existingQuantity = Number(checkItem[0].quantity);
+                const newQuantity = Number(data.data.quantity);
+                const totalQuantity = existingQuantity + newQuantity;
+
+                const productCurrentPrice = productPrice; // Ensure this is a number
+                console.log("Product Current Price:", productCurrentPrice);
+
+                const totalAmount = productCurrentPrice * totalQuantity;
+                console.log("Calculating Total Amount: ", productCurrentPrice, "*", totalQuantity, "=", totalAmount);
+
+                console.log("Existing Quantity:", existingQuantity);
+                console.log("New Quantity to Add:", newQuantity);
+                console.log("Total Quantity:", totalQuantity);
+                console.log("Total Amount:", totalAmount);
+
+                // Update the cart with the new quantity and amount
+                await axiosClient.put(`/user-carts/${cartId}`, { data: { amount: totalAmount, quantity: totalQuantity } }, {
                     headers: {
                         Authorization: "Bearer " + token
                     }
                 });
             } else {
-                console.log("Exists");
-                const checkItem = theItem.data.data;
-                const cartId = checkItem[0]?.documentId;
-    
-                if (cartId) {
-                    const existingQuantity = Number(checkItem[0].quantity);
-                    const newQuantity = Number(data.data.quantity);
-                    const totalQuantity = existingQuantity + newQuantity;
-    
-                    const productCurrentPrice = productPrice; // Ensure this is a number
-                    console.log("Product Current Price:", productCurrentPrice);
-    
-                    const totalAmount = productCurrentPrice * totalQuantity;
-                    console.log("Calculating Total Amount: ", productCurrentPrice, "*", totalQuantity, "=", totalAmount);
-    
-                    console.log("Existing Quantity:", existingQuantity);
-                    console.log("New Quantity to Add:", newQuantity);
-                    console.log("Total Quantity:", totalQuantity);
-                    console.log("Total Amount:", totalAmount);
-    
-                    // Update the cart with the new quantity and amount
-                    await axiosClient.put(`/user-carts/${cartId}`, { data: { amount: totalAmount, quantity: totalQuantity } }, {
-                        headers: {
-                            Authorization: "Bearer " + token
-                        }
-                    });
-                } else {
-                    console.log("Cart ID not found");
-                }
+                console.log("Cart ID not found");
             }
-        } catch (error) {
-            console.error("Error adding to cart:", error);
         }
+    } catch (error) {
+        console.error("Error adding to cart:", error);
     }
-    
+}
+
 
 /* const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]='+userId+'&populate=*',{
     headers: {
@@ -117,7 +117,8 @@ const signIn = (email, password) => axiosClient.post('/auth/local', {
     return resp.data.data;
 }) */
 
-const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]=' + userId + '&[populate][products][populate][images]=*', {
+//const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]=' + userId + '&populate[0]=products&populate[1]=products.colors&populate[2]=products.images', {
+const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]=' + userId + '&populate=products&populate=products.images', {
     headers: {
         Authorization: "Bearer " + token
     }
@@ -126,6 +127,8 @@ const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[use
     const cartItemsList = data.map((item, index) => ({
         name: item?.products[0]?.name,
         quantity: item.quantity,
+        //color: item.products[0].colors[0]?.name,
+        color: item.color,
         amount: item.amount,
         image: item?.products[0]?.images[0]?.url,
         actualPrice: item?.products[0]?.mrp,
@@ -135,6 +138,8 @@ const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[use
     return cartItemsList;
 })
 
+
+//const getCartItemsForOrder = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]=' + userId + '&populate=products&populate=products.colors', {
 const getCartItemsForOrder = (userId, token) => axiosClient.get('/user-carts?filters[userId][$eq]=' + userId + '&[populate][products]=*', {
     headers: {
         Authorization: "Bearer " + token
@@ -142,7 +147,10 @@ const getCartItemsForOrder = (userId, token) => axiosClient.get('/user-carts?fil
 }).then(resp => {
     const data = resp.data.data;
     const cartItemsList = data.map((item, index) => ({
+        name: item.products[0].name, 
         quantity: item.quantity,
+        //color: item.products[0].colors[0]?.name,
+        color: item.color,
         amount: item.amount,
         product: item.products[0].id,
         id: item.documentId
@@ -186,7 +194,7 @@ const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$
 })
 
 //const getSingleOrder = (orderId, token) => axiosClient.get("/orders?filters[documentId][$eq]=" + orderId, {
-const getSingleOrder = (orderId, token) => axiosClient.get("/orders?filters[documentId][$eq]=" + orderId + "&populate[orderItemList][populate][product][populate][images]=*", {
+    const getSingleOrder = (orderId, token) => axiosClient.get("/orders?filters[documentId][$eq]=" + orderId + "&populate[orderItemList][populate][product][populate][images]=*", {
     headers: {
         Authorization: "Bearer " + token
     }
@@ -238,6 +246,10 @@ export default {
 
 // Select cart with products and images
 //http://localhost:1337/api/user-carts?[populate][products][populate][images]=*
+// Select cart with products , images and color
+//http://localhost:1337/api/user-carts?populate[0]=products&populate[1]=products.colors&populate[2]=products.images        // way 01
+//http://localhost:1337/api/user-carts?[populate][products][populate][colors]=*&[populate][products][populate][images]=*   // way 02
+
 
 // get a product equalsto product-slug with image
 //http://localhost:1337/api/products?filters[slug][$eq]=red-carrot&[populate][images]=*

@@ -19,8 +19,8 @@ function Invoice() {
         const jwtToken = sessionStorage.getItem("jwt");
         const getUser = JSON.parse(sessionStorage.getItem("user"));
 
-        console.log("JWT Token:", jwtToken);
-        console.log("User:", getUser);
+        //console.log("JWT Token:", jwtToken);
+        //console.log("User:", getUser);
 
         if (jwtToken) {
             setToken(jwtToken);
@@ -34,9 +34,9 @@ function Invoice() {
         if (token && user) {
             try {
                 const getOrder = await GlobalApi.getSingleOrder(orderId, token);
-                //console.log("Order Address: ", getOrder[0].address);
+                console.log("Order Address: ", getOrder[0].address);
                 setOrderItem(getOrder[0]); // Set orderItem to the first item of the array
-                console.log("Order: ", getOrder);
+                //console.log("Order: ", getOrder);
             } catch (error) {
                 console.log(error)
             }
@@ -144,8 +144,9 @@ function Invoice() {
 
                         <div className="mt-6">
                             <div className="border border-gray-200 p-4 rounded-lg space-y-4 dark:border-neutral-700">
-                                <div className="hidden sm:grid sm:grid-cols-5">
+                                <div className="hidden sm:grid sm:grid-cols-6">
                                     <div className="sm:col-span-2 text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Item</div>
+                                    <div className="text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Color</div>
                                     <div className="text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Qty</div>
                                     <div className="text-start text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Rate</div>
                                     <div className="text-end text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Amount</div>
@@ -154,12 +155,16 @@ function Invoice() {
                                 <div className="hidden sm:block border-b border-gray-200 dark:border-neutral-700"></div>
 
 
-                                {orderItem?.orderItemList.map((productItem, idx) => (
+                                {orderItem?.orderItemList?.map((productItem, idx) => (
                                     <div key={idx}>
-                                        <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                                        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
                                             <div className="col-span-full sm:col-span-2">
                                                 <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Item</h5>
                                                 <p className="font-medium text-gray-800 dark:text-neutral-200">{productItem.product.name}</p>
+                                            </div>
+                                            <div>
+                                                <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Color</h5>
+                                                <p className="text-gray-800 dark:text-neutral-200">{productItem.color} </p>
                                             </div>
                                             <div>
                                                 <h5 className="sm:hidden text-xs font-medium text-gray-500 uppercase dark:text-neutral-500">Qty</h5>

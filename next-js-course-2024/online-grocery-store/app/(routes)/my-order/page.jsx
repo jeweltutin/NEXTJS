@@ -66,8 +66,7 @@ function MyOrder() {
                     <div>
                         {orderList.map((item, index) => (
                             <Collapsible key={index}>
-                                <CollapsibleTrigger>
-
+                                <CollapsibleTrigger asChild>
                                     <div className="flex justify-evenly gap-3 md:gap-20 border p-2 mt-4 bg-slate-100 md:w-[800px] xl:w-[1024px]">
                                         {/* <div className="grid grid-cols-3 border p-2 bg-slate-100"> */}
                                         <h2 className="w-[45%]"><span className="font-bold mr-2">Order Date:</span> {moment(item?.createdAt).format("DD/MMM/yyyy")}</h2>

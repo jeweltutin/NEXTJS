@@ -54,6 +54,7 @@ function Checkout() {
     const getCartItems = async () => {
         if (user && token) {
             const cartList = await GlobalApi.getCartItemsForOrder(user.id, token);
+            //console.log("Order pg Items:", cartList);
             setTotalCartItem(cartList?.length);
             setCartItemList(cartList);
         }
@@ -97,10 +98,10 @@ function Checkout() {
             alert("Sorry Order can't be processed!");
             return false;
         }else{
-            alert(subTotal);
+            //alert(subTotal);
         }
 
-        alert(shippingCharge);
+        //alert(shippingCharge);
 
         const orderData = {
             data: {
