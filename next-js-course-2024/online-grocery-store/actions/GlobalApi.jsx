@@ -19,6 +19,12 @@ async function getCategoryList() {
     return resp;
 }
 
+async function singleCategory(categorySlug) {
+    const theCategory = await axiosClient.get("/categories?filters[slug][$eq]=" + categorySlug + "&populate=banner");
+    const respcat = theCategory.data.data;
+    return respcat;
+}
+
 const getAllProducts = () => {
     return (
         axiosClient.get('/products?populate=*').then(resp => {
@@ -210,6 +216,7 @@ export default {
     getCategories,
     getSliders,
     getCategoryList,
+    singleCategory,
     getAllProducts,
     getSingleProduct,
     getProductsByCategory,

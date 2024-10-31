@@ -9,7 +9,7 @@ function CategorySection({ categoryList }) {
             </h2>
             <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-5 mt-2">
                 {categoryList.map((category, index) => (
-                    <Link href={'/category/'+category.name} className="flex flex-col gap-2 items-center bg-green-50 p-3 rounded-lg group cursor-pointer  hover:bg-green-600">
+                    <Link href={'/category/'+category.slug} className="flex flex-col gap-2 items-center bg-green-50 p-3 rounded-lg group cursor-pointer  hover:bg-green-600">
                         <Image src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + category?.icon[0]?.url} width={50} height={50} alt="icon" className="group-hover:scale-125 transition-all ease-in-out" />
                         <h2 className="text-green-800  group-hover:text-white">
                             {category.name}
