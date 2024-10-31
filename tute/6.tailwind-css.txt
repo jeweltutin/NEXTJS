@@ -4,6 +4,12 @@ https://www.youtube.com/watch?v=X7XbjwD6fVY&list=PLHiZ4m8vCp9P23SqlHL0QAqiwS_oCo
 //Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.
 https://ui.shadcn.com/docs
 
+// Tailwind ready code -used in groceryShop app
+https://tailblocks.cc/
+
+//Tailwind CSS Modal - Flowbite ready and used in groceryShop app
+https://flowbite.com/docs/components/modal/
+
 //Top quality open-source UI Kit
 https://tw-elements.com/docs/standard/navigation/footer/
 
