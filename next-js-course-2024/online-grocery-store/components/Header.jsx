@@ -96,6 +96,14 @@ function Header() {
                 </div>
             </div>
             <div className="flex gap-5 items-center">
+                <div className="hidden xl:block">
+                    <nav className="md:ml-auto flex flex-wrap items-end text-base justify-end">
+                        <Link href={"/"} className="mr-5 hover:text-gray-900">Home</Link>
+                        <Link href={"/about"} className="mr-5 hover:text-gray-900">About</Link>
+                        <Link href={"/"} className="mr-5 hover:text-gray-900">Campaign</Link>
+                        <Link href={"/"} className="mr-5 hover:text-gray-900">Outlets</Link>
+                    </nav>
+                </div>
                 <Sheet>
                     <SheetTrigger>
                         <h4 className="flex gap-2 items-center">

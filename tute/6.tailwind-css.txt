@@ -7,6 +7,9 @@ https://ui.shadcn.com/docs
 // Tailwind ready code -used in groceryShop app
 https://tailblocks.cc/
 
+// Tailwind profile page template free
+https://tailwindflex.com/tag/profile
+
 //Tailwind CSS Modal - Flowbite ready and used in groceryShop app
 https://flowbite.com/docs/components/modal/
 
