@@ -200,7 +200,7 @@ const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$
 })
 
 //const getSingleOrder = (orderId, token) => axiosClient.get("/orders?filters[documentId][$eq]=" + orderId, {
-    const getSingleOrder = (orderId, token) => axiosClient.get("/orders?filters[documentId][$eq]=" + orderId + "&populate[orderItemList][populate][product][populate][images]=*", {
+const getSingleOrder = (orderId, token) => axiosClient.get("/orders?filters[documentId][$eq]=" + orderId + "&populate[orderItemList][populate][product][populate][images]=*", {
     headers: {
         Authorization: "Bearer " + token
     }

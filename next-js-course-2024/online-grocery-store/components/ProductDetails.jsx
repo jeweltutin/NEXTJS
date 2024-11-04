@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import PopUpModal from "./PopUpModal";
-import { CarIcon, CircleOffIcon, DollarSignIcon, MapPin } from "lucide-react";
+import { CarIcon, CircleOffIcon, DollarSignIcon, MapPin, WalletCards } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 function ProductDetails({ theProduct }) {
     console.log(theProduct);
@@ -123,6 +124,13 @@ function ProductDetails({ theProduct }) {
         })
     }
 
+    function buyNow() {
+        alert("Buy Now");
+        // Navigate to checkout with only the productId
+        const productSlug = theProduct[0].slug;
+        router.push(`/checkout?productSlug=${productSlug}`);
+    }
+
     return (
         <div className="container mx-auto grid grid-cols-1 lg:grid-cols-4 gap-3 p-4">
             <div className="col-span-3 mx-auto px-4 py-8 bg-white">
@@ -152,7 +160,21 @@ function ProductDetails({ theProduct }) {
 
                     <div className="w-full md:w-1/2 px-4">
                         <h2 className="text-3xl font-bold mb-2">{theProduct[0].name}</h2>
-                        <p className="text-gray-600 mb-4">SKU: WH1000XM4</p>
+                        <div className="flex justify-between">
+                            <p className="text-gray-600 mb-4">SKU: WH1000XM4</p>
+                            <div className="">
+                                <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#34a52c">
+                                    <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+                                    <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
+                                    <g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#1a8922" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /> </g>
+                                </svg>
+                                {/* <svg width="25px" height="25px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                                    <g id="SVGRepo_iconCarrier"> <path d="M4.03553 1C1.80677 1 0 2.80677 0 5.03553C0 6.10582 0.42517 7.13228 1.18198 7.88909L7.14645 13.8536C7.34171 14.0488 7.65829 14.0488 7.85355 13.8536L13.818 7.88909C14.5748 7.13228 15 6.10582 15 5.03553C15 2.80677 13.1932 1 10.9645 1C9.89418 1 8.86772 1.42517 8.11091 2.18198L7.5 2.79289L6.88909 2.18198C6.13228 1.42517 5.10582 1 4.03553 1Z" fill="#199a22" /> </g>
+                                </svg> */}
+                            </div>
+                        </div>
                         {/* <p className="text-gray-600 mb-4">{ num }</p> */}
                         <div className="mb-4">
                             <span className="text-2xl font-bold mr-2">Tk {theProduct[0].sellingPrice ? theProduct[0].sellingPrice : theProduct[0].mrp}</span>
@@ -186,6 +208,7 @@ function ProductDetails({ theProduct }) {
                             </svg>
                             <span className="ml-2 text-gray-600">4.5 (120 reviews)</span>
                         </div>
+
                         <p className="text-gray-700 mb-6">
                             {theProduct[0].description}
                         </p>
@@ -258,15 +281,20 @@ function ProductDetails({ theProduct }) {
                                 </svg>
                                 Add to Cart
                             </button>
-                            <button
-                                className="bg-gray-200 flex gap-2 items-center  text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            <button onClick={() => buyNow()} className="bg-gray-200 flex gap-2 items-center  text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
+                                {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     strokeWidth="1.5" stroke="currentColor" className="size-6">
                                     <path strokeLinecap="round" strokeLinejoin="round"
                                         d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-                                </svg>
-                                Wishlist
+                                </svg> */}
+                                <WalletCards />Buy Now
                             </button>
+                            {/* <Link href={{
+                                pathname: '/about',
+                                query: { course: ["JavaScript", "Java", "Data Strucutre"] },
+                            }}>
+                                About Page
+                            </Link> */}
                         </div>
 
                         <div>
@@ -320,4 +348,4 @@ function ProductDetails({ theProduct }) {
     )
 }
 
-export default ProductDetails
+export default ProductDetails;

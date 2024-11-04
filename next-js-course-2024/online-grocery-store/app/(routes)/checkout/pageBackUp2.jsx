@@ -1,30 +1,29 @@
-"use client";
+"use client"
 import GlobalApi from "@/actions/GlobalApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { ArrowBigRight, BikeIcon, HomeIcon, WalletCards } from "lucide-react";
+import { ArrowBigRight, BikeIcon, HomeIcon, Wallet, WalletCards } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "sonner";
+
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Textarea } from "@/components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea"
+
 import Link from "next/link";
-import Image from "next/image";
+
+
 
 function Checkout() {
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const productSlug = searchParams.get("productSlug");
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
 
     const [totalCartItem, setTotalCartItem] = useState(0);
     const [cartItemList, setCartItemList] = useState([]);
-    const [product, setProduct] = useState(null); // Store individual product data
     const [subTotal, setSubTotal] = useState(0);
 
     const [userName, setUserName] = useState();
@@ -33,9 +32,13 @@ function Checkout() {
     const [zip, setZip] = useState();
     const [address, setAddress] = useState();
     const [shippingCharge, setShippingCharge] = useState();
-    const [isChecked, setIsChecked] = useState(false);
+    const [isChecked, setIsCecked] = useState(false);
 
-    // Check if the user is logged in
+    const searchParams = useSearchParams();
+    const productId = searchParams.get("productId");
+    console.log("productId="), productId;
+
+
     useEffect(() => {
         const jwt = sessionStorage.getItem("jwt");
         const userData = JSON.parse(sessionStorage.getItem("user"));
@@ -49,106 +52,106 @@ function Checkout() {
         }
     }, []);
 
-    // Fetch the product or cart items based on `productSlug`
     useEffect(() => {
-        if (productSlug) {
-            fetchProductDetails();
-        } else if (user && token) {
-            getCartItems();
-        }
-    }, [user, token, productSlug]);
+        getCartItems();
+    }, [user, token]);
 
-    // Fetch single product details if `productSlug` is present
-    const fetchProductDetails = async () => {
-        try {
-            const productData = await GlobalApi.getSingleProduct(productSlug);
-            //console.log("productData", productData[0]);
-            setProduct(productData[0]);
-            setSubTotal(productData.price); // Assuming productData includes a price property
-        } catch (error) {
-            console.error("Failed to fetch product:", error);
-        }
-    };
-
-    // Fetch all cart items if there’s no `productId`
     const getCartItems = async () => {
         if (user && token) {
             const cartList = await GlobalApi.getCartItemsForOrder(user.id, token);
-            console.log("cartList:", cartList);
+            //console.log("Order pg Items:", cartList);
             setTotalCartItem(cartList?.length);
             setCartItemList(cartList);
         }
-    };
+    }
 
     useEffect(() => {
-        const total = cartItemList.reduce((sum, item) => sum + item.amount, 0);
+        const total = cartItemList.reduce((sum, element) => sum + element.amount, 0);
         setSubTotal(total);
     }, [cartItemList]);
 
-    const onOptionChange = (e) => setShippingCharge(e.target.value);
-
-    const checkHandler = () => setIsChecked(!isChecked);
-
-    const calculateTotalAmount = () => {
-        const sCharge = parseInt(shippingCharge) || 0;
-        if (subTotal) {
-            return subTotal + sCharge;
-        } else if (product) {
-            if (product.sellingPrice) {
-                return product.sellingPrice + sCharge;
-            } else {
-                return product.mrp + sCharge;
-            }
-        } else {
-            return 0;
-        }
-
+    const onOptionChange = e => {
+        setShippingCharge(e.target.value);
     };
 
+    const checkHandler = () => {
+        setIsCecked(!isChecked);
+
+    }
+
+    const calculateTotalAmount = () => {
+        const sCharge = parseInt(shippingCharge)
+        let totalAmount = 0;
+        const tax = 0.2; // For 2% tax
+        //console.log(typeof shippingCharge);
+        if (isNaN(sCharge)) {
+            totalAmount = subTotal;
+        } else {
+            totalAmount = (subTotal + sCharge);
+        }
+        return totalAmount;
+    }
 
     const placeOrder = () => {
-        if (!isChecked) {
-            alert("Please accept the Terms & Conditions!");
-            return;
+        if (isChecked == false) {
+            alert("Please Read and Accept our Terms & Conditions to Place Order!");
+            return false;
+        }else if(shippingCharge == undefined){
+            alert("Please Select Shipping Method!");
+            return false;
+        }else if(subTotal <= 0){
+            alert("Sorry Order can't be processed!");
+            return false;
+        }else{
+            //alert(subTotal);
         }
-        if (!shippingCharge) {
-            alert("Please select a shipping method!");
-            return;
-        }
-        if (subTotal <= 0) {
-            alert("Order cannot be processed.");
-            return;
-        }
+
+        //alert(shippingCharge);
 
         const orderData = {
             data: {
                 paymentId: "pay00087",
                 userId: user.id,
-                subTotal: productSlug ? price : subTotal,
+                subTotal: subTotal,
                 totalAmount: calculateTotalAmount(),
                 username: userName,
-                email,
-                phone,
-                zip,
-                address,
-                orderItemList: productSlug ? [{ product: product.id, quantity: 1, amount: product.sellingPrice ? product.sellingPrice : product.mrp }] : cartItemList,
-            },
-        };
-
-        GlobalApi.createOrder(orderData, token).then(() => {
-            toast("Order placed successfully!");
-            if (!productSlug) {
-                cartItemList.forEach((item) => {
-                    GlobalApi.deleteCartItem(item.id, token);
-                });
-                getCartItems();
+                email: email,
+                phone: phone,
+                zip: zip,
+                address: address,
+                /* orderItemList: [
+                    {
+                        product: 5,
+                        quantity: 2,
+                        price: 100
+                    }
+                ]     */
+                orderItemList: cartItemList
             }
-            router.replace("/order-confirmation");
-        });
-    };
+        }
+
+        //console.log(cartItemList);
+        GlobalApi.createOrder(orderData, token).then(resp => {
+            //console.log(resp);
+            toast("Order places successfully !");
+            cartItemList.forEach((item, index) => {
+                try {
+                    GlobalApi.deleteCartItem(item.id, token).then(resp => {
+                        //
+                    })
+
+                } catch (error) {
+                    console.log(error);
+                }
+                getCartItems();
+                router.replace("/order-confirmation");
+            })
+        })
+    }
 
     return (
         <div className="">
+            {productId}
             <hr />
             {/* <h2 className="p-3 bg-primary text-xl font-bold text-center text-white">Checkout</h2> */}
             <div className="pt-3 pl-10">
@@ -212,61 +215,33 @@ function Checkout() {
                             </div>
                         </RadioGroup>
                     </div>
-                </div>
-                {/* Order Summary */}
-                {/* <div>
-                    <h2 className="p-3 bg-gray-200 font-bold text-center">
-                        {productSlug ? "Order" : "Cart"} Summary
-                    </h2>
-                    {productSlug && product ? (
-                        <div>
-                            <h3>{product.name}</h3>
-                            <p>Price: ${product.price}</p>
-                        </div>
-                    ) : (
-                        <div>
-                            <h3>Total Cart ({totalCartItem})</h3>
-                            <p>Subtotal: ${subTotal}</p>
-                        </div>
-                    )}
-                    <p>Shipping: ${shippingCharge || 0}</p>
-                    <p>Total: ${calculateTotalAmount()}</p>
-                    <Button onClick={placeOrder} disabled={!(userName && email && phone && address)}>
-                        Place Order <ArrowBigRight />
-                    </Button>
-                </div> */}
+                    {/* <p>Shipping Charge: {shippingCharge}</p> */}
+                    {/*      <div>
+                        <h3>Select Pizza Size</h3>
 
+                        <input type="radio" name="topping" value="Regular" id="regular" checked={topping === "Regular"} onChange={onOptionChange} />
+                        <label htmlFor="regular">Regular</label>
+
+                        <input type="radio" name="topping" value="Medium" id="medium" checked={topping === "Medium"} onChange={onOptionChange} />
+                        <label htmlFor="medium">Medium</label>
+
+                        <input type="radio" name="topping" value="Large" id="large" checked={topping === "Large"} onChange={onOptionChange} />
+                        <label htmlFor="large">Large</label>
+
+                        <p>
+                            Select topping <strong>{topping}</strong>
+                        </p>
+                    </div> */}
+                </div>
                 <div className="mx-10 border">
-                    <h2 className="p-3 bg-gray-200 font-bold text-center">
-                        {productSlug ? "Order" : "Cart"} Summary
-                    </h2>
+                    <h2 className="p-3 bg-gray-200 font-bold text-center">Total Cart ({totalCartItem})</h2>
                     <div className="p-4 flex flex-col gap-4">
-                        {productSlug && product ? (
-                            <div className="flex justify-between items-center">
-                                <div className="flex flex-col justify-center items-center gap-1">
-                                    <Image src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + product.images[0].url} width={60} height={40} alt="product Image" />
-                                    <h3 className="text-grey-400"><small>{product.name}</small></h3>
-                                </div>
-                                <div>
-                                    Qty : 1
-                                </div>
-                                <div>
-                                    BDT {product.sellingPrice ? product.sellingPrice : product.mrp}
-                                </div>
-                            </div>
-                        ) : ""}
-                        <div>
-                            {!product ? <h2 className="flex justify-between">Total Cart: <span> ({totalCartItem}) Items</span></h2> : ""}
-                            <h2 className="flex justify-between">Subtotal: <span>BDT {subTotal ? subTotal : (product?.sellingPrice ? product?.sellingPrice : product?.mrp)}</span></h2>
-                        </div>
+                        <h2 className="font-bold flex justify-between">Subtotal: <span>tk {subTotal}</span></h2>
                         <hr></hr>
-                        <h2 className="flex justify-between">Shipping: <span>BDT {shippingCharge || 0}</span></h2>
-                        <h2 className="flex justify-between">Tax (0%): <span>BDT 00</span></h2>
+                        <h2 className="flex justify-between">Delivery: <span>tk { shippingCharge }</span></h2>
+                        <h2 className="flex justify-between">Tax (0%): <span>tk 00</span></h2>
                         <hr></hr>
-                        <h2 className="flex font-bold justify-between">
-                            {/* Total: <span>BDT {product ? (product.sellingPrice ? product.sellingPrice : product.mrp) : calculateTotalAmount()}</span> */}
-                            Total: <span>BDT {calculateTotalAmount()}</span>
-                        </h2>
+                        <h2 className="flex justify-between">Total: <span>tk {calculateTotalAmount()}</span></h2>
                         <div className="items-top flex space-x-2">
                             <Checkbox id="terms1" type="checkbox"
                                 checked={isChecked}
@@ -286,7 +261,7 @@ function Checkout() {
                 </div>
             </div>
         </div>
-    );
+    )
 }
 
-export default Checkout;
+export default Checkout
