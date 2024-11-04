@@ -1,4 +1,11 @@
 "use client";
+const { default: axios } = require("axios");
+
+
+const axiosClient = axios.create({
+    //baseURL: 'http://localhost:1337/api'
+    baseURL: 'http://127.0.0.1:1337/api'
+})
 
 import GlobalApi from "@/actions/GlobalApi";
 import { Button } from "@/components/ui/button";
@@ -107,6 +114,49 @@ function Checkout() {
     };
 
 
+    /* const placeOrder = () => {
+        if (!isChecked) {
+            alert("Please accept the Terms & Conditions!");
+            return;
+        }
+        if (!shippingCharge) {
+            alert("Please select a shipping method!");
+            return;
+        }
+        if (subTotal <= 0) {
+            alert("Order cannot be processed.");
+            return;
+        }
+
+        const orderData = {
+            data: {
+                paymentId: "pay00087",
+                userId: user.id,
+                subTotal: productSlug ? price : subTotal,
+                totalAmount: calculateTotalAmount(),
+                username: userName,
+                email,
+                phone,
+                zip,
+                address,
+                orderItemList: productSlug ? [{ product: product.id, quantity: 1, amount: product.sellingPrice ? product.sellingPrice : product.mrp }] : cartItemList,
+            },
+        };
+
+        GlobalApi.createOrder(orderData, token).then(() => {
+            toast("Order placed successfully!");
+            if (!productSlug) {
+                cartItemList.forEach((item) => {
+                    GlobalApi.deleteCartItem(item.id, token);
+                });
+                getCartItems();
+            }
+            router.replace("/order-confirmation");
+        });
+    };
+ */
+
+
     const placeOrder = async () => {
         if (!isChecked) {
             alert("Please accept the Terms & Conditions!");
@@ -144,7 +194,18 @@ function Checkout() {
             //console.log(orderData.data.orderItemList);
             // Step 2: Update Stock for Each Item in the Order
             const stockUpdatePromises = orderData.data.orderItemList.map(async (item) => {
-                await GlobalApi.stockUpdate(item, token);
+                const response = await axiosClient.get(`/products/${item.product}`, {
+                    headers: { Authorization: "Bearer " + token }
+                });
+                const product = response.data.data;
+                console.log("Up Pro:", product);
+
+                // Update stock based on the order quantity
+                return axiosClient.put(`/products/${item.product}`, {
+                    data: { stock: product.stock - item.quantity }
+                }, {
+                    headers: { Authorization: "Bearer " + token }
+                });
             });
 
             // Wait for all stock updates to complete
@@ -236,6 +297,27 @@ function Checkout() {
                     </div>
                 </div>
                 {/* Order Summary */}
+                {/* <div>
+                    <h2 className="p-3 bg-gray-200 font-bold text-center">
+                        {productSlug ? "Order" : "Cart"} Summary
+                    </h2>
+                    {productSlug && product ? (
+                        <div>
+                            <h3>{product.name}</h3>
+                            <p>Price: ${product.price}</p>
+                        </div>
+                    ) : (
+                        <div>
+                            <h3>Total Cart ({totalCartItem})</h3>
+                            <p>Subtotal: ${subTotal}</p>
+                        </div>
+                    )}
+                    <p>Shipping: ${shippingCharge || 0}</p>
+                    <p>Total: ${calculateTotalAmount()}</p>
+                    <Button onClick={placeOrder} disabled={!(userName && email && phone && address)}>
+                        Place Order <ArrowBigRight />
+                    </Button>
+                </div> */}
 
                 <div className="mx-10 border">
                     <h2 className="p-3 bg-gray-200 font-bold text-center">

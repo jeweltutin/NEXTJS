@@ -183,8 +183,19 @@ const createOrder = (alldata, token) => axiosClient.post('/orders', alldata, {
     //console.log(resp.data.data)
 }).catch(error => console.error(error));
 
-async function stockUpdate(params) {
-    
+async function stockUpdate(item, token) {
+    const response = await axiosClient.get(`/products/${item.product}`, {
+        headers: { Authorization: "Bearer " + token }
+    });
+    const product = response.data.data;
+    console.log("Up Pro:", product);
+
+    // Update stock based on the order quantity
+    return axiosClient.put(`/products/${item.product}`, {
+        data: { stock: product.stock - item.quantity }
+    }, {
+        headers: { Authorization: "Bearer " + token }
+    });
 }
 
 const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$eq]=" + userId + "&sort[0]=createdAt:desc&populate[orderItemList][populate][product][populate][images]=*", {
@@ -234,6 +245,7 @@ export default {
     deleteCartItem,
     getCartItemsForOrder,
     createOrder,
+    stockUpdate,
     getMyOrder,
     getSingleOrder
 }
