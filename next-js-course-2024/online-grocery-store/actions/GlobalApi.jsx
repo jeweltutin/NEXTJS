@@ -181,6 +181,10 @@ const createOrder = (alldata, token) => axiosClient.post('/orders', alldata, {
     //console.log(resp.data.data)
 }).catch(error => console.error(error));
 
+async function stockUpdate(params) {
+    
+}
+
 const getMyOrder = (userId, token) => axiosClient.get("/orders?filters[userId][$eq]=" + userId + "&sort[0]=createdAt:desc&populate[orderItemList][populate][product][populate][images]=*", {
     headers: {
         Authorization: "Bearer " + token

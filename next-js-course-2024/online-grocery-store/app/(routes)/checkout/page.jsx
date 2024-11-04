@@ -1,4 +1,12 @@
 "use client";
+const { default: axios } = require("axios");
+
+
+const axiosClient = axios.create({
+    //baseURL: 'http://localhost:1337/api'
+    baseURL: 'http://127.0.0.1:1337/api'
+})
+
 import GlobalApi from "@/actions/GlobalApi";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -74,7 +82,7 @@ function Checkout() {
     const getCartItems = async () => {
         if (user && token) {
             const cartList = await GlobalApi.getCartItemsForOrder(user.id, token);
-            console.log("cartList:", cartList);
+            //console.log("cartList:", cartList);
             setTotalCartItem(cartList?.length);
             setCartItemList(cartList);
         }
@@ -106,7 +114,7 @@ function Checkout() {
     };
 
 
-    const placeOrder = () => {
+    /* const placeOrder = () => {
         if (!isChecked) {
             alert("Please accept the Terms & Conditions!");
             return;
@@ -146,10 +154,85 @@ function Checkout() {
             router.replace("/order-confirmation");
         });
     };
+ */
+
+
+    const placeOrder = async () => {
+        if (!isChecked) {
+            alert("Please accept the Terms & Conditions!");
+            return;
+        }
+        if (!shippingCharge) {
+            alert("Please select a shipping method!");
+            return;
+        }
+        if (subTotal <= 0) {
+            alert("Order cannot be processed.");
+            return;
+        }
+
+        const orderData = {
+            data: {
+                paymentId: "pay00087",  // Use a dynamic payment ID based on actual payment processing
+                userId: user.id,
+                subTotal: productSlug ? (product?.sellingPrice ? product?.sellingPrice : product?.mrp) : subTotal,
+                totalAmount: calculateTotalAmount(),
+                username: userName,
+                email,
+                phone,
+                zip,
+                address,
+                orderItemList: productSlug
+                    ? [{ product: product.documentId, quantity: 1, name: product.name, amount: product.sellingPrice ? product.sellingPrice : product.mrp }]
+                    : cartItemList,
+            },
+        };
+
+        try {
+            // Step 1: Place the Order
+            const orderResponse = await GlobalApi.createOrder(orderData, token);
+            console.log(orderData.data.orderItemList);
+            // Step 2: Update Stock for Each Item in the Order
+            const stockUpdatePromises = orderData.data.orderItemList.map(async (item) => {
+                const response = await axiosClient.get(`/products/${item.product}`, {
+                    headers: { Authorization: "Bearer " + token }
+                });
+                const product = response.data.data;
+                console.log("Up Pro:", product);
+
+                // Update stock based on the order quantity
+                return axiosClient.put(`/products/${item.product}`, {
+                    data: { stock: product.stock - item.quantity }
+                }, {
+                    headers: { Authorization: "Bearer " + token }
+                });
+            });
+
+            // Wait for all stock updates to complete
+            await Promise.all(stockUpdatePromises);
+
+            // Success Message
+            toast("Order placed successfully!");
+
+            // Clear the cart if necessary
+            if (!productSlug) {
+                cartItemList.forEach((item) => {
+                    GlobalApi.deleteCartItem(item.id, token);
+                });
+                getCartItems();
+            }
+
+            // Redirect to order confirmation
+            router.replace("/order-confirmation");
+        } catch (error) {
+            alert("Failed to place order: " + error.message);
+        }
+    };
 
     return (
         <div className="">
             <hr />
+            {console.log(product)}
             {/* <h2 className="p-3 bg-primary text-xl font-bold text-center text-white">Checkout</h2> */}
             <div className="pt-3 pl-10">
                 <h2 className="capitalize text-2xl text-gray-500">Three steps checkout</h2>
