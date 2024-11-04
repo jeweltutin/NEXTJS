@@ -139,7 +139,8 @@ const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[use
         image: item?.products[0]?.images[0]?.url,
         actualPrice: item?.products[0]?.mrp,
         id: item.documentId,
-        product: item?.products[0]?.id
+        product: item?.products[0]?.id,
+        //productDocId: item?.products[0]?.documentId
     }))
     return cartItemsList;
 })
@@ -158,7 +159,8 @@ const getCartItemsForOrder = (userId, token) => axiosClient.get('/user-carts?fil
         //color: item.products[0].colors[0]?.name,
         color: item.color,
         amount: item.amount,
-        product: item.products[0].id,
+        //product: item.products[0].id,
+        product: item?.products[0]?.documentId,
         id: item.documentId
     }))
     return cartItemsList;

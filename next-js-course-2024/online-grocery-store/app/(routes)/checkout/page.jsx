@@ -82,7 +82,7 @@ function Checkout() {
     const getCartItems = async () => {
         if (user && token) {
             const cartList = await GlobalApi.getCartItemsForOrder(user.id, token);
-            //console.log("cartList:", cartList);
+            console.log("cartList:", cartList);
             setTotalCartItem(cartList?.length);
             setCartItemList(cartList);
         }
@@ -191,7 +191,7 @@ function Checkout() {
         try {
             // Step 1: Place the Order
             const orderResponse = await GlobalApi.createOrder(orderData, token);
-            console.log(orderData.data.orderItemList);
+            //console.log(orderData.data.orderItemList);
             // Step 2: Update Stock for Each Item in the Order
             const stockUpdatePromises = orderData.data.orderItemList.map(async (item) => {
                 const response = await axiosClient.get(`/products/${item.product}`, {
