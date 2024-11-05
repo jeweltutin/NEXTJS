@@ -7,6 +7,9 @@ https://tailwindui.com/components/marketing/feedback/404-pages
 //Table design - Tailwind CSS Table - Flowbite
 https://flowbite.com/docs/components/tables/
 
+//SVG Vector and Icons
+https://www.svgrepo.com/
+
 // useState basic
 https://www.youtube.com/watch?v=ww8Gbi0nckg&ab_channel=DeveloperResources
 https://www.youtube.com/watch?v=-e0834TnoAQ&list=PL0wCCp4kCP9xajus_5fiDKpHEOI_vMVqk&index=6&ab_channel=DeveloperResources
@@ -17,6 +20,9 @@ https://fkhadra.github.io/react-toastify/introduction/
 
 //react-native-flash-message
 https://www.npmjs.com/package/react-native-flash-message
+
+//Autocomplete Search🪄 in React.js and Next.js // Implemented grocery project with chatgpt
+https://medium.com/@yuvidexter/mastering-autocomplete-search-in-react-js-cb5edc3c528c
 
 //Data table
 https://react-data-table-component.netlify.app/?path=/docs/getting-started-examples--page
@@ -77,3 +83,7 @@ https://stackoverflow.com/questions/1731190/check-if-a-string-has-white-space
 
 //Power of Console - Five things browser console can do other than just logging
 https://www.youtube.com/watch?v=QkZoqLlewPM&ab_channel=LearnwithSumit-LWS-Bangladesh
+
+//What Is a Product SKU
+https://forbytes.com/blog/guide-to-creating-product-sku/
+https://www.techiediaries.com/generate-product-sku-sql/

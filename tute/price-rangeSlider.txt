@@ -1,0 +1,6 @@
+//multi-range-slider-react
+//a react component that can easy to use and interact with parent component with props and events.
+
+
+https://www.npmjs.com/package/multi-range-slider-react
+https://codesandbox.io/p/sandbox/range-slider-custom-style-props-dcvshf?file=%2Fsrc%2FApp.tsx%3A53%2C11-57%2C33

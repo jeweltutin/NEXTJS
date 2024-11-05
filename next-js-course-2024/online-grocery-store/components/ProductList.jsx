@@ -4,7 +4,7 @@ import ProductItem from './ProductItem';
 function ProductList({ productList }) {
     //console.log(productList);
     return (
-        <div className="mt-10">
+        <div className="mt-1 px-5">
             <h2 className="text-green-600 font-bold text-2xl">
                 Our Popular Products
             </h2>

@@ -33,16 +33,42 @@ const getAllProducts = () => {
     )
 }
 
-const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][slug][$in]=' + category + '&populate=*').then(resp => {
-    //console.log("cat:", category);
-    //console.log("Products:", resp.data.data);
+/* const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][slug][$in]=' + category + '&populate=*').then(resp => {
     return resp.data.data;
-})
+}) */
+
+const getProductsByCategory = (category, minPrice, maxPrice) => {
+    // Base URL for fetching products by category
+    let url = `/products?filters[categories][slug][$in]=${category}&populate=*`;
+
+    // Append price filters if minPrice and maxPrice are provided
+    if (minPrice !== undefined && maxPrice !== undefined) {
+        url += `&filters[mrp][$gte]=${minPrice}&filters[mrp][$lte]=${maxPrice}`;
+    }
+
+    return axiosClient.get(url).then(resp => {
+        return resp.data.data;
+    });
+};
+
+/* async function getProductsByCategory(categoryName, minPrice, maxPrice) {
+    let url = `/api/products?filters[category][$eq]=${categoryName}`;
+
+    if (minPrice && maxPrice) {
+        url += `&filters[price][$gte]=${minPrice}&filters[price][$lte]=${maxPrice}`;
+    }
+
+    const response = await fetch(url);
+    return await response.json();
+}
+ */
 
 //http://localhost:1337/api/products?populate=colors&populate=images&populate=categories
 const getSingleProduct = (productSlug) => axiosClient.get("/products?filters[slug][$eq]=" + productSlug + "&populate=*").then(resp => {
     return resp.data.data;
 })
+
+
 
 const testfunc = (username, email, phone) => {
     console.log(phone);
@@ -154,7 +180,7 @@ const getCartItemsForOrder = (userId, token) => axiosClient.get('/user-carts?fil
 }).then(resp => {
     const data = resp.data.data;
     const cartItemsList = data.map((item, index) => ({
-        name: item.products[0].name, 
+        name: item.products[0].name,
         quantity: item.quantity,
         //color: item.products[0].colors[0]?.name,
         color: item.color,
