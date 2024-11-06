@@ -107,10 +107,10 @@ function Header() {
             <div className="flex gap-5 items-center">
                 <div className="hidden xl:block">
                     <nav className="md:ml-auto flex flex-wrap items-end text-base justify-end">
-                        <Link href={"/"} className="mr-5 hover:text-gray-900">Home</Link>
+                        <Link href={"/shop"} className="mr-5 hover:text-gray-900">Shop</Link>
                         <Link href={"/about"} className="mr-5 hover:text-gray-900">About</Link>
-                        <Link href={"/"} className="mr-5 hover:text-gray-900">Campaign</Link>
                         <Link href={"/"} className="mr-5 hover:text-gray-900">Outlets</Link>
+                        <Link href={"/contact"} className="mr-5 hover:text-gray-900">Contact</Link>
                     </nav>
                 </div>
                 <Sheet>

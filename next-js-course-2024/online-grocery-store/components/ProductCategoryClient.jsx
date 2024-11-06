@@ -9,6 +9,7 @@ import { Input } from './ui/input';
 import Link from 'next/link';
 import BrandFilter from './BrandFilter';
 import { BoxIcon, List } from 'lucide-react';
+import SelectProductFilter from './selectProductFilter';
 
 function ProductCategoryClient({ initialProductList, categoryList, theCategory, categoryName }) {
     const [filteredProducts, setFilteredProducts] = useState(initialProductList);
@@ -16,6 +17,10 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
     const [maxPrice, setMaxPrice] = useState(0);
 
     const productCount = initialProductList.length;
+    let catName;
+    if (categoryName) {
+        catName = categoryName.split('-').join(' ');
+    }
 
     useEffect(() => {
         if (initialProductList.length > 0) {
@@ -44,7 +49,7 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
                     />
                 </div>
                 <h2 className="absolute right-0 top-0 p-2 mb-6 bg-primary bg-opacity-75 rounded-2xl text-white text-2xl text-center capitalize">
-                    {categoryName.split('-').join(' ')}
+                    {catName}
                 </h2>
             </div>
 
@@ -66,7 +71,15 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
                     </div>
                 </div>
                 <div>
-                    <ProductList productList={filteredProducts} categoryName={categoryName} productCount={productCount} />
+                    <div className="flex justify-between bg-gray-100 p-2 items-center">
+                        <h2 className="text-black uppercase">
+                            {productCount ? catName + " has " + productCount + " products" : "Our Popular Products"}
+                        </h2>
+                        <div>
+                            <SelectProductFilter />
+                        </div>
+                    </div>
+                    <ProductList productList={filteredProducts} categoryName={categoryName} />
                 </div>
             </div>
         </div>
