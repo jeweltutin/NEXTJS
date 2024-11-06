@@ -5,11 +5,17 @@ import ProductList from '@/components/ProductList';
 import TopCategoryList from '@/components/TopCategoryList';
 import Image from 'next/image';
 import GlobalApi from '@/actions/GlobalApi';
+import { Input } from './ui/input';
+import Link from 'next/link';
+import BrandFilter from './BrandFilter';
+import { BoxIcon, List } from 'lucide-react';
 
 function ProductCategoryClient({ initialProductList, categoryList, theCategory, categoryName }) {
     const [filteredProducts, setFilteredProducts] = useState(initialProductList);
     const [minPrice, setMinPrice] = useState(0);
     const [maxPrice, setMaxPrice] = useState(0);
+
+    const productCount = initialProductList.length;
 
     useEffect(() => {
         if (initialProductList.length > 0) {
@@ -44,16 +50,23 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
 
             <TopCategoryList categoryList={categoryList} selectedCategory={categoryName} />
 
-            <div className="md:flex md:flex-row gap-4 py-5 md:py-10">
+            <div className="md:flex md:flex-row gap-5 py-5 md:py-10">
                 <div className="basis-1/4">
-                    <PriceSlider 
-                        minValue={minPrice} 
-                        maxValue={maxPrice} 
-                        onPriceChange={handlePriceChange} 
-                    />
+                    <PriceSlider minValue={minPrice} maxValue={maxPrice} onPriceChange={handlePriceChange} />
+
+                    <div className="border-b-[1px] lg:border-[1px] border-solid border-[#E7E7E7] lg:rounded-[5px] px-4 lg:px-3.5 py-4 lg:py-4 bg-[#FCFCFC] mb-0 lg:mb-3.5">
+                        <div className="filter-title flex justify-between items-center pb-2">
+                            <h4 className="text-sm font-medium leading-none uppercase">Brands</h4>
+                            <div className="flex items-center justify-end">
+                                <List></List>
+                            </div>
+                        </div>
+
+                        <BrandFilter />
+                    </div>
                 </div>
                 <div>
-                    <ProductList productList={filteredProducts} />
+                    <ProductList productList={filteredProducts} categoryName={categoryName} productCount={productCount} />
                 </div>
             </div>
         </div>

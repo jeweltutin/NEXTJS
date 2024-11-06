@@ -7,6 +7,7 @@ async function Shop() {
   return (
     <div>
       <SearchProduct productList={productList} />
+      <r />
       <div class="max-w-max mx-auto bg-white shadow-xl min-w-0 dark:bg-slate-800 dark:highlight-white/5">
         <div class="overflow-x-auto flex">
           <div class="flex-none py-6 px-3 first:pl-6 last:pr-6">
