@@ -37,7 +37,7 @@ const getAllProducts = () => {
     return resp.data.data;
 }) */
 
-const getProductsByCategory = (category, minPrice, maxPrice) => {
+/*  const getProductsByCategory = (category, minPrice, maxPrice) => {
     // Base URL for fetching products by category
     let url = `/products?filters[categories][slug][$in]=${category}&populate=*`;
 
@@ -49,6 +49,81 @@ const getProductsByCategory = (category, minPrice, maxPrice) => {
     return axiosClient.get(url).then(resp => {
         return resp.data.data;
     });
+}; */
+
+const getProductsByCategory = async (categoryName, minPrice, maxPrice) => {
+    let filters = `filters[categories][slug][$eq]=${categoryName}`;
+    if (minPrice && maxPrice) {
+        filters += `&filters[mrp][$gte]=${minPrice}&filters[mrp][$lte]=${maxPrice}`;
+    }
+    try {
+        const response = await axiosClient.get(`/products?${filters}&populate[brand]=true&populate[images]=true`);
+        return response.data.data;
+    } catch (error) {
+        console.error("Error fetching products by category:", error);
+        return [];
+    }
+};
+
+
+// In your GlobalApi.jsx or wherever you use selectedBrands
+const getProductsByCategoryWithBrands = async (categoryName, selectedBrands = [], minPrice = 0, maxPrice = 0) => {
+    // Initialize the base filters with the selected category
+    let filters = `filters[categories][slug][$eq]=${categoryName}`;
+
+    // Add price filters if provided
+    if (minPrice && maxPrice) {
+        filters += `&filters[price][$gte]=${minPrice}&filters[price][$lte]=${maxPrice}`;
+    }
+
+    // Add brand filters if any brands are selected
+    if (selectedBrands.length > 0) {
+        const brandFilters = selectedBrands
+            .map(brand => `filters[brands][name][$eq]=${brand}`)
+            .join("&");
+        filters += `&${brandFilters}`;
+    }
+
+    // Make the API request with the constructed filters
+    try {
+        const response = await axiosClient.get(`/products?${filters}&populate=brand`);
+        return response.data.data;
+    } catch (error) {
+        console.error("Error fetching products by category and brands:", error);
+        return [];
+    }
+};
+
+
+
+
+/* const getBrandsForFilter = async () => {
+    const brands = await axiosClient.get("/brands");
+    const resp = brands.data.data;
+    return resp;
+} */
+
+const getBrandsForFilter = async (categorySlug) => {
+    //console.log(categorySlug);
+    const products = await axiosClient.get(`/products?filters[categories][slug][$eq]=${categorySlug}&populate=brand`);
+    const resp = products.data.data;
+    //console.log("Products : ", resp);
+
+    // Use a Set to keep unique brand names
+    const brandsSet = new Set();
+
+    // Loop through each product
+    resp.forEach(product => {
+        const brandName = product.brand?.name;
+
+        if (brandName) {
+            // Add brand name to Set to ensure uniqueness
+            brandsSet.add(brandName);
+        }
+    });
+
+    // Convert the Set back to an array of unique brand names
+    return Array.from(brandsSet);
 };
 
 /* async function getProductsByCategory(categoryName, minPrice, maxPrice) {
@@ -263,6 +338,8 @@ export default {
     getAllProducts,
     getSingleProduct,
     getProductsByCategory,
+    getProductsByCategoryWithBrands,
+    getBrandsForFilter,
     registerUser,
     testfunc,
     signIn,
@@ -291,6 +368,9 @@ export default {
 
 // Select fields name , mrp and description Select where product id = 6
 //http://localhost:1337/api/products?fields=name,mrp,description&filters[id][$eq]=6
+
+//Selected category products with brand
+//http://localhost:1337/api/products?filters[categories][slug][$eq]=smart-watch&populate=brand
 
 // get products from cart for the selected user
 //http://localhost:1337/api/user-carts?filters[userId][$eq]=9&populate=*

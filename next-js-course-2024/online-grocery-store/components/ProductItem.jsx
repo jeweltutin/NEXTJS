@@ -21,14 +21,23 @@ function ProductItem({ product }) {
     let sellingPrice = product.sellingPrice;
     let percentage;
     if (sellingPrice) {
-        percentage = ((regularPrice - sellingPrice) / (regularPrice) * 100).toFixed(2); 
+        percentage = ((regularPrice - sellingPrice) / (regularPrice) * 100).toFixed(2);
     }
-    
+
     return (
         <div className="relative p-2 md:p-6 flex flex-col items-center justify-center gap-3 border rounded-lg hover:scale-105 hover:shadow-lg transition-all ease-in-out cursor-pointer">
             <Link href={"/product/" + product.slug}>
                 <div className="">
-                    <Image src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + product?.images[0]?.url} width={500} height={200} alt={product.name} className="group-hover:scale-125 transition-all ease-in-out h-[200px] w-[200px] object-contain" />
+                    {/* <Image src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + product?.images[0]?.url} width={500} height={200} alt={product.name} className="group-hover:scale-125 transition-all ease-in-out h-[200px] w-[200px] object-contain" /> */}
+                    {product?.images?.length > 0 && (
+                        <Image
+                            src={process.env.NEXT_PUBLIC_BACKEND_BASE_URL + product.images[0]?.url}
+                            width={500}
+                            height={200}
+                            alt={product.name}
+                            className="group-hover:scale-125 transition-all ease-in-out h-[200px] w-[200px] object-contain"
+                        />
+                    )}
                     <h2 className="text-green-800 text-lg text-center">
                         {product.name}
                     </h2>

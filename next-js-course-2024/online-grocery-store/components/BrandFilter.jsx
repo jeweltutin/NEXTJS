@@ -1,31 +1,48 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const BrandFilter = () => {
+const BrandFilter = ({ brands, onFilterChange }) => {
   const [showAll, setShowAll] = useState(false);
+  const [selectedBrands, setSelectedBrands] = useState([]);
 
-  const brands = [
-    "No Brand",
-    "Amazfit",
-    "Boat",
-    "Kieslect",
-    "Promate",
-    "Riversong",
-    "Skg",
-    "Tagg",
-    "Xiaomi",
-  ];
+  // Check if brands is an array of objects or strings
+  const brandNames = Array.isArray(brands)
+    ? brands.map(brand => (typeof brand === "string" ? brand : brand.name))
+    : [];
+
+  // Handle the selection of a brand
+  const handleBrandSelection = (brand) => {
+    let updatedSelectedBrands;
+    if (selectedBrands.includes(brand)) {
+      // If already selected, remove the brand
+      updatedSelectedBrands = selectedBrands.filter((b) => b !== brand);
+    } else {
+      // If not selected, add the brand
+      updatedSelectedBrands = [...selectedBrands, brand];
+    }
+
+    // Update the state with the new selected brands
+    setSelectedBrands(updatedSelectedBrands);
+
+    // Pass the updated selected brands to the parent component
+    onFilterChange(updatedSelectedBrands);
+  };
 
   const toggleShowAll = (e) => {
-    e.preventDefault(); // Prevent the default link behavior
+    e.preventDefault(); // Prevent default link behavior
     setShowAll(!showAll);
   };
 
   return (
     <div className="uppercase text-[11px]">
-      {brands.slice(0, showAll ? brands.length : 5).map((brand, index) => (
+      {brandNames.slice(0, showAll ? brandNames.length : 5).map((brand, index) => (
         <div className="flex gap-2 py-[5px]" key={index}>
-          <input type="checkbox" id={`checkbox-${index}`} />
+          <input
+            type="checkbox"
+            id={`checkbox-${index}`}
+            checked={selectedBrands.includes(brand)}
+            onChange={() => handleBrandSelection(brand)}
+          />
           <label htmlFor={`checkbox-${index}`}>{brand}</label>
         </div>
       ))}
