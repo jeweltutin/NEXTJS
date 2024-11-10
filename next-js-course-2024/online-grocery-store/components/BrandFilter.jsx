@@ -1,33 +1,26 @@
 import { useState } from "react";
-import Link from "next/link";
 
 const BrandFilter = ({ brands, onFilterChange }) => {
   const [showAll, setShowAll] = useState(false);
   const [selectedBrands, setSelectedBrands] = useState([]);
 
-  // Check if brands is an array of objects or strings
+  // Extract brand names from the array of brands
   const brandNames = Array.isArray(brands)
     ? brands.map(brand => (typeof brand === "string" ? brand : brand.name))
     : [];
 
   // Handle the selection of a brand
   const handleBrandSelection = (brand) => {
-    let updatedSelectedBrands;
-    if (selectedBrands.includes(brand)) {
-      // If already selected, remove the brand
-      updatedSelectedBrands = selectedBrands.filter((b) => b !== brand);
-    } else {
-      // If not selected, add the brand
-      updatedSelectedBrands = [...selectedBrands, brand];
-    }
-
-    // Update the state with the new selected brands
-    setSelectedBrands(updatedSelectedBrands);
-
-    // Pass the updated selected brands to the parent component
-    onFilterChange(updatedSelectedBrands);
+    setSelectedBrands((prevSelectedBrands) => {
+      const updatedSelectedBrands = prevSelectedBrands.includes(brand)
+        ? prevSelectedBrands.filter((b) => b !== brand) // Remove if already selected
+        : [...prevSelectedBrands, brand];              // Add if not selected
+      onFilterChange(updatedSelectedBrands);            // Update parent component
+      return updatedSelectedBrands;
+    });
   };
 
+  // Toggle to show all or limited brands
   const toggleShowAll = (e) => {
     e.preventDefault(); // Prevent default link behavior
     setShowAll(!showAll);
@@ -42,14 +35,15 @@ const BrandFilter = ({ brands, onFilterChange }) => {
             id={`checkbox-${index}`}
             checked={selectedBrands.includes(brand)}
             onChange={() => handleBrandSelection(brand)}
+            aria-label={`Filter by ${brand}`}
           />
           <label htmlFor={`checkbox-${index}`}>{brand}</label>
         </div>
       ))}
       <div className="text-[12px] pt-[3px] pl-[15px] text-primary capitalize">
-        <Link href="#" onClick={toggleShowAll}>
+        <button onClick={toggleShowAll} className="text-primary">
           {showAll ? "- View Less" : "+ View More"}
-        </Link>
+        </button>
       </div>
     </div>
   );

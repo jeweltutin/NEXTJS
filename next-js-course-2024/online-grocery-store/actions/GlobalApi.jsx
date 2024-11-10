@@ -33,9 +33,9 @@ const getAllProducts = () => {
     )
 }
 
-/* const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][slug][$in]=' + category + '&populate=*').then(resp => {
+const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][slug][$in]=' + category + '&populate=*').then(resp => {
     return resp.data.data;
-}) */
+})
 
 /*  const getProductsByCategory = (category, minPrice, maxPrice) => {
     // Base URL for fetching products by category
@@ -51,13 +51,48 @@ const getAllProducts = () => {
     });
 }; */
 
-const getProductsByCategory = async (categoryName, minPrice, maxPrice) => {
+const getProductsByCategoryWithFilters = async (categoryName, selectedBrands = [], minPrice = 0, maxPrice = 10000) => {
     let filters = `filters[categories][slug][$eq]=${categoryName}`;
-    if (minPrice && maxPrice) {
+    console.log(selectedBrands);
+    // Add brand filters if any brands are selected
+    if (selectedBrands.length > 0) {
+        const brandFilters = selectedBrands
+            .map(brand => `filters[brand][name][$eq]=${encodeURIComponent(brand)}`)
+            .join("&");
+        filters += `&${brandFilters}`;
+    }
+
+
+    // Add price range filter
+    // Add price filters only if minPrice or maxPrice are greater than 0
+    if (minPrice > 0 || maxPrice > 0) {
+        if (minPrice > 0) {
+            filters += `&filters[mrp][$gte]=${minPrice}`; // Greater than or equal to minPrice
+        }
+        if (maxPrice > 0) {
+            filters += `&filters[mrp][$lte]=${maxPrice}`; // Less than or equal to maxPrice
+        }
+    }
+    console.log(filters);
+
+    // Make the API request with the constructed filters
+    try {
+        const response = await axiosClient.get(`/products?${filters}&populate[images]=true`);
+        return response.data.data; // Return the filtered products data
+    } catch (error) {
+        console.error("Error fetching products by category and filters:", error);
+        return []; // Return an empty array in case of error
+    }
+}
+
+
+const getProductsByCategoryWithPriceRange = async (categoryName, minPrice, maxPrice) => {
+    let filters = `filters[categories][slug][$eq]=${categoryName}`;
+    if (minPrice !== undefined && maxPrice !== undefined) {
         filters += `&filters[mrp][$gte]=${minPrice}&filters[mrp][$lte]=${maxPrice}`;
     }
     try {
-        const response = await axiosClient.get(`/products?${filters}&populate[brand]=true&populate[images]=true`);
+        const response = await axiosClient.get(`/products?${filters}&populate[images]=true`);
         return response.data.data;
     } catch (error) {
         console.error("Error fetching products by category:", error);
@@ -65,15 +100,36 @@ const getProductsByCategory = async (categoryName, minPrice, maxPrice) => {
     }
 };
 
+const getProductsByCategoryWithBrands = async (categoryName, selectedBrands = []) => {
+    let filters = `filters[categories][slug][$eq]=${categoryName}`;
+
+    // Add brand filters if any brands are selected
+    if (selectedBrands.length > 0) {
+        const brandFilters = selectedBrands
+            .map(brand => `filters[brand][name][$eq]=${brand}`)
+            .join("&");
+        filters += `&${brandFilters}`;
+    }
+
+    // Make the API request with the constructed filters
+    try {
+        const response = await axiosClient.get(`/products?${filters}&populate[images]=true`);
+        return response.data.data;
+    } catch (error) {
+        console.error("Error fetching products by category and brands:", error);
+        return [];
+    }
+}
+
 
 // In your GlobalApi.jsx or wherever you use selectedBrands
-const getProductsByCategoryWithBrands = async (categoryName, selectedBrands = [], minPrice = 0, maxPrice = 0) => {
+const getProductsByCategoryWithBrand = async (categoryName, selectedBrands = [], minPrice = 0, maxPrice = 0) => {
     // Initialize the base filters with the selected category
     let filters = `filters[categories][slug][$eq]=${categoryName}`;
 
     // Add price filters if provided
     if (minPrice && maxPrice) {
-        filters += `&filters[price][$gte]=${minPrice}&filters[price][$lte]=${maxPrice}`;
+        filters += `&filters[price][$gte]=${minPrice}&filters[price][$lte]=${maxPrice}&populate[images]=true`;
     }
 
     // Add brand filters if any brands are selected
@@ -86,13 +142,32 @@ const getProductsByCategoryWithBrands = async (categoryName, selectedBrands = []
 
     // Make the API request with the constructed filters
     try {
-        const response = await axiosClient.get(`/products?${filters}&populate=brand`);
+        const response = await axiosClient.get(`/products?${filters}&populate=brand&populate[images]=true`);
         return response.data.data;
     } catch (error) {
         console.error("Error fetching products by category and brands:", error);
         return [];
     }
 };
+
+/* const getProductsByCategoryWithFilters = (category, minPrice, maxPrice, selectedBrands) => {
+    let url = `/products?filters[categories][slug][$eq]=${category}&populate=brand`;
+
+    if (minPrice !== undefined && maxPrice !== undefined) {
+        url += `&filters[mrp][$gte]=${minPrice}&filters[mrp][$lte]=${maxPrice}`;
+    }
+
+    if (selectedBrands.length > 0) {
+        selectedBrands.forEach(brand => {
+            url += `&filters[brands][name][$eq]=${brand}`;
+        });
+    }
+
+    return axiosClient.get(url).then(resp => {
+        return resp.data.data;
+    });
+}; */
+
 
 
 
@@ -338,7 +413,9 @@ export default {
     getAllProducts,
     getSingleProduct,
     getProductsByCategory,
+    getProductsByCategoryWithPriceRange,
     getProductsByCategoryWithBrands,
+    getProductsByCategoryWithFilters,
     getBrandsForFilter,
     registerUser,
     testfunc,

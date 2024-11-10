@@ -8,7 +8,6 @@ import GlobalApi from "@/actions/GlobalApi";
 import BrandFilter from "./BrandFilter";
 import { List } from "lucide-react";
 import SelectProductFilter from "./selectProductFilter";
-import PriceRangeFilter from "./PriceRangeFilter";
 
 function ProductCategoryClient({ initialProductList, categoryList, theCategory, categoryName, brands }) {
     const [filteredProducts, setFilteredProducts] = useState(initialProductList);
@@ -16,59 +15,73 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
     const [maxPrice, setMaxPrice] = useState(0);
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [loading, setLoading] = useState(false);
+    
 
-    const productCount = filteredProducts.length;
+    const productCount = initialProductList.length;
     const catName = categoryName ? categoryName.split("-").join(" ") : "";
 
     // Set initial price range
-    useEffect(() => {
-        // Ensure initial data is set
-        setFilteredProducts(initialProductList);
-    }, [initialProductList]);
+    /* useEffect(() => {
+        if (initialProductList.length > 0) {
+            const prices = initialProductList.map((product) => product.mrp);
+            setMinPrice(Math.min(...prices));
+            setMaxPrice(Math.max(...prices));
+        }
+    }, [initialProductList]); */
 
-    // Handle price range change
+    // Update selected brands for filtering
+
     const handlePriceChange = async (minPrice, maxPrice) => {
-        setLoading(true); // Start loading
-        setMinPrice(minPrice);
-        setMaxPrice(maxPrice);
-
-        // Make API call to get filtered products by price range and brand
-        const filtered = await GlobalApi.getProductsByCategoryWithFilters(
-            categoryName,
-            selectedBrands,
-            minPrice,
-            maxPrice
-        );
-        setFilteredProducts(filtered);
-        setLoading(false); // Stop loading after data is fetched
+        //const filtered = await GlobalApi.getProductsByCategoryWithPriceRange(categoryName, minPrice, maxPrice);
+        //setFilteredProducts(filtered);
     };
 
-    // Handle brand change
+
+    //Another way
+    const handleMinPriceChange = (e) => {
+        setMinPrice(e.target.value);
+    };
+
+    // Handle the change in max price input
+    const handleMaxPriceChange = (e) => {
+        setMaxPrice(e.target.value);
+    };
+
+    // Update products based on price and brand filters
     const handleBrandChange = async (selectedBrands) => {
-        setLoading(true); // Start loading
-        setSelectedBrands(selectedBrands);
-
-        // Make API call to get filtered products by brand
-        const filtered = await GlobalApi.getProductsByCategoryWithFilters(
-            categoryName,
-            selectedBrands,
-            minPrice,
-            maxPrice
-        );
-        console.log("With brands", filtered);
-        setFilteredProducts(filtered);
-        setLoading(false); // Stop loading after data is fetched
+        setLoading(true);  // Ensure loading state is set to true at the beginning
+        try {
+            const products = await GlobalApi.getProductsByCategoryWithBrands(
+                categoryName, selectedBrands
+            );
+            console.log(products);
+            setFilteredProducts(products);
+        } catch (error) {
+            console.error("Error fetching filtered products:", error);
+        } finally {
+            setLoading(false);  // Ensure loading state is set to false when the function completes
+        } 
     };
+    
+
+    // Fetch filtered products whenever filters change
+    /* useEffect(() => {
+        handleFiltersChange(minPrice, maxPrice, selectedBrands);
+    }, [minPrice, maxPrice, selectedBrands, categoryName]); */
 
     return (
         <div className="container mx-auto">
             <div className="relative">
                 <div className="mb-7 border rounded-md">
                     <Image
-                        src={theCategory[0]?.banner?.url ? process.env.NEXT_PUBLIC_BACKEND_BASE_URL + theCategory[0]?.banner?.url : "/images/default-cat-banner.jpg"}
+                        src={
+                            theCategory[0]?.banner?.url
+                                ? process.env.NEXT_PUBLIC_BACKEND_BASE_URL + theCategory[0]?.banner?.url
+                                : "/images/default-cat-banner.jpg"
+                        }
                         width={1200}
                         height={290}
-                        alt="Category Banner"
+                        alt=""
                         className="w-full max-h-[291px] object-contain"
                     />
                 </div>
@@ -81,7 +94,7 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
 
             <div className="md:flex md:flex-row gap-5 py-5 md:py-10">
                 <div className="basis-1/4">
-                    <PriceRangeFilter onPriceChange={handlePriceChange} />
+                    <PriceSlider minValue={minPrice} maxValue={maxPrice} onPriceChange={handlePriceChange} />
 
                     <div className="border-b-[1px] lg:border-[1px] border-solid border-[#E7E7E7] lg:rounded-[5px] px-4 lg:px-3.5 py-4 lg:py-4 bg-[#FCFCFC] mb-0 lg:mb-3.5">
                         <div className="filter-title flex justify-between items-center pb-2">
