@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import PriceSlider from "@/components/PriceSlider";
 import ProductList from "@/components/ProductList";
 import TopCategoryList from "@/components/TopCategoryList";
 import Image from "next/image";
@@ -17,22 +16,25 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    const [filter, setFilter] = useState("byNewest");
+    const [sortedProducts, setSortedProducts] = useState(filteredProducts);
+
     const productCount = filteredProducts.length;
     const catName = categoryName ? categoryName.split("-").join(" ") : "";
 
-    // Set initial price range
+    const prices = initialProductList.map((product) => product.mrp);
+    const minPriceShow = Math.min(...prices);
+    const maxPriceShow = Math.max(...prices);
+
     useEffect(() => {
-        // Ensure initial data is set
         setFilteredProducts(initialProductList);
     }, [initialProductList]);
 
-    // Handle price range change
     const handlePriceChange = async (minPrice, maxPrice) => {
-        setLoading(true); // Start loading
+        setLoading(true);
         setMinPrice(minPrice);
         setMaxPrice(maxPrice);
 
-        // Make API call to get filtered products by price range and brand
         const filtered = await GlobalApi.getProductsByCategoryWithFilters(
             categoryName,
             selectedBrands,
@@ -40,25 +42,50 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
             maxPrice
         );
         setFilteredProducts(filtered);
-        setLoading(false); // Stop loading after data is fetched
+        setLoading(false);
     };
 
-    // Handle brand change
     const handleBrandChange = async (selectedBrands) => {
-        setLoading(true); // Start loading
+        setLoading(true);
         setSelectedBrands(selectedBrands);
 
-        // Make API call to get filtered products by brand
         const filtered = await GlobalApi.getProductsByCategoryWithFilters(
             categoryName,
             selectedBrands,
             minPrice,
             maxPrice
         );
-        console.log("With brands", filtered);
         setFilteredProducts(filtered);
-        setLoading(false); // Stop loading after data is fetched
+        setLoading(false);
     };
+
+    function handleFilterChange(selectedFilter) {
+        setFilter(selectedFilter);
+    }
+
+    useEffect(() => {
+        let sortedList = [...filteredProducts];
+        switch (filter) {
+            case "byNewest":
+                sortedList.sort((a, b) => new Date(b.date) - new Date(a.date));
+                break;
+            case "byPriceLH":
+                sortedList.sort((a, b) => a.mrp - b.mrp);
+                break;
+            case "byPriceHL":
+                sortedList.sort((a, b) => b.mrp - a.mrp);
+                break;
+            case "byNameAZ":
+                sortedList.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case "byNameZA":
+                sortedList.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            default:
+                sortedList = filteredProducts;
+        }
+        setSortedProducts(sortedList);
+    }, [filter, filteredProducts]);
 
     return (
         <div className="container mx-auto">
@@ -81,7 +108,7 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
 
             <div className="md:flex md:flex-row gap-5 py-5 md:py-10">
                 <div className="basis-1/4">
-                    <PriceRangeFilter onPriceChange={handlePriceChange} />
+                    <PriceRangeFilter onPriceChange={handlePriceChange} minPriceShow={minPriceShow} maxPriceShow={maxPriceShow} />
 
                     <div className="border-b-[1px] lg:border-[1px] border-solid border-[#E7E7E7] lg:rounded-[5px] px-4 lg:px-3.5 py-4 lg:py-4 bg-[#FCFCFC] mb-0 lg:mb-3.5">
                         <div className="filter-title flex justify-between items-center pb-2">
@@ -99,13 +126,13 @@ function ProductCategoryClient({ initialProductList, categoryList, theCategory, 
                             {productCount ? `${catName} has ${productCount} products` : "Our Popular Products"}
                         </h2>
                         <div>
-                            <SelectProductFilter />
+                            <SelectProductFilter onFilterChange={handleFilterChange} />
                         </div>
                     </div>
                     {loading ? (
                         <p>Loading...</p>
                     ) : (
-                        <ProductList productList={filteredProducts} categoryName={categoryName} />
+                        <ProductList productList={sortedProducts} categoryName={categoryName} />
                     )}
                 </div>
             </div>

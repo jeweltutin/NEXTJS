@@ -9,7 +9,7 @@ async function ProductCategoryPage({ params }) {
 
     // Pass the category ID to get the filtered brands
     const brandsForFilter = await GlobalApi.getBrandsForFilter(theCategory[0].slug);
-    console.log("brandsForFilter: ", theCategory[0].id);
+    //console.log("brandsForFilter: ", theCategory[0].id);
     
     return (
         <ProductCategoryClient

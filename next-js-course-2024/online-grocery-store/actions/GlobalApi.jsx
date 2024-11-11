@@ -73,7 +73,7 @@ const getProductsByCategoryWithFilters = async (categoryName, selectedBrands = [
             filters += `&filters[mrp][$lte]=${maxPrice}`; // Less than or equal to maxPrice
         }
     }
-    console.log(filters);
+    //console.log(filters);
 
     // Make the API request with the constructed filters
     try {
@@ -86,7 +86,7 @@ const getProductsByCategoryWithFilters = async (categoryName, selectedBrands = [
 }
 
 
-const getProductsByCategoryWithPriceRange = async (categoryName, minPrice, maxPrice) => {
+/* const getProductsByCategoryWithPriceRange = async (categoryName, minPrice, maxPrice) => {
     let filters = `filters[categories][slug][$eq]=${categoryName}`;
     if (minPrice !== undefined && maxPrice !== undefined) {
         filters += `&filters[mrp][$gte]=${minPrice}&filters[mrp][$lte]=${maxPrice}`;
@@ -98,9 +98,9 @@ const getProductsByCategoryWithPriceRange = async (categoryName, minPrice, maxPr
         console.error("Error fetching products by category:", error);
         return [];
     }
-};
+}; */
 
-const getProductsByCategoryWithBrands = async (categoryName, selectedBrands = []) => {
+/* const getProductsByCategoryWithBrands = async (categoryName, selectedBrands = []) => {
     let filters = `filters[categories][slug][$eq]=${categoryName}`;
 
     // Add brand filters if any brands are selected
@@ -119,36 +119,7 @@ const getProductsByCategoryWithBrands = async (categoryName, selectedBrands = []
         console.error("Error fetching products by category and brands:", error);
         return [];
     }
-}
-
-
-// In your GlobalApi.jsx or wherever you use selectedBrands
-const getProductsByCategoryWithBrand = async (categoryName, selectedBrands = [], minPrice = 0, maxPrice = 0) => {
-    // Initialize the base filters with the selected category
-    let filters = `filters[categories][slug][$eq]=${categoryName}`;
-
-    // Add price filters if provided
-    if (minPrice && maxPrice) {
-        filters += `&filters[price][$gte]=${minPrice}&filters[price][$lte]=${maxPrice}&populate[images]=true`;
-    }
-
-    // Add brand filters if any brands are selected
-    if (selectedBrands.length > 0) {
-        const brandFilters = selectedBrands
-            .map(brand => `filters[brands][name][$eq]=${brand}`)
-            .join("&");
-        filters += `&${brandFilters}`;
-    }
-
-    // Make the API request with the constructed filters
-    try {
-        const response = await axiosClient.get(`/products?${filters}&populate=brand&populate[images]=true`);
-        return response.data.data;
-    } catch (error) {
-        console.error("Error fetching products by category and brands:", error);
-        return [];
-    }
-};
+} */
 
 /* const getProductsByCategoryWithFilters = (category, minPrice, maxPrice, selectedBrands) => {
     let url = `/products?filters[categories][slug][$eq]=${category}&populate=brand`;
@@ -167,10 +138,6 @@ const getProductsByCategoryWithBrand = async (categoryName, selectedBrands = [],
         return resp.data.data;
     });
 }; */
-
-
-
-
 
 /* const getBrandsForFilter = async () => {
     const brands = await axiosClient.get("/brands");
@@ -217,8 +184,6 @@ const getBrandsForFilter = async (categorySlug) => {
 const getSingleProduct = (productSlug) => axiosClient.get("/products?filters[slug][$eq]=" + productSlug + "&populate=*").then(resp => {
     return resp.data.data;
 })
-
-
 
 const testfunc = (username, email, phone) => {
     console.log(phone);
@@ -413,8 +378,7 @@ export default {
     getAllProducts,
     getSingleProduct,
     getProductsByCategory,
-    getProductsByCategoryWithPriceRange,
-    getProductsByCategoryWithBrands,
+    //getProductsByCategoryWithBrands,
     getProductsByCategoryWithFilters,
     getBrandsForFilter,
     registerUser,
@@ -446,8 +410,15 @@ export default {
 // Select fields name , mrp and description Select where product id = 6
 //http://localhost:1337/api/products?fields=name,mrp,description&filters[id][$eq]=6
 
+// Products filter with category slug
+//http://localhost:1337/api/products?filters[categories][slug][$eq]=smart-watch
+
 //Selected category products with brand
 //http://localhost:1337/api/products?filters[categories][slug][$eq]=smart-watch&populate=brand
+
+////Selected category products with price range
+//http://127.0.0.1:1337/api/products?category=smart-watch&minPrice=2000&maxPrice=5571
+//http://127.0.0.1:1337/api/products?filters[categories][slug][$eq]=smart-watch&filters[mrp][$gte]=5&filters[mrp][$lte]=8000
 
 // get products from cart for the selected user
 //http://localhost:1337/api/user-carts?filters[userId][$eq]=9&populate=*
