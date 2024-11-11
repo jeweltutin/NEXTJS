@@ -1,3 +1,4 @@
+import Loading from './Loading';
 import ProductItem from './ProductItem';
 import SelectProductFilter from './selectProductFilter';
 
@@ -5,7 +6,8 @@ function ProductList({ productList }) {
     if (!productList || productList.length === 0) {
         return (
             <div className="text-center mt-10">
-                <p>No products found based on your filters.</p>
+                {/* <p>No products found based on your filters.</p> */}
+                <Loading />
             </div>
         );
     }
