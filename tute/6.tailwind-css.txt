@@ -7,8 +7,12 @@ https://ui.shadcn.com/docs
 // Tailwind ready code -used in groceryShop app
 https://tailblocks.cc/
 
-// Tailwind profile page template free
+// Tailwind profile page template free -used in groceryShop app
 https://tailwindflex.com/tag/profile
+
+// Tailwind cart page template free -used in groceryShop app
+https://tailwindflex.com/tag/shopping-cart
+https://readymadeui.com/tailwind-ecommerce/shopping-cart
 
 //Tailwind CSS Modal - Flowbite ready and used in groceryShop app
 https://flowbite.com/docs/components/modal/

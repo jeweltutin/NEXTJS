@@ -281,7 +281,8 @@ const getCartItems = (userId, token) => axiosClient.get('/user-carts?filters[use
         actualPrice: item?.products[0]?.mrp,
         id: item.documentId,
         product: item?.products[0]?.id,
-        //productDocId: item?.products[0]?.documentId
+        // productDocId: item?.products[0]?.documentId
+        stock: item?.products[0]?.stock
     }))
     return cartItemsList;
 })

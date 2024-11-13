@@ -94,3 +94,22 @@ body {
   background-color: #4CAF50;
   color: white;
 }
+
+/* Regular increase button */
+.btn-increase {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Disabled button */
+.btn-disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Decrease button */
+.btn-decrease {
+  background-color: #f44336;
+  color: white;
+}
+

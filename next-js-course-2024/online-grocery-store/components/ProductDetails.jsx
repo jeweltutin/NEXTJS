@@ -108,7 +108,8 @@ function ProductDetails({ theProduct }) {
                 products: theProduct[0].documentId,
                 users_permissions_user: user.id,
                 userId: user.id,
-                productId: theProduct[0].id
+                productId: theProduct[0].id,
+                stock: theProduct[0].stock
             }
         }
         //console.log(data);

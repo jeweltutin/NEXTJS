@@ -36,7 +36,7 @@ export default function PopUpModal({ isOpen, setIsOpen, heading, popUpImage }) {
                                     <Image src={popUpImage} width={110} height={95} alt='Out of Stock' />
                                 </div>
                                 <h3 className="mb-5 text-lg font-normal text-gray-500">{heading ? heading : "Are you sure you want to delete this product?"}</h3>
-                                <Link href={"/"}>
+                                <Link href={"/cart"}>
                                     <button type="button" className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5">
                                         Go to Cart
                                     </button>

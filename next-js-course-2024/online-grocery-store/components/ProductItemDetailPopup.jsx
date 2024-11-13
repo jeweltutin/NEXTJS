@@ -90,7 +90,8 @@ function ProductItemDetailPopup({ product, setOPenDialog }) {
                 products: product.id,
                 users_permissions_user: user.id,
                 userId: user.id,
-                productId: product.id
+                productId: product.id,
+                stock: product.stock
             }
         }
         console.log(data);
