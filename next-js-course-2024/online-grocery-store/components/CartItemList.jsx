@@ -17,7 +17,7 @@ function CartItemList({ cartItemList, onDeleteItem }) {
                                 <h2 className="font-bold">{cart.name}</h2>
                                 {cart.color && <h3 className="text-sm"><small>Color: {cart.color}</small></h3> }
                                 <h3 className="text-sm"><small>Quantity: {cart.quantity}</small></h3>
-                                <h4 className="text-lg font-bold">Tk {cart.amount}</h4>
+                                <h4 className="text-lg font-bold">Tk {cart.amount * cart.quantity}</h4>
                             </div>                           
                         </div>
                         <LucideTrash2 onClick={() => onDeleteItem(cart.id)} className="cursor-pointer" />

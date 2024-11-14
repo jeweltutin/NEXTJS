@@ -78,7 +78,7 @@ function Header() {
     }
 
     useEffect(() => {
-        const total = cartItemList.reduce((sum, element) => sum + element.amount, 0);
+        const total = cartItemList.reduce((sum, element) => sum + (element.amount * element.quantity), 0);
         setSubTotal(total.toFixed(2));
     }, [cartItemList]);
 

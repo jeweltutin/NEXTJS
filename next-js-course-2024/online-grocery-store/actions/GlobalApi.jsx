@@ -308,6 +308,47 @@ const getCartItemsForOrder = (userId, token) => axiosClient.get('/user-carts?fil
     return cartItemsList;
 })
 
+/* async function updateCartItem(cartItemId, updatedData, token) {
+    try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}api/user-carts/${cartItemId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ data: updatedData }),  // Wrap in a data object for Strapi
+        });
+
+        if (!response.ok) {
+            const errorResponse = await response.json();
+            console.error(`Error: ${response.status}`, errorResponse);
+            throw new Error(`Error: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error('Error updating cart item:', error);
+    }
+} */
+
+const updateCartItem = async (cartItemId, updatedData, token) => {
+    try {
+        const response = await axiosClient.put(`/user-carts/${cartItemId}`,
+            { data: updatedData }, // Wrapping `updatedData` in `data` object for Strapi
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        console.log(response.data.data); // Log the updated item data
+        return response.data.data;
+    } catch (error) {
+        console.error('Error updating cart item:', error);
+    }
+};
+
+
 const deleteCartItem = (id, token) => axiosClient.delete('/user-carts/' + id, {
     headers: {
         Authorization: "Bearer " + token
@@ -330,7 +371,7 @@ async function stockUpdate(item, token) {
         headers: { Authorization: "Bearer " + token }
     });
     const product = response.data.data;
-    console.log("Up Pro:", product);
+    //console.log("Up Pro:", product);
 
     // Update stock based on the order quantity
     return axiosClient.put(`/products/${item.product}`, {
@@ -387,6 +428,7 @@ export default {
     signIn,
     addToCart,
     getCartItems,
+    updateCartItem,
     deleteCartItem,
     getCartItemsForOrder,
     createOrder,

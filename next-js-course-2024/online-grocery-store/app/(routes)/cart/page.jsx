@@ -3,9 +3,13 @@ import GlobalApi from '@/actions/GlobalApi';
 import PopUpModal from '@/components/PopUpModal';
 import { CarTaxiFront, Delete } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 function Cart() {
+    const router = useRouter();
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
     const [cartItemList, setCartItemList] = useState([]);
@@ -19,7 +23,7 @@ function Cart() {
     async function getCartData() {
         const cartList = await GlobalApi.getCartItems(user.id, token);
         setCartItemList(cartList);
-        console.log(cartItemList);
+        //console.log(cartItemList);
     }
 
     useEffect(() => {
@@ -28,6 +32,8 @@ function Cart() {
         if (jwt) {
             setToken(jwt);
             setUser(userData);
+        } else {
+            router.push("/sign-in");
         }
     }, []);
 
@@ -82,6 +88,8 @@ function Cart() {
                     //if (item.quantity < 5) {
                     item.quantity += 1;
                     setStockWarning(null); // Clear warning if quantity is within stock
+                    //GlobalApi.updateCartItem(item.id, { quantity: item.quantity, amount: item.amount * item.quantity }, token);
+                    //GlobalApi.updateCartItem(item.id, { quantity: item.quantity }, token);
                 } else {
                     setHeadingText(`Only ${item.stock} items left in stock!`);
                     setPopUpImage("/images/insufficient.jpg");
@@ -94,22 +102,49 @@ function Cart() {
     };
 
     const handleDecreaseQty = (cartItem) => {
+        console.log(cartItem.id);
         if (cartItem.quantity > 1) {
             setCartItemList(cartItemList.map(item => {
                 if (item.id === cartItem.id) {
                     item.quantity -= 1;
                     setStockWarning(null); // Clear warning when quantity decreases
+                    //GlobalApi.updateCartItem(item.id, { quantity: item.quantity, amount: item.amount * item.quantity }, token);
+                    //GlobalApi.updateCartItem(item.id, { quantity: item.quantity }, token);
                 }
                 return item;
             }));
         }
     };
 
+    function onDeleteCartItem(cartItemId) {
+        //alert(cartItemId);
+        GlobalApi.deleteCartItem(cartItemId, token).then(() => {
+            toast('Item removed!');
+            getCartData();
+        });
+    }
+
     // Calculate total amount whenever cartItemList changes
     useEffect(() => {
         const total = cartItemList.reduce((acc, item) => acc + item.amount * item.quantity, 0);
         setTotalAmount(total);
     }, [cartItemList]);
+
+    async function goCheckoutPage() {
+        if (token) {
+            // Update all cart items in Strapi before navigating
+           for (const item of cartItemList) {
+                //await GlobalApi.updateCartItem(item.id, { quantity: item.quantity, amount: item.amount * item.quantity }, token);
+                await GlobalApi.updateCartItem(item.id, { quantity: item.quantity }, token);
+            }
+            router.push("/checkout");
+            router.refresh();
+        } else {
+            router.push("/sign-in");
+        }
+    }
+
+    
 
     return (
         <div className="bg-gray-100 h-auto py-8 ">
@@ -153,7 +188,7 @@ function Cart() {
                                             </td>
                                             <td className="py-4 text-center">Tk {cartItem.amount * cartItem.quantity}</td>
                                             <td className="py-4 flex justify-end">
-                                                <Delete className="text-primary cursor-pointer" />
+                                                <Delete onClick={() => onDeleteCartItem(cartItem.id)} className="text-primary cursor-pointer" />
                                             </td>
                                         </tr>
                                     ))}
@@ -170,7 +205,8 @@ function Cart() {
                             </div>
                             <div className="flex justify-between mb-2">
                                 <span>Taxes</span>
-                                <span>Tk {(totalAmount * 0.1).toFixed(2)}</span>
+                                {/* <span>Tk {(totalAmount * 0.1).toFixed(2)}</span> */}
+                                <span>0.00</span>
                             </div>
                             <div className="flex justify-between mb-2">
                                 <span>Shipping</span>
@@ -179,11 +215,13 @@ function Cart() {
                             <hr className="my-2" />
                             <div className="flex justify-between mb-2">
                                 <span className="font-semibold">Total</span>
-                                <span className="font-semibold">Tk {(totalAmount * 1.1).toFixed(2)}</span>
+                                {/* <span className="font-semibold">Tk {(totalAmount * 1.1).toFixed(2)}</span> */}
+                                <span className="font-semibold">Tk {totalAmount.toFixed(2)}</span>
                             </div>
-                            <button className="bg-primary text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
-                            <button className="bg-white text-black py-2 px-4 border rounded-lg mt-4 w-full">Continue Shopping</button>
-
+                            <button onClick={() => goCheckoutPage()} className="bg-primary text-white py-2 px-4 rounded-lg mt-4 w-full">Checkout</button>
+                            <Link href={"/shop"}>
+                                <button className="bg-white text-black py-2 px-4 border rounded-lg mt-4 w-full">Continue Shopping</button>
+                            </Link>
                             <div className="mt-4 flex flex-wrap justify-center gap-4">
                                 <Image src="/images/master.webp" width={256} height={100} alt="card1" className="w-10 object-contain" />
                                 <Image src="/images/visa.webp" width={256} height={100} alt="card2" className="w-10 object-contain" />

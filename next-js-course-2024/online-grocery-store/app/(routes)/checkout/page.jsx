@@ -82,7 +82,7 @@ function Checkout() {
     };
 
     useEffect(() => {
-        const total = cartItemList.reduce((sum, item) => sum + item.amount, 0);
+        const total = cartItemList.reduce((sum, item) => sum + (item.amount * item.quantity), 0);
         setSubTotal(total);
     }, [cartItemList]);
 
