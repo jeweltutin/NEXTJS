@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowBigRight, BikeIcon, HomeIcon, WalletCards } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { toast } from "sonner";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -13,6 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
 import Link from "next/link";
 import Image from "next/image";
+import { UpdateCartContext } from "@/app/context/UpdateCartContext";
 
 function Checkout() {
     const router = useRouter();
@@ -35,6 +36,8 @@ function Checkout() {
     const [address, setAddress] = useState();
     const [shippingCharge, setShippingCharge] = useState();
     const [isChecked, setIsChecked] = useState(false);
+
+    const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
 
     // Check if the user is logged in
     useEffect(() => {
@@ -152,13 +155,18 @@ function Checkout() {
 
             // Success Message
             toast("Order placed successfully!");
-
+            
             // Clear the cart if necessary
             if (!productSlug) {
                 cartItemList.forEach((item) => {
                     GlobalApi.deleteCartItem(item.id, token);
                 });
-                getCartItems();
+                //
+                //setUpdateCart((prevUpdateCart) => !prevUpdateCart);
+                await getCartItems(); 
+                //console.log("Setting updateCart to:", !updateCart); 
+                setUpdateCart(!updateCart);
+                //setUpdateCart((prevUpdateCart) => !prevUpdateCart); // Trigger header update        
             }
 
             // Redirect to order confirmation

@@ -5,8 +5,9 @@ import { CarTaxiFront, Delete } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'sonner';
+import { UpdateCartContext } from '@/app/context/UpdateCartContext';
 
 function Cart() {
     const router = useRouter();
@@ -19,6 +20,8 @@ function Cart() {
     const [isOpen, setIsOpen] = useState(false);
     let [popUpImage, setPopUpImage] = useState("");
     let [headingText, setHeadingText] = useState("");
+
+    const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
 
     async function getCartData() {
         const cartList = await GlobalApi.getCartItems(user.id, token);
@@ -41,7 +44,7 @@ function Cart() {
         if (user && token) {
             getCartData();
         }
-    }, [user, token]);
+    }, [user, token, updateCart]);
 
     // Function to handle increasing quantity
     /* const handleIncreaseQty = (cartItem) => {
@@ -102,7 +105,7 @@ function Cart() {
     };
 
     const handleDecreaseQty = (cartItem) => {
-        console.log(cartItem.id);
+        //console.log(cartItem.id);
         if (cartItem.quantity > 1) {
             setCartItemList(cartItemList.map(item => {
                 if (item.id === cartItem.id) {
@@ -121,19 +124,36 @@ function Cart() {
         GlobalApi.deleteCartItem(cartItemId, token).then(() => {
             toast('Item removed!');
             getCartData();
+            setUpdateCart(!updateCart);
         });
     }
 
     // Calculate total amount whenever cartItemList changes
+    /*     useEffect(() => {
+            const total = cartItemList.reduce((acc, item) => acc + item.amount * item.quantity, 0);
+            setTotalAmount(total);
+        }, [cartItemList]); */
+
     useEffect(() => {
-        const total = cartItemList.reduce((acc, item) => acc + item.amount * item.quantity, 0);
+        /* Using for loop:
+        let total = 0;
+        for (let i = 0; i < cartItemList.length; i++) {
+            total += cartItemList[i].amount * cartItemList[i].quantity;
+        }
+        setTotalAmount(total); */
+
+        //Using forEach loop:
+        let total = 0;
+        cartItemList.forEach(item => {
+            total += item.amount * item.quantity;
+        });
         setTotalAmount(total);
     }, [cartItemList]);
 
     async function goCheckoutPage() {
         if (token) {
             // Update all cart items in Strapi before navigating
-           for (const item of cartItemList) {
+            for (const item of cartItemList) {
                 //await GlobalApi.updateCartItem(item.id, { quantity: item.quantity, amount: item.amount * item.quantity }, token);
                 await GlobalApi.updateCartItem(item.id, { quantity: item.quantity }, token);
             }
@@ -144,7 +164,7 @@ function Cart() {
         }
     }
 
-    
+
 
     return (
         <div className="bg-gray-100 h-auto py-8 ">

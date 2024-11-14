@@ -35,7 +35,7 @@ function Header() {
     const [token, setToken] = useState(null);
     const [totalCartItem, setTotalCartItem] = useState(0);
     const router = useRouter();
-    const { updateCart } = useContext(UpdateCartContext);
+    const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
     const [cartItemList, setCartItemList] = useState([]);
     const [subTotal, setSubTotal] = useState(0);
 
@@ -52,6 +52,7 @@ function Header() {
 
     useEffect(() => {
         getCartItems();
+        console.log("Header re-rendered, updateCart value:", updateCart);
     }, [updateCart, user, token]);
 
     const onSignOut = () => {
