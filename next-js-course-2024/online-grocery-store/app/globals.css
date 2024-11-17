@@ -76,6 +76,19 @@ body {
     @apply bg-background text-foreground;
   }
 }
+.dialog-overlay {
+    position: fixed; /* Fix the dialog position to the screen */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+    z-index: 9999; /* Ensure the dialog is on top */
+}
+
+.carousel-wrapper {
+  position: relative;
+}
 
 .pagination-button {
   background-color: #f3f3f3;
