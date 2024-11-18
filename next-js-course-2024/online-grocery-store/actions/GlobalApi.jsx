@@ -19,10 +19,10 @@ async function getCategoryList() {
     return resp;
 }
 
-async function singleCategory(categorySlug) {
-    const theCategory = await axiosClient.get("/categories?filters[slug][$eq]=" + categorySlug + "&populate=banner");
-    const respcat = theCategory.data.data;
-    return respcat;
+async function getAboutUsData() {
+    const aboutData = await axiosClient.get("/about-page?populate[banner]=true");
+    const resp = aboutData.data.data;
+    return resp;
 }
 
 const getAllProducts = () => {
@@ -31,6 +31,76 @@ const getAllProducts = () => {
             return resp.data.data;
         })
     )
+}
+
+const fetchTop12Products = async () => {
+    try {
+        const response = await axiosClient.get('/products', {
+            params: {
+                populate: {
+                    images: true, // Populate images field
+                    categories: true
+                },
+                sort: ['id:desc'], // Sort by ID in descending order (or use 'createdAt' or another field)
+                pagination: {
+                    page: 1,
+                    pageSize: 12, // Fetch 12 products only
+                },
+            },
+        });
+
+        return response.data.data; // Return raw products data
+    } catch (error) {
+        console.error('Error fetching products:', error);
+        return [];
+    }
+};
+
+async function fetch12ProductsInACategory (){
+    try {
+        const response = await axiosClient.get('/products', {
+            params: {
+                populate: {
+                    images: true,  // Populate images field
+                    categories: true  // Populate categories field
+                },
+                sort: ['id:desc'],  // Sort by ID in descending order
+                pagination: {
+                    page: 1,
+                    pageSize: 12,  // Fetch 12 products only
+                },
+                filters: {
+                    categories: {
+                        slug: 'smart-watch',  // Filter products by category slug "watch"
+                    }
+                }
+            },
+        });
+    
+        return response.data.data;  // Return raw products data
+    } catch (error) {
+        console.error("Error fetching products: ", error);
+        throw error;
+    }
+    
+}
+
+const fetchRandom12Products = async () => {
+    try {
+        const response = await axiosClient.get('/products?populate[images]=true');
+        const allProducts = response.data.data;
+        const randomProducts = allProducts.sort(() => 0.5 - Math.random()).slice(0, 12);
+        return randomProducts;
+    } catch (error) {
+        console.error('Error fetching random products:', error);
+        return [];
+    }
+};
+
+async function singleCategory(categorySlug) {
+    const theCategory = await axiosClient.get("/categories?filters[slug][$eq]=" + categorySlug + "&populate=banner");
+    const respcat = theCategory.data.data;
+    return respcat;
 }
 
 const getProductsByCategory = (category) => axiosClient.get('/products?filters[categories][slug][$in]=' + category + '&populate=*').then(resp => {
@@ -418,6 +488,10 @@ export default {
     getCategoryList,
     singleCategory,
     getAllProducts,
+    getAboutUsData,
+    fetchTop12Products,
+    fetch12ProductsInACategory,
+    fetchRandom12Products,
     getSingleProduct,
     getProductsByCategory,
     //getProductsByCategoryWithBrands,
@@ -449,6 +523,9 @@ export default {
 
 // Select where product id = 6
 //http://localhost:1337/api/products?filters[id][$eq]=6
+
+//Get products with images & sorted by id desc
+//http://localhost:1337/api/products?populate[images]=true&sort[id]=desc
 
 // Select fields name , mrp and description Select where product id = 6
 //http://localhost:1337/api/products?fields=name,mrp,description&filters[id][$eq]=6

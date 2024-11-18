@@ -1,6 +1,5 @@
 import Loading from './Loading';
 import ProductItem from './ProductItem';
-import SelectProductFilter from './selectProductFilter';
 
 function ProductList({ productList }) {
     if (!productList || productList.length === 0) {

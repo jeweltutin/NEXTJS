@@ -4,7 +4,7 @@ import "react-multi-carousel/lib/styles.css";
 import ProductItemsFSlider from "./ProductItemsFSlider";
 import Image from "next/image";
 
-function PopularProductsSlider({ productList }) {
+function SmartWatchProductsSlider({ productList }) {
 
     const responsive = {
         superLargeDesktop: {
@@ -32,10 +32,10 @@ function PopularProductsSlider({ productList }) {
     return (
         <div className="mt-1 px-5 xl:px-1">
             <h2 className="text-green-600 font-bold text-2xl py-4">
-                Popular Products
+                Smart Watch
             </h2>
             <div className="pb-5 w-full">
-                <Image src={"/images/banner-home01.webp"} width={1600} height={200} alt="banner" className="object-contain w-full" />
+                <Image src={"/images/x-watch.jpg"} width={1600} height={200} alt="banner" className="object-contain w-full" />
             </div>
             <Carousel responsive={responsive} autoPlay={false} ssr={true} infinite={true}  >
                 {productList.map((product) => (
@@ -46,4 +46,4 @@ function PopularProductsSlider({ productList }) {
     );
 }
 
-export default PopularProductsSlider;
+export default SmartWatchProductsSlider;
