@@ -5,7 +5,7 @@ import PopularProductsSlider from "@/components/home/PopularProductsSlider";
 import SectionWBanner from "@/components/home/SectionWBanner";
 import SmartWatchProductsSlider from "@/components/home/SmartWatchProductsSlider";
 import TopProducts from "@/components/home/TopProducts";
-import ProductList from "@/components/ProductList";
+//import ProductList from "@/components/ProductList";
 import Slider from "@/components/Slider";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import Image from "next/image";
 export default async function Home() {
   const sliderList = await GlobalApi.getSliders();
   const categoryList = await GlobalApi.getCategoryList();
-  const productList = await GlobalApi.getAllProducts();
+  //const productList = await GlobalApi.getAllProducts();
   const dec12Products = await GlobalApi.fetchTop12Products();
   const randomProducts = await GlobalApi.fetchRandom12Products();
   const watchCat12ProDec = await GlobalApi.fetch12ProductsInACategory();

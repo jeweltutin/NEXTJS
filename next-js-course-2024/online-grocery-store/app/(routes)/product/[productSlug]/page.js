@@ -13,4 +13,4 @@ async function Product({ params }) {
     )
 }
 
-export default Product
+export default Product;

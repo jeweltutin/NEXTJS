@@ -109,7 +109,7 @@ function Header() {
                 <div className="hidden xl:block">
                     <nav className="md:ml-auto flex flex-wrap items-end text-base justify-end">
                         <Link href={"/shop"} className="mr-5 hover:text-gray-900">Shop</Link>
-                        <Link href={"/about"} className="mr-5 hover:text-gray-900">About</Link>
+                        <Link href={"/about-us"} className="mr-5 hover:text-gray-900">About</Link>
                         <Link href={"/"} className="mr-5 hover:text-gray-900">Outlets</Link>
                         <Link href={"/contact"} className="mr-5 hover:text-gray-900">Contact</Link>
                     </nav>

@@ -136,7 +136,9 @@ function ProductItemDetailPopup({ product, setOPenDialog }) {
                             {loading ? "Wait .." + <LoaderCircle className="animate-spin" /> : "Add To Cart"}
                         </Button>
                     </div>
-                    <h3><span className="font-bold">Category: </span>{product.categories[0].name}</h3>
+                    {product && product.categories &&
+                        <h3><span className="font-bold">Category: </span>{product?.categories[0]?.name}</h3>
+                    }
                 </div>
             </div>
             {/* <div>

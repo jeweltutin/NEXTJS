@@ -1,0 +1,85 @@
+To display rich text (Markdown) content in a Next.js application, you can use a library like react-markdown to parse and render Markdown content. Below are the steps to implement this:
+
+Install react-markdown: To render Markdown content, install the react-markdown package:
+yarn add react-markdown
+
+import GlobalApi from '@/actions/GlobalApi';
+import ReactMarkdown from 'react-markdown';
+
+async function AboutUs() {
+  const aboutData = await GlobalApi.getAboutUsData();
+
+  return (
+    <div className="container mx-auto">
+      <h2>{aboutData.title}</h2>
+      <div className="prose max-w-none">
+        <ReactMarkdown>{aboutData.body || "No content available"}</ReactMarkdown>
+      </div>
+    </div>
+  );
+}
+
+export default AboutUs;
+
+Optional Styling: Use the TailwindCSS Typography plugin to style your Markdown content for a clean and professional look:
+
+Install the plugin:
+yarn add @tailwindcss/typography
+Update your tailwind.config.js:
+module.exports = {
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {},
+  },
+  plugins: [require('@tailwindcss/typography')],
+};
+
+
+
+--------------------------------
+How to Enable HTML in Markdown?
+Install Required Packages: You need the rehype-raw plugin to process raw HTML in Markdown:
+
+yarn add rehype-raw
+Update Your AboutUs Component: Modify the component to include the rehype-raw plugin for rendering HTML:
+
+import GlobalApi from '@/actions/GlobalApi';
+import ReactMarkdown from 'react-markdown';
+import rehypeRaw from 'rehype-raw';
+
+async function AboutUs() {
+  const aboutData = await GlobalApi.getAboutUsData();
+
+  return (
+    <div className="container mx-auto">
+      <h2>{aboutData.title}</h2>
+      <div className="prose max-w-none">
+        <ReactMarkdown rehypePlugins={[rehypeRaw]}>{aboutData.body}</ReactMarkdown>
+      </div>
+    </div>
+  );
+}
+
+export default AboutUs;
+
+Example Markdown with HTML
+
+**This is Markdown content.**
+
+<p style="color: red;">This is raw HTML content.</p>
+
+<ul>
+  <li>Markdown Item 1</li>
+  <li>Markdown Item 2</li>
+</ul>
+
+<div class="custom-class">Custom HTML Block</div>
+With the rehype-raw plugin enabled, both Markdown and HTML content will render properly.
+
+Important Notes
+Security: Be cautious when enabling raw HTML, especially if the Markdown content comes from untrusted sources. If you trust the content (like an admin-created Strapi field), it should be fine.
+CSS Styling: Tailwind's typography plugin styles standard Markdown elements but not custom HTML. Add appropriate Tailwind classes manually or extend your styles as needed.
+Customization: You can use components prop in react-markdown to customize how specific tags (like <p>, <ul>, etc.) are rendered.
+
+//Rendering Strapi's New Rich Text Block Editor Data in Next 14
+https://www.youtube.com/watch?v=px7wgkXoufU

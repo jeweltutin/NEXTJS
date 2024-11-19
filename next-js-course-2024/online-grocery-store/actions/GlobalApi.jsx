@@ -87,7 +87,7 @@ async function fetch12ProductsInACategory (){
 
 const fetchRandom12Products = async () => {
     try {
-        const response = await axiosClient.get('/products?populate[images]=true');
+        const response = await axiosClient.get('/products?populate[categories]=true&populate[images]=true');
         const allProducts = response.data.data;
         const randomProducts = allProducts.sort(() => 0.5 - Math.random()).slice(0, 12);
         return randomProducts;
@@ -96,6 +96,30 @@ const fetchRandom12Products = async () => {
         return [];
     }
 };
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1)); // Random index
+        [array[i], array[j]] = [array[j], array[i]]; // Swap
+    }
+    return array;
+}
+
+async function getRelatedProducts(categorySlug) {
+    try {
+        // const response = await axiosClient.get("products?filters[categories][slug][$eq]="+categorySlug+"&populate[images]=true");
+        // const rltdProducts = response.data.data; 
+        // const relatedProducts = rltdProducts.sort(() => 0.5 - Math.random()).slice(0, 4);
+
+        const response = await axiosClient.get(`products?filters[categories][slug][$eq]=${categorySlug}&pagination[page]=1&pagination[pageSize]=10&populate[images]=true`);
+        const rltdProducts = response.data.data;
+        const shuffledProducts = shuffleArray(rltdProducts).slice(0, 4);
+        return shuffledProducts;
+    } catch (error) {
+        console.error('Error fetching random products:', error);
+        return [];
+    }    
+}
 
 async function singleCategory(categorySlug) {
     const theCategory = await axiosClient.get("/categories?filters[slug][$eq]=" + categorySlug + "&populate=banner");
@@ -492,6 +516,7 @@ export default {
     fetchTop12Products,
     fetch12ProductsInACategory,
     fetchRandom12Products,
+    getRelatedProducts,
     getSingleProduct,
     getProductsByCategory,
     //getProductsByCategoryWithBrands,
