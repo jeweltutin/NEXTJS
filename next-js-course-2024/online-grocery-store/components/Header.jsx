@@ -150,7 +150,9 @@ function Header() {
                         <DropdownMenuContent>
                             <DropdownMenuLabel>My Account</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Profile</DropdownMenuItem>
+                            <Link href={"/profile"}>
+                                <DropdownMenuItem>Profile</DropdownMenuItem>
+                            </Link>
                             <Link href={'/my-order'}>
                                 <DropdownMenuItem>My Order</DropdownMenuItem>
                             </Link>

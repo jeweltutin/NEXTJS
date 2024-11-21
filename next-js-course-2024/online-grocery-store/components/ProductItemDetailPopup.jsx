@@ -23,7 +23,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 
 
-function ProductItemDetailPopup({ product, setOPenDialog }) {
+function ProductItemDetailPopup({ product, setOpenDialog }) {
     const token = sessionStorage.getItem("jwt");
     const user = JSON.parse(sessionStorage.getItem('user'));
 
@@ -58,7 +58,7 @@ function ProductItemDetailPopup({ product, setOPenDialog }) {
             }, 3000);  */
 
             alert("This product is temporarily out of stock.");
-            setOPenDialog(false);
+            setOpenDialog(false);
             return false;
         } else if (product.stock < quantity) {
             // Insufficient stock
@@ -70,7 +70,7 @@ function ProductItemDetailPopup({ product, setOPenDialog }) {
             }, 3000);  */
             setLoading(false);
             alert(`Only ${product.stock} items left in stock!`);
-            setOPenDialog(false);
+            setOpenDialog(false);
             return false;
         } else {
             // Enough stock available
@@ -100,7 +100,7 @@ function ProductItemDetailPopup({ product, setOPenDialog }) {
             //toast("Added to Cart");
             setUpdateCart(!updateCart);
             setLoading(false);
-            setOPenDialog(false);
+            setOpenDialog(false);
             //setIsOpen(true);
         }, (e) => {
             console.log(e);

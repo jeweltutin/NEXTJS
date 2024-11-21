@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 function Profile() {
     const token = sessionStorage.getItem("jwt");
+    //const userData = JSON.parse(sessionStorage.getItem("user"));
 
     const [user, setUser] = useState({
         username: "",
@@ -12,26 +13,24 @@ function Profile() {
         email: "",
         mobile: "",
         about: "",
-        profileImage: "",
+        //profileImage: "",
     });
-
     const [isEditing, setIsEditing] = useState(false);
-    const [loading, setLoading] = useState(false); // Spinner state
 
     // Fetch user data
     useEffect(() => {
-        axios
-            .get("http://localhost:1337/api/users/me", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
+        axios.get("http://localhost:1337/api/users/me", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
                 setUser(response.data);
             })
             .catch((error) => {
                 console.error("Error fetching user data:", error);
             });
+        console.log("User Details: ", user);
     }, [token]);
 
     if (!user) {
@@ -47,61 +46,22 @@ function Profile() {
         }));
     };
 
-    // Handle file upload for profile picture
-    const handleFileChange = async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-
-        const formData = new FormData();
-        formData.append("files", file);
-
-        try {
-            const response = await axios.post("http://localhost:1337/api/upload", formData, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "multipart/form-data",
-                },
-            });
-
-            const uploadedFileUrl = response.data.data[0]?.url;
-            setUser((prevUser) => ({
-                ...prevUser,
-                profileImage: uploadedFileUrl, // Update profile image
-            }));
-            console.log("Profile image uploaded:", uploadedFileUrl);
-        } catch (error) {
-            console.error("Error uploading image:", error.message);
-        }
-    };
-
-    // Validate inputs before submission
-    const validateForm = () => {
-        if (!user.name.trim()) {
-            alert("Name is required");
-            return false;
-        }
-        if (!user.mobile.trim() || !/^\d{10}$/.test(user.mobile)) {
-            alert("Enter a valid 10-digit phone number");
-            return false;
-        }
-        return true;
-    };
-
     // Submit updated data
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!validateForm()) return; // Stop if validation fails
 
-        setLoading(true); // Start loading
+        //const token = "your_jwt_token_here"; // Get the token
+        const userId = user.id; // Get the user ID (can be from session or profile)
 
         try {
             const response = await axios.put(
-                `http://localhost:1337/api/users/${user.id}`,
+                `http://localhost:1337/api/users/${userId}`,
+                //"http://localhost:1337/api/users/me", // Update to /users/me for current user
                 {
                     name: user.name,
                     about: user.about,
+                    //profileImage: formData.profileImage,
                     mobile: user.mobile,
-                    profileImage: user.profileImage,
                 },
                 {
                     headers: {
@@ -110,11 +70,8 @@ function Profile() {
                 }
             );
             console.log("User profile updated:", response.data);
-            setLoading(false); // End loading
-            setIsEditing(false); // Exit editing mode
         } catch (error) {
-            console.error("Error updating profile:", error.message);
-            setLoading(false); // End loading
+            console.error("Error updating profile:", error.response?.data?.message || error.message);
         }
     };
 
@@ -126,9 +83,7 @@ function Profile() {
                     <div className="col-span-4 sm:col-span-3">
                         <div className="bg-white shadow rounded-lg p-6">
                             <div className="flex flex-col">
-                                <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">
-                                    My Account
-                                </span>
+                                <span className="text-gray-700 uppercase font-bold tracking-wider mb-2">My Account</span>
                                 <hr className="my-6 border-t border-gray-300" />
                                 <ul>
                                     <li className="mb-2">My Orders</li>
@@ -155,8 +110,8 @@ function Profile() {
                                     <>
                                         <h1 className="text-xl font-bold">{user.name}</h1>
                                         <p className="text-gray-700">{user.email}</p>
-                                        <p className="text-gray-700">{user.mobile}</p>
-                                        <p className="text-gray-700">{user.about}</p>
+                                        <p className="text-gray-700">Software Developer</p>
+                                        <p className="text-gray-700">{user.phone}</p>
                                         <button
                                             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
                                             onClick={() => setIsEditing(true)}
@@ -184,7 +139,6 @@ function Profile() {
                                                 value={user.email}
                                                 onChange={handleInputChange}
                                                 className="w-full px-4 py-2 border rounded"
-                                                disabled // Email is not editable
                                             />
                                         </div>
                                         <div className="mb-4">
@@ -206,21 +160,11 @@ function Profile() {
                                                 className="w-full px-4 py-2 border rounded"
                                             />
                                         </div>
-                                        <div className="mb-4">
-                                            <label className="block text-gray-700 font-bold">Profile Picture</label>
-                                            <input
-                                                type="file"
-                                                onChange={handleFileChange}
-                                                className="w-full px-4 py-2 border rounded"
-                                                accept="image/*"
-                                            />
-                                        </div>
                                         <button
                                             type="submit"
-                                            className={`px-4 py-2 ${loading ? "bg-gray-500" : "bg-green-500"} text-white rounded`}
-                                            disabled={loading}
+                                            className="px-4 py-2 bg-green-500 text-white rounded"
                                         >
-                                            {loading ? "Saving..." : "Save"}
+                                            Save
                                         </button>
                                         <button
                                             type="button"

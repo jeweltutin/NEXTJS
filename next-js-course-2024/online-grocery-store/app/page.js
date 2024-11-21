@@ -7,7 +7,6 @@ import SmartWatchProductsSlider from "@/components/home/SmartWatchProductsSlider
 import TopProducts from "@/components/home/TopProducts";
 //import ProductList from "@/components/ProductList";
 import Slider from "@/components/Slider";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
 export default async function Home() {

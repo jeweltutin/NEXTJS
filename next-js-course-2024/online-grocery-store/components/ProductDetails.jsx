@@ -12,9 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ReactMarkdown from 'react-markdown';
 import ProductList from "./ProductList";
 
-
 function ProductDetails({ theProduct }) {
-    console.log(theProduct);
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     //const defaultImageUrl = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxfHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080";
@@ -25,10 +23,6 @@ function ProductDetails({ theProduct }) {
     const item4ImageUrl = "https://images.unsplash.com/photo-1528148343865-51218c4a13e6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwzfHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080";
 
     const [showImage, setShowImage] = useState(defaultImageUrl);
-
-    const token = sessionStorage.getItem("jwt");
-    const user = JSON.parse(sessionStorage.getItem('user'));
-
     const [loading, setLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const { updateCart, setUpdateCart } = useContext(UpdateCartContext);
@@ -36,12 +30,16 @@ function ProductDetails({ theProduct }) {
     const [productPrice, setProductTotalPrice] = useState(
         theProduct[0].sellingPrice ? theProduct[0].sellingPrice : theProduct[0].mrp
     )
-
     //console.log("The Product:", theProduct);
 
     let [headingText, setHeadingText] = useState("");
     let [popUpImage, setPopUpImage] = useState("");
     const [selectedColor, setSelectedColor] = useState(null);
+
+    useEffect(() => {
+        const token = sessionStorage.getItem("jwt");
+        const user = JSON.parse(sessionStorage.getItem('user'));
+    }, []);
 
     let num = 314340;
     console.log(new Intl.NumberFormat().format(num));
@@ -137,7 +135,7 @@ function ProductDetails({ theProduct }) {
     }
 
     const categorySlug = theProduct[0].categories[0].slug;
-    console.log(categorySlug);
+    //console.log(categorySlug);
 
     const [relatedProducts, setRelatedProducts] = useState([]);
 
@@ -382,9 +380,7 @@ function ProductDetails({ theProduct }) {
                         <TabsTrigger value="review">Review</TabsTrigger>
                     </TabsList>
                     <TabsContent value="details" className="w-full bg-white p-4">
-                        <p>
-                            <ReactMarkdown>{theProduct[0].details || "No content available"}</ReactMarkdown>
-                        </p>
+                        <ReactMarkdown>{theProduct[0].details || "No content available"}</ReactMarkdown>
                     </TabsContent>
                     <TabsContent className="w-full bg-white p-4" value="warranty">{theProduct[0].warranty}</TabsContent>
                     <TabsContent value="review">
