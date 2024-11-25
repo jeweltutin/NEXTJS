@@ -2,9 +2,11 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Textarea } from "@/components/ui/textarea";
+import { useRouter } from "next/navigation";
 
 function Profile() {
     const token = sessionStorage.getItem("jwt");
+    const router = useRouter();
 
     const [user, setUser] = useState({
         username: "",
@@ -12,30 +14,56 @@ function Profile() {
         email: "",
         mobile: "",
         about: "",
-        profileImage: "",
+        profileImage: "", // Initially empty
+        id: "", // Initialize with empty id
     });
 
     const [isEditing, setIsEditing] = useState(false);
     const [loading, setLoading] = useState(false); // Spinner state
+    const [error, setError] = useState(null); // Error state
 
     // Fetch user data
     useEffect(() => {
-        axios
-            .get("http://localhost:1337/api/users/me", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
-                setUser(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching user data:", error);
-            });
-    }, [token]);
+        const fetchUser = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:1337/api/users/me?populate[profileImage]=true`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                );
 
-    if (!user) {
-        return <div>Loading...</div>;
+                const userData = response.data;
+
+                // Check if profileImage exists and handle properly
+                const profileImageUrl =
+                    userData.profileImage?.url
+                        ? `http://localhost:1337${userData.profileImage.url}`
+                        : null;
+
+                setUser({
+                    ...userData,
+                    profileImage: profileImageUrl, // Resolve URL if present
+                });
+            } catch (error) {
+                console.error("Error fetching user:", error.message);
+                setError("Failed to fetch user data."); // Handle error
+            }
+        };
+
+        if (token) {
+            fetchUser();
+        }
+    }, [token]); // Only re-fetch if the token changes
+
+    if (error) {
+        return <div className="text-red-500">{error}</div>; // Display error message if any
+    }
+
+    if (!user.name) {
+        return <div>Loading...</div>; // Only show loading if data is incomplete
     }
 
     // Handle input changes
@@ -51,10 +79,10 @@ function Profile() {
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
         if (!file) return;
-
+    
         const formData = new FormData();
         formData.append("files", file);
-
+    
         try {
             const response = await axios.post("http://localhost:1337/api/upload", formData, {
                 headers: {
@@ -62,21 +90,23 @@ function Profile() {
                     "Content-Type": "multipart/form-data",
                 },
             });
-
-            // Get the URL directly from the upload response
+    
+            // Get the file ID and construct the full image URL
+            const uploadedFileId = response.data[0]?.id;
             const uploadedImageUrl = `http://localhost:1337${response.data[0]?.url}`;
-
-            // Update the user state with the URL (for immediate use in the UI)
+    
+            // Update the user state with the new image URL (so it will reflect on the UI)
             setUser((prevUser) => ({
                 ...prevUser,
-                profileImage: uploadedImageUrl, // Save the URL string in the state
+                profileImage: uploadedFileId, // Store the image URL for display
             }));
-
+    
             console.log("Profile image uploaded:", uploadedImageUrl);
         } catch (error) {
             console.error("Error uploading image:", error.message);
         }
     };
+    
 
     // Validate inputs before submission
     const validateForm = () => {
@@ -84,7 +114,7 @@ function Profile() {
             alert("Name is required");
             return false;
         }
-        if (!user.mobile.trim() || !/^\d{11}$/.test(user.mobile)) {
+        if (!user.mobile.trim() || !/^\d{10}$/.test(user.mobile)) {
             alert("Enter a valid 10-digit phone number");
             return false;
         }
@@ -95,9 +125,9 @@ function Profile() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validateForm()) return; // Stop if validation fails
-
+    
         setLoading(true); // Start loading
-
+    
         try {
             const response = await axios.put(
                 `http://localhost:1337/api/users/${user.id}`,
@@ -105,7 +135,7 @@ function Profile() {
                     name: user.name,
                     about: user.about,
                     mobile: user.mobile,
-                    profileImage: user.profileImage, // Save the image URL in the database
+                    profileImage: user.profileImage, // Send the image ID (not the URL)
                 },
                 {
                     headers: {
@@ -116,11 +146,15 @@ function Profile() {
             console.log("User profile updated:", response.data);
             setLoading(false); // End loading
             setIsEditing(false); // Exit editing mode
+           // router.refresh();
+            //window.location.reload;
         } catch (error) {
             console.error("Error updating profile:", error.message);
             setLoading(false); // End loading
         }
     };
+    
+
 
     return (
         <div className="bg-gray-100">
@@ -148,17 +182,18 @@ function Profile() {
                     <div className="col-span-4 sm:col-span-9">
                         <div className="bg-white shadow rounded-lg p-6">
                             <div className="flex flex-col items-center">
-                                {/* Display Profile Image */}
                                 <img src={user.profileImage || "https://via.placeholder.com/150"} alt="Profile" className="w-32 h-32 bg-gray-300 rounded-full mb-4" />
                                 {/* <p>{user.id}</p> */}
-
                                 {!isEditing ? (
                                     <>
                                         <h1 className="text-xl font-bold">{user.name}</h1>
                                         <p className="text-gray-700">{user.email}</p>
                                         <p className="text-gray-700">{user.mobile}</p>
                                         <p className="text-gray-700">{user.about}</p>
-                                        <button onClick={() => setIsEditing(true)} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
+                                        <button
+                                            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+                                            onClick={() => setIsEditing(true)}
+                                        >
                                             Edit Profile
                                         </button>
                                     </>
