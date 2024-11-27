@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 
-const initialState = {
+/* const initialState = {
     user: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null,
     isSidebarOpen: false
-}
+} */
+const initialState = {
+    user: typeof window !== 'undefined' && localStorage.getItem('userInfo')
+        ? JSON.parse(localStorage.getItem('userInfo'))
+        : null,
+    isSidebarOpen: false,
+};
 
 const authSlice = createSlice({
     name: "auth",
@@ -21,7 +27,7 @@ const authSlice = createSlice({
         setOpenSidebar: (state, action) => {
             state.isSidebarOpen = action.payload;
         }
-         
+
     }
 })
 

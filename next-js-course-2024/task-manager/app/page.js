@@ -17,6 +17,12 @@ export default function Home() {
   }, [])
 
   return (
-    <div></div>
+    <div>
+      <h2>Build your work’s foundation with tasks</h2>
+      <p>
+        Plan, organize, and collaborate on any project with tasks
+        that adapt to any workflow or type of work.
+      </p>
+    </div>
   );
 }
