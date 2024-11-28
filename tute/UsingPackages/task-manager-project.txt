@@ -14,3 +14,5 @@ yarn add @reduxjs/toolkit
 yarn add react-redux
 
 recharts sonner react-icons
+
+yarn add recharts
