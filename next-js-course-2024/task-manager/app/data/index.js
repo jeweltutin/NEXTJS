@@ -525,10 +525,11 @@ export const summary = {
       {
         _id: "1",
         name: "Jewel Tutin",
-        title: "Designer",
+        title: "Programmer",
         role: "Programmer",
         isActive: true,
         createdAt: "2024-11-09T09:38:07.765Z",
+        isAdmin: true
       },
       {
         _id: "65c5f27fb5204a81bde86833",

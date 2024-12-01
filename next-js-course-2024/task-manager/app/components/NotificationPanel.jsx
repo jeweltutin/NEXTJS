@@ -122,7 +122,7 @@ function NotificationPanel() {
                                     ))}
                                 </div>
 
-                                <div className='grid grid-cols-2 divide-x bg-gray-50'>
+                                {/* <div className='grid grid-cols-2 divide-x bg-gray-50'>
                                     {callsToAction.map((item) => (
                                         <Link
                                             href={"#"}
@@ -135,6 +135,18 @@ function NotificationPanel() {
                                             {item.name}
                                         </Link>
                                     ))}
+                                </div> */}
+                                
+                                <div className='grid grid-cols-2 divide-x bg-gray-50'>
+                                    <PopoverButton className='flex items-center justify-center gap-x-2.5 p-3 font-semibold text-blue-600 hover:bg-gray-100'>
+                                        Cancel
+                                    </PopoverButton>
+                                    <button
+                                        onClick={() => readHandler("all", "")}
+                                        className='flex items-center justify-center gap-x-2.5 p-3 font-semibold text-blue-600 hover:bg-gray-100'
+                                    >
+                                        Mark All Read
+                                    </button>
                                 </div>
                             </div>
                         )}

@@ -15,4 +15,10 @@ yarn add react-redux
 
 recharts sonner react-icons
 
+
+https://recharts.org/en-US/examples/BiaxialBarChart
+https://www.npmjs.com/package/recharts
 yarn add recharts
+
+//Sonner is an opinionated toast component for React.
+https://www.npmjs.com/package/sonner
