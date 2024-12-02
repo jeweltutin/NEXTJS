@@ -12,6 +12,7 @@ import { FaList } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
 import { MdGridView } from 'react-icons/md';
 import Table from '../../components/task/Table';
+import AddTask from '@/app/components/task/AddTask';
 
 function Tasks() {
   const params = useParams();
@@ -49,6 +50,7 @@ function Tasks() {
             addClasses='flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md py-2 2xl:py-2.5'
           />
         )}
+
       </div>
       <Tabs tabs={TABS} setSelected={setSelected}>
         {!status && (
@@ -64,10 +66,11 @@ function Tasks() {
         ) : (
           <div className='w-full'>
             <Table tasks={tasks} />
-
           </div>
         )}
       </Tabs>
+
+      <AddTask open={open} setOpen={setOpen} />
     </div>
   )
 }
