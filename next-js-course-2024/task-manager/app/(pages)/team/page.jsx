@@ -8,6 +8,7 @@ import Title from "@/app/components/Title";
 import Button from "@/app/components/Button";
 import { summary } from "@/app/data";
 import { getInitials } from "@/app/utils";
+import AddUser from "@/app/components/AddUser";
 
 const Team = () => {
     const [openDialog, setOpenDialog] = useState(false);
@@ -113,7 +114,8 @@ const Team = () => {
                     </div>
                 </div>
             </div>
-
+            
+            <AddUser />
             {/* <AddUser
                 open={open}
                 setOpen={setOpen}

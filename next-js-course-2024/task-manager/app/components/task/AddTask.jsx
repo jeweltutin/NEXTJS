@@ -38,10 +38,7 @@ function AddTask({ open, setOpen }) {
         <Dialog open={open} as="div" className="relative z-10 focus:outline-none" onClose={() => setOpen(false)}>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
                 <div className="flex min-h-full items-center justify-center p-4 bg-black/50">
-                    <DialogPanel
-                        transition
-                        className="w-full max-w-md lg:max-w-xl rounded-xl bg-white lg:p-9 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
-                    >
+                    <DialogPanel transition className="w-full max-w-md lg:max-w-xl rounded-xl bg-white lg:p-9 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                         <DialogTitle as="h3" className="text-base font-bold leading-6 text-gray-900 mb-4">
                             {task ? "UPDATE TASK" : "ADD TASK"}
                         </DialogTitle>
@@ -60,13 +57,7 @@ function AddTask({ open, setOpen }) {
                             <UserList setTeam={setTeam} team={team} />
 
                             <div className='flex gap-4'>
-                                <SelectList
-                                    label='Task Stage'
-                                    lists={LISTS}
-                                    selected={stage}
-                                    setSelected={setStage}
-                                />
-
+                                <SelectList label='Task Stage' lists={LISTS} selected={stage} setSelected={setStage} />
                                 <div className='w-full'>
                                     <Textbox
                                         placeholder='Date'
@@ -91,10 +82,7 @@ function AddTask({ open, setOpen }) {
                                 />
 
                                 <div className='w-full flex items-center justify-center mt-4'>
-                                    <label
-                                        className='flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4'
-                                        htmlFor='imgUpload'
-                                    >
+                                    <label className='flex items-center gap-1 text-base text-ascent-2 hover:text-ascent-1 cursor-pointer my-4' htmlFor='imgUpload'>
                                         <input
                                             type='file'
                                             className='hidden'
@@ -115,11 +103,7 @@ function AddTask({ open, setOpen }) {
                                         Uploading assets
                                     </span>
                                 ) : (
-                                    <Button
-                                        label='Submit'
-                                        type='submit'
-                                        addClasses='bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto'
-                                    />
+                                    <Button label='Submit' type='submit' addClasses='bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto' />
                                 )}
 
                                 <Button
@@ -137,4 +121,4 @@ function AddTask({ open, setOpen }) {
     )
 }
 
-export default AddTask
+export default AddTask;
