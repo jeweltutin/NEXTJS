@@ -3,12 +3,12 @@ import React, { useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import clsx from "clsx";
 // import ConfirmatioDialog, { UserAction } from "../components/Dialogs";
-// import AddUser from "../components/AddUser";
 import Title from "@/app/components/Title";
 import Button from "@/app/components/Button";
 import { summary } from "@/app/data";
 import { getInitials } from "@/app/utils";
 import AddUser from "@/app/components/AddUser";
+import ConfirmationDialog from "@/app/components/Dialogs";
 
 const Team = () => {
     const [openDialog, setOpenDialog] = useState(false);
@@ -24,10 +24,17 @@ const Team = () => {
         setOpenDialog(true);
     };
 
+    const createUserClick = () => {
+        setSelected(null);
+        setOpen(true);
+    }
+
     const editClick = (el) => {
         setSelected(el);
         setOpen(true);
     };
+
+    //console.log(selected);
 
     const TableHeader = () => (
         <thead className='border-b border-gray-300'>
@@ -97,7 +104,8 @@ const Team = () => {
                         label='Add New User'
                         icon={<IoMdAdd className='text-lg' />}
                         addClasses='flex flex-row-reverse gap-1 items-center bg-blue-600 text-white rounded-md 2xl:py-2.5'
-                        onClick={() => setOpen(true)}
+                        //onClick={() => { setSelected(null); setOpen(true)} }
+                        onClick={() => createUserClick()}
                     />
                 </div>
 
@@ -114,21 +122,20 @@ const Team = () => {
                     </div>
                 </div>
             </div>
-            
-            <AddUser />
-            {/* <AddUser
+
+             <AddUser
                 open={open}
                 setOpen={setOpen}
-                userData={selected}
+                userData={selected || ""} 
                 key={new Date().getTime().toString()}
             />
 
-            <ConfirmatioDialog
+           <ConfirmationDialog
                 open={openDialog}
                 setOpen={setOpenDialog}
                 onClick={deleteHandler}
             />
-
+{/* 
             <UserAction
                 open={openAction}
                 setOpen={setOpenAction}

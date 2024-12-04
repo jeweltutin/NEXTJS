@@ -37,6 +37,8 @@ const TaskCard = ({ task }) => {
       return null; // Return nothing during SSR
     }
 
+    //console.log(user.isAdmin);
+
     return (
         <>
             <div className='w-full h-fit bg-white shadow-md p-4 rounded'>

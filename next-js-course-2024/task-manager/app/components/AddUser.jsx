@@ -1,80 +1,110 @@
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
-import { MdCheck } from "react-icons/md";
-import clsx from 'clsx';
-import { useState } from 'react';
-import { IoChevronDownCircleOutline } from 'react-icons/io5';
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
+import Textbox from "./Textbox";
+import Loading from "./Loader";
+import Button from "./Button";
 
-const people = [
-  { id: 1, name: 'Tom Cook' },
-  { id: 2, name: 'Wade Cooper' },
-  { id: 3, name: 'Tanya Fox' },
-  { id: 4, name: 'Arlene Mccoy' },
-  { id: 5, name: 'Devon Webb' },
-];
+const AddUser = ({ open, setOpen, userData }) => {
+  let defaultValues = userData ?? {};
+  const { user } = useSelector((state) => state.auth);
 
-export default function AddUser() {
-  // Initialize the selected state with the first person
-  const [selected, setSelected] = useState([people[0]]);
+  const isLoading = false,
+    isUpdating = false;
 
-  const handleChange = (selectedItems) => {
-    setSelected(selectedItems);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues });
+
+  const handleOnSubmit = () => { };
 
   return (
-    <div className="mx-auto h-screen w-52 pt-20">
-      <Listbox value={selected} onChange={handleChange} multiple>
-        <ListboxButton
-          className={clsx(
-            'relative block w-full rounded-lg bg-black py-1.5 pr-8 pl-3 text-left text-sm text-white',
-            'focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white/25'
-          )}
-        >
-          {selected.length > 0
-            ? selected.map((item) => item.name).join(', ')
-            : 'Select users'}
-          <IoChevronDownCircleOutline
-            className="absolute top-2.5 right-2.5 h-5 w-5 text-white/60 pointer-events-none"
-            aria-hidden="true"
-          />
-        </ListboxButton>
-        <ListboxOptions
-          className={clsx(
-            'mt-1 max-h-60 w-full overflow-auto rounded-lg bg-black border border-white/10 py-1 shadow-lg focus:outline-none'
-          )}
-        >
-          {people.map((person) => (
-            <ListboxOption
-              key={person.id}
-              value={person}
-              className={({ active, selected }) =>
-                clsx(
-                  'cursor-default select-none relative py-2 pl-10 pr-4',
-                  active ? 'bg-gray-800 text-white' : 'text-gray-300',
-                  selected && 'font-medium'
-                )
-              }
-            >
+    <>
+      <Dialog open={open} className='relative z-10 w-full' as="div" onClose={() => setOpen(false)}>
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-center justify-center p-4 bg-black/50 sm:p-0">
+            <DialogPanel transition className="w-full max-w-md lg:max-w-xl rounded-xl bg-white lg:p-9 p-6 backdrop-blur-2xl duration-200 ease-in data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+              <form onSubmit={handleSubmit(handleOnSubmit)} className=''>
+                <DialogTitle as='h2' className='text-base font-bold leading-6 text-gray-900 mb-4'>
+                  {userData ? "UPDATE PROFILE" : "ADD NEW USER"}
+                </DialogTitle>
+                <div className='mt-2 flex flex-col gap-6'>
+                  <Textbox
+                    placeholder='Full name'
+                    type='text'
+                    name='name'
+                    label='Full Name'
+                    addClasses='w-full rounded'
+                    register={register("name", {
+                      required: "Full name is required!",
+                    })}
+                    error={errors.name ? errors.name.message : ""}
+                  />
+                  <Textbox
+                    placeholder='Title'
+                    type='text'
+                    name='title'
+                    label='Title'
+                    addClasses='w-full rounded'
+                    register={register("title", {
+                      required: "Title is required!",
+                    })}
+                    error={errors.title ? errors.title.message : ""}
+                  />
+                  <Textbox
+                    placeholder='Email Address'
+                    type='email'
+                    name='email'
+                    label='Email Address'
+                    addClasses='w-full rounded'
+                    register={register("email", {
+                      required: "Email Address is required!",
+                    })}
+                    error={errors.email ? errors.email.message : ""}
+                  />
 
-                <>
-                  <span
-                    className={clsx(
-                      'block truncate',
-                      selected ? 'font-semibold' : 'font-normal'
-                    )}
-                  >
-                    {person.name}
-                  </span>
-                  {selected ? (
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                      <MdCheck className="w-5 h-5 text-white" aria-hidden="true" />
-                    </span>
-                  ) : null}
-                </>
+                  <Textbox
+                    placeholder='Role'
+                    type='text'
+                    name='role'
+                    label='Role'
+                    addClasses='w-full rounded'
+                    register={register("role", {
+                      required: "User role is required!",
+                    })}
+                    error={errors.role ? errors.role.message : ""}
+                  />
+                </div>
 
-            </ListboxOption>
-          ))}
-        </ListboxOptions>
-      </Listbox>
-    </div>
+                {isLoading || isUpdating ? (
+                  <div className='py-5'>
+                    <Loading />
+                  </div>
+                ) : (
+                  <div className='py-3 mt-4 sm:flex sm:flex-row-reverse'>
+                    <Button
+                      type='submit'
+                      addClasses='bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto'
+                      label='Submit'
+                    />
+
+                    <Button
+                      type='button'
+                      addClasses='bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto'
+                      onClick={() => setOpen(false)}
+                      label='Cancel'
+                    />
+                  </div>
+                )}
+              </form>
+            </DialogPanel>
+          </div>
+        </div >
+      </Dialog >
+    </>
   );
-}
+};
+
+export default AddUser;

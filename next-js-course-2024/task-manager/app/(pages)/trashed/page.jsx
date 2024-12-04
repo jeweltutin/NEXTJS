@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/app/components/Button";
+import ConfirmationDialog from "@/app/components/Dialogs";
 import Title from "@/app/components/Title";
 import { tasks } from "@/app/data";
 import { TASK_TYPE, PRIOTITYSTYELS } from "@/app/utils";
@@ -43,6 +44,7 @@ const Trash = () => {
 
   const deleteClick = (id) => {
     setType("delete");
+    setMsg("Do you want to delete the selected item?");
     setSelected(id);
     setOpenDialog(true);
   };
@@ -140,9 +142,7 @@ const Trash = () => {
         </div>
       </div>
 
-      {/* <AddUser open={open} setOpen={setOpen} /> */}
-
-      {/* <ConfirmatioDialog
+      <ConfirmationDialog
         open={openDialog}
         setOpen={setOpenDialog}
         msg={msg}
@@ -150,7 +150,7 @@ const Trash = () => {
         type={type}
         setType={setType}
         onClick={() => deleteRestoreHandler()}
-      /> */}
+      />
     </>
   );
 };

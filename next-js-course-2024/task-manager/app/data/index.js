@@ -528,6 +528,7 @@ export const summary = {
         title: "Programmer",
         role: "Programmer",
         isActive: true,
+        email: "jewel@gmail.com",
         createdAt: "2024-11-09T09:38:07.765Z",
         isAdmin: true
       },

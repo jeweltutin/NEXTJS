@@ -11,8 +11,9 @@ import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../utils";
 import clsx from "clsx";
 import { FaList } from "react-icons/fa";
 import UserInfo from "@/app/components/UserInfo";
-// import ConfirmatioDialog from "../Dialogs";
 import Button from "@/app/components/Button";
+import ConfirmationDialog from "../Dialogs";
+import AddTask from "./AddTask";
 
 
 const ICONS = {
@@ -24,13 +25,14 @@ const ICONS = {
 const Table = ({ tasks }) => {
   const [openDialog, setOpenDialog] = useState(false);
   const [selected, setSelected] = useState(null);
+  const [openEdit, setOpenEdit] = useState(false);
 
   const deleteClicks = (id) => {
     setSelected(id);
     setOpenDialog(true);
   };
 
-  const deleteHandler = () => {};
+  const deleteHandler = () => { };
 
   const TableHeader = () => (
     <thead className='w-full border-b border-gray-300'>
@@ -109,13 +111,14 @@ const Table = ({ tasks }) => {
 
       <td className='py-2 flex gap-2 md:gap-4 justify-end'>
         <Button
-          className='text-blue-600 hover:text-blue-500 sm:px-0 text-sm md:text-base'
+          addClasses='text-blue-600 hover:text-blue-500 sm:px-0 text-sm md:text-base'
           label='Edit'
           type='button'
+          onClick={() => setOpenEdit(true)}
         />
 
         <Button
-          className='text-red-700 hover:text-red-500 sm:px-0 text-sm md:text-base'
+          addClasses='text-red-700 hover:text-red-500 sm:px-0 text-sm md:text-base'
           label='Delete'
           type='button'
           onClick={() => deleteClicks(task._id)}
@@ -139,11 +142,19 @@ const Table = ({ tasks }) => {
       </div>
 
       {/* TODO */}
-     {/*  <ConfirmatioDialog
+      <ConfirmationDialog
         open={openDialog}
         setOpen={setOpenDialog}
         onClick={deleteHandler}
+      />
+
+    {/*   <AddTask
+        open={openEdit}
+        setOpen={setOpenEdit}
+        task={task}
+        key={new Date().getTime()}
       /> */}
+      
     </>
   );
 };
