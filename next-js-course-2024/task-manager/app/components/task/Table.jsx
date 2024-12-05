@@ -32,6 +32,12 @@ const Table = ({ tasks }) => {
     setOpenDialog(true);
   };
 
+  const editTask = (vrTask) => {
+    console.log(vrTask);
+    setSelected(vrTask);
+    setOpenEdit(true);
+  }
+
   const deleteHandler = () => { };
 
   const TableHeader = () => (
@@ -114,7 +120,8 @@ const Table = ({ tasks }) => {
           addClasses='text-blue-600 hover:text-blue-500 sm:px-0 text-sm md:text-base'
           label='Edit'
           type='button'
-          onClick={() => setOpenEdit(true)}
+          // onClick={() => setOpenEdit(true)}
+          onClick={() => editTask(task)}
         />
 
         <Button
@@ -148,13 +155,13 @@ const Table = ({ tasks }) => {
         onClick={deleteHandler}
       />
 
-    {/*   <AddTask
+      <AddTask
         open={openEdit}
         setOpen={setOpenEdit}
-        task={task}
+        taskData={selected || ""} 
         key={new Date().getTime()}
-      /> */}
-      
+      /> 
+
     </>
   );
 };

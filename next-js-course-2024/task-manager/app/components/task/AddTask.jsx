@@ -10,14 +10,15 @@ import UserList from "./UserList";
 const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORIRY = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 
-function AddTask({ open, setOpen }) {
+function AddTask({ open, setOpen, taskData }) {
     const task = "";
+    let defaultValues = taskData ?? {};
     console.log('Modal open state:', open); // Debugging
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm();
+    } = useForm({defaultValues});
 
     const [team, setTeam] = useState(task?.team || []);
     const [stage, setStage] = useState(task?.stage?.toUpperCase() || LISTS[0]);
