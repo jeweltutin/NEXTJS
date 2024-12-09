@@ -1,0 +1,9 @@
+yarn init
+yarn add express
+
+bcryptjs
+cookie-parcer
+cors
+dotenv
+jsonwebtoken
+morgan  - HTTP request logger middleware for node.js

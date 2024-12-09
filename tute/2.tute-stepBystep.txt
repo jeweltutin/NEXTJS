@@ -17,6 +17,9 @@ https://www.youtube.com/watch?v=mQnWCmVErnw&ab_channel=SangamMukherjee
 https://www.youtube.com/watch?v=7NN56jsaj6w&ab_channel=TubeGuruji
 https://www.tubeguruji.com/courses
 
+//Fullstack/MERN Stack Task Manager   // Completed 09-12-2024 - frontend -backend done/ Now need intigrate "Task Manager"
+https://www.youtube.com/watch?v=ixxQ-7SJ21A&list=PLeR-H2WqA8sNzkIhNA0TwW44oitkknc8G&ab_channel=CodeWave
+
 // Multi-Vendor Ecommerce | Online Store App With Next js 14: Kickstarting with Dashboard 
 https://www.youtube.com/watch?v=KY1t_AvyD-0&list=PLDn5_2K0bUmfREsFv1nSHDbmHEX5oqI3Z&index=2&ab_channel=JBWEBDEVELOPER
 
