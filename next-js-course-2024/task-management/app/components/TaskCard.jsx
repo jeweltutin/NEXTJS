@@ -127,7 +127,7 @@ const TaskCard = ({ task }) => {
                 <div className='w-full pb-2'>
                     <button
                         onClick={() => setOpenModal(true)}
-                        disabled={user.isAdmin ? false : true}
+                        disabled={user?.isAdmin ? false : true}
                         className='w-full flex gap-4 items-center text-sm text-gray-500 font-semibold disabled:cursor-not-allowed disabled::text-gray-300'
                     >
                         <IoMdAdd className='text-lg' />

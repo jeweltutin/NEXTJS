@@ -70,7 +70,7 @@ function Sidebar() {
     return null; // Return nothing during SSR
   }
 
-  const sidebarLinks = user?.isAdmin ? linkData : linkData.slice(0, 5);
+  const sidebarLinks = user?.data?.isAdmin ? linkData : linkData.slice(0, 5);
 
   const closeSidebar = () => {
     dispatch(setOpenSidebar(false));

@@ -1,18 +1,21 @@
 "use client";
 import Button from '@/app/components/Button';
-import TextBox from '@/app/components/TextBox';
+import Loader from '@/app/components/Loader';
+import TextBox from '@/app/components/MyTextBox';
 import { useLoginMutation } from '@/app/redux/slices/api/authApiSlice';
+import { setCredentials } from '@/app/redux/slices/authSlice';
 import { useRouter } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'sonner';
 
 function LogIn() {
     const router = useRouter();
-    //const user = "";
     const { user } = useSelector((state) => state.auth);
+    //console.log("User = ", user);
 
+    const dispatch = useDispatch();
     const [login, { isLoading }] = useLoginMutation();
 
 
@@ -27,15 +30,29 @@ function LogIn() {
     } = useForm();
 
     const submitHandler = async (data) => {
-        console.log("submit");
         try {
             const result = await login(data);
-            console.log(result);
+            console.log("LogIn Info: ", result);
+
+            // Check for success based on the presence of user details
+            if (result?.data?._id) {
+                dispatch(setCredentials(result));
+                router.push("/dashboard");
+            } else {
+                const errorMessage = result?.error?.data?.message || "Login failed. Please try again.";
+                console.log("Error Message: ", errorMessage);
+                toast.error(errorMessage);
+            }
         } catch (error) {
-            console.log(error);
-            toast.error(error?.data?.message || error.message);
+            console.log("Caught Error: ", error);
+            const errorMessage = error?.data?.message || error.message || "An unexpected error occurred.";
+            console.log("Error Toast Message: ", errorMessage);
+            toast.error(errorMessage);
         }
     };
+
+
+
     //console.log(user);
 
     return (
@@ -98,7 +115,7 @@ function LogIn() {
                                 Forget Password?
                             </span>
 
-                            <Button type='submit' label='Submit' addClasses='w-full h-10 bg-blue-700 text-white rounded-full' />
+                            {isLoading ? <Loader /> : <Button type='submit' label='Submit' addClasses='w-full h-10 bg-blue-700 text-white rounded-full' />}
                         </div>
                     </form>
                 </div>

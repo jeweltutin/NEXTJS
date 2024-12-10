@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-function TextBox({ type, placeholder, label, name, register, error, addClasses }) {
+function MyTextBox({ type, placeholder, label, name, register, error, addClasses }) {
     return (
         <div className="w-full flex flex-col gap-1">
             {label && (
@@ -26,4 +26,4 @@ function TextBox({ type, placeholder, label, name, register, error, addClasses }
     )
 }
 
-export default TextBox;
+export default MyTextBox;

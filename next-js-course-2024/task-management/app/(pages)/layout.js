@@ -5,6 +5,7 @@ import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
 import MobileSidebar from "../components/MobileSidebar";
 import { usePathname } from "next/navigation";
+import { Toaster } from "sonner";
 
 export default function MyLayout({ children }) {
   const checkUrl = usePathname();
@@ -30,11 +31,13 @@ export default function MyLayout({ children }) {
                 <div className="p-4 2xl:px-10 flex-1">
                   {/* Content goes here */}
                   {children}
+                  <Toaster />
                 </div>
               </div>
             </div> :
             <div>
               {children}
+              <Toaster />
             </div>
           }
         </main>

@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 // import ModalWrapper from "../ModalWrapper";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import Textbox from "../Textbox";
+import Textbox from "../MyTextBox";
 import Button from "../Button";
 
 const AddSubTask = ({ openModal, setOpenModal, id }) => {

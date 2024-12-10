@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import Textbox from "../Textbox";
+import Textbox from "../MyTextBox";
 import { useForm } from "react-hook-form";
 import SelectList from "../SelectList";
 import { BiImages } from "react-icons/bi";
