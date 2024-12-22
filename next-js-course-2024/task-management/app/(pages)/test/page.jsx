@@ -1,12 +1,14 @@
-import TaskDialog from '@/app/components/task/TaskDialog'
-import React from 'react'
-
-function page() {
+"use client";
+function Page() {
+    const x = 10 * 3 + 7 - 2;
+    console.log(x);
+    const year = new Date().getFullYear();
+    console.log(year);
     return (
         <div>
-            <TaskDialog />
+            <h1>Welcome to Testing</h1>
         </div>
     )
 }
 
-export default page
+export default Page

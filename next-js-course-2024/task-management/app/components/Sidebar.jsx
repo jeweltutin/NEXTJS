@@ -75,6 +75,7 @@ function Sidebar() {
   const closeSidebar = () => {
     dispatch(setOpenSidebar(false));
   };
+  console.log(user);
 
   return (
     <div className="w-full h-full flex flex-col gap-6 p-5">

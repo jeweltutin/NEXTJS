@@ -8,57 +8,54 @@ import { useRegisterMutation } from "../redux/slices/api/authApiSlice";
 import { toast } from "sonner";
 import { useUpdateUserMutation } from "../redux/slices/api/userApiSlice";
 import { setCredentials } from "../redux/slices/authSlice";
-import { useEffect } from "react";
 
-const AddUser = ({ open, setOpen, userData, refetch }) => {
+const AddUser = ({ open, setOpen, userData }) => {
+  let defaultValues = userData ?? {};
   const { user } = useSelector((state) => state.auth);
 
+  //const isLoading = false, isUpdating = false;
 
   const {
     register,
     handleSubmit,
-    reset, // This is important
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues });
 
   const dispatch = useDispatch();
   const [addNewUser, { isLoading }] = useRegisterMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
 
-  useEffect(() => {
-    if (userData) {
-      reset(userData); // Pre-fill form for editing
-    } else {
-      reset({ name: "", email: "", title: "", role: "" }); // Clear form for new user creation
-    }
-  }, [userData, reset]);
-
-
   const handleOnSubmit = async (formData) => {
     try {
       if (userData) {
+        console.log(userData);
         const result = await updateUser(formData).unwrap();
-        refetch();
         toast.success(result?.message);
-        dispatch(setCredentials(result.user));
-      } else {
-        const result = await addNewUser({ ...formData, password: formData.email });
-        refetch();
-        toast.success("User added successfully");
+        if (userData?._id === user._id) {
+          dispatch(setCredentials(...result.user));
+        }
+      }else{
+        console.log("UserData: ", userData);
+        const result = await addNewUser({ ...formData, password: formData.email }).unwrap();
+        toast.success("New user added successfully");
       }
-      setTimeout(() => setOpen(false), 1500);
+
+      setTimeout(() => {
+        setOpen(false)
+      }, 1500);
+
     } catch (error) {
       toast.error("Something went wrong");
     }
   };
 
   return (
-    <Dialog open={open} className="relative z-10 w-full" as="div" onClose={() => setOpen(false)}>
+    <Dialog open={open} className='relative z-10 w-full' as="div" onClose={() => setOpen(false)}>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-center justify-center p-4 bg-black/50 sm:p-0">
-          <DialogPanel transition className="w-full max-w-md lg:max-w-xl rounded-xl bg-white lg:p-9 p-6 backdrop-blur-2xl duration-200 ease-in">
-            <form onSubmit={handleSubmit(handleOnSubmit)} className="">
-              <DialogTitle as="h2" className="text-base font-bold leading-6 text-gray-900 mb-4">
+          <DialogPanel transition className="w-full max-w-md lg:max-w-xl rounded-xl bg-white lg:p-9 p-6 backdrop-blur-2xl duration-200 ease-in data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
+            <form onSubmit={handleSubmit(handleOnSubmit)} className=''>
+              <DialogTitle as='h2' className='text-base font-bold leading-6 text-gray-900 mb-4'>
                 {userData ? "UPDATE PROFILE" : "ADD NEW USER"}
               </DialogTitle>
               <div className='mt-2 flex flex-col gap-6'>
@@ -108,30 +105,32 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
                   error={errors.role ? errors.role.message : ""}
                 />
               </div>
+
               {isLoading || isUpdating ? (
-                <div className="py-5">
+                <div className='py-5'>
                   <Loading />
                 </div>
               ) : (
-                <div className="py-3 mt-4 sm:flex sm:flex-row-reverse">
+                <div className='py-3 mt-4 sm:flex sm:flex-row-reverse'>
                   <Button
-                    type="submit"
-                    addClasses="bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700 sm:w-auto"
-                    label="Submit"
+                    type='submit'
+                    addClasses='bg-blue-600 px-8 text-sm font-semibold text-white hover:bg-blue-700  sm:w-auto'
+                    label='Submit'
                   />
+
                   <Button
-                    type="button"
-                    addClasses="bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto"
+                    type='button'
+                    addClasses='bg-white px-5 text-sm font-semibold text-gray-900 sm:w-auto'
                     onClick={() => setOpen(false)}
-                    label="Cancel"
+                    label='Cancel'
                   />
                 </div>
               )}
             </form>
           </DialogPanel>
         </div>
-      </div>
-    </Dialog>
+      </div >
+    </Dialog >
   );
 };
 
