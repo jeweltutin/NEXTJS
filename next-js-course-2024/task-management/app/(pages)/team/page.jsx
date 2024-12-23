@@ -33,13 +33,17 @@ const Team = () => {
         id: selected?._id,
       }).unwrap();
       refetch();
-      toast.success(result.message);
+      toast.success(result.message, {
+        className: 'bg-green-500 text-white'
+      });
       refetch();
       setSelected(null);
       setOpenAction(false);
     } catch (err) {
       console.error(err);
-      toast.error(err?.data?.message || "An error occurred");
+      toast.error(err?.data?.message || "An error occurred", {
+        className: 'bg-red-500 text-white'
+      });
     }
   }
 

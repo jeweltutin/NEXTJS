@@ -136,6 +136,15 @@
   }
 }
 
+.sonner-toast-success {
+  background-color: #28a745 !important; /* Green */
+  color: #fff;
+}
+.sonner-toast-error {
+  background-color: #dc3545 !important; /* Red */
+  color: #fff;
+}
+
 
 @media (prefers-color-scheme: dark) {
   :root {

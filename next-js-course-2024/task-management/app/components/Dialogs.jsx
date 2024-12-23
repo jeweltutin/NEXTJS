@@ -72,7 +72,7 @@ export function UserAction({ openAction, setOpenAction, onClick = () => { } }) {
                         <DialogPanel transition className="w-full max-w-md lg:max-w-xl rounded-xl bg-white lg:p-9 p-6 backdrop-blur-2xl duration-200 ease-in data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0">
                             <div className='py-4 w-full flex flex-col gap-4 items-center justify-center'>
                                 <DialogTitle as='h3' className=''>
-                                    <p className={clsx("p-3 rounded-full ", "text-green-600 bg-red-200")}>
+                                    <p className={clsx("p-7 rounded-full ", "text-green-600 bg-green-200")}>
                                         <FaQuestion size={60} />
                                     </p>
                                 </DialogTitle>
@@ -82,21 +82,15 @@ export function UserAction({ openAction, setOpenAction, onClick = () => { } }) {
                                 </p>
 
                                 <div className='bg-gray-50 py-3 sm:flex sm:flex-row-reverse gap-4'>
-                                    <Button
-                                        type='button'
+                                    <Button type='button' onClick={onClick} label={"Yes"}
                                         addClasses={clsx(
                                             " px-8 text-sm font-semibold text-white sm:w-auto",
                                             "bg-red-600 hover:bg-red-500"
-                                        )}
-                                        onClick={onClick}
-                                        label={"Yes"}
+                                        )} 
                                     />
 
-                                    <Button
-                                        type='button'
-                                        addClasses='bg-white px-8 text-sm font-semibold text-gray-900 sm:w-auto border'
-                                        onClick={() => closeDialog()}
-                                        label='No'
+                                    <Button type='button' onClick={() => closeDialog()} label='No'
+                                        addClasses='bg-white px-8 text-sm font-semibold text-gray-900 sm:w-auto border'                                      
                                     />
                                 </div>
                             </div>

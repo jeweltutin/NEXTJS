@@ -1,10 +1,12 @@
 import { Popover, PopoverButton, PopoverPanel, Transition } from '@headlessui/react';
 import moment from 'moment';
 import Link from 'next/link';
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { BiSolidMessageRounded } from "react-icons/bi";
 import { HiBellAlert } from "react-icons/hi2";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { useGetNotificationQuery, useMarkNotiAsReadMutation } from '../redux/slices/api/userApiSlice';
+import ViewNotification from './ViewNotification';
 
 function NotificationPanel() {
     const data = [
@@ -49,7 +51,13 @@ function NotificationPanel() {
             updatedAt: "2024-02-09T09:32:26.810Z",
             __v: 0,
         },
-    ];
+    ]; 
+
+    const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState(null);
+
+    //const { data, refetch } = useGetNotificationQuery();
+    const { markAsRead } = useMarkNotiAsReadMutation();
 
     const ICONS = {
         alert: (
@@ -60,8 +68,17 @@ function NotificationPanel() {
         ),
     };
 
-    const readHandler = () => { };
-    const viewHandler = () => { };
+    const readHandler = async (type, id) => { 
+        await markAsRead({ type, id }).unwrap();
+        refetch();
+    };
+
+    const viewHandler = async (el) => {
+        setSelected(el);
+        readHandler("One", el._id);
+        setOpen(true);
+     };
+
 
     const callsToAction = [
         { name: "Cancel", href: "#", icon: "" },
@@ -153,6 +170,8 @@ function NotificationPanel() {
                     </PopoverPanel>
                 </Transition>
             </Popover>
+
+            <ViewNotification open={open} setOpen={setOpen} el={selected} />
         </div>
     )
 }

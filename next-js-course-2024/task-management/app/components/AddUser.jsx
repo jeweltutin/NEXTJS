@@ -1,4 +1,4 @@
-import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { Dialog, DialogPanel, DialogTitle, Select } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Textbox from "./MyTextBox";
@@ -37,20 +37,39 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
   const handleOnSubmit = async (formData) => {
     try {
       if (userData) {
+        // Update existing user
         const result = await updateUser(formData).unwrap();
         refetch();
-        toast.success(result?.message);
-        dispatch(setCredentials(result.user));
+
+        /* // Check if the updated user is the logged-in user
+        const loggedInUser = JSON.parse(localStorage.getItem("session"));
+        if (loggedInUser?.id === result.user?.id) {
+          // Update session credentials if the logged-in user is being updated
+          dispatch(setCredentials(result.user));
+        } */
+
+        toast.success(result?.message, {
+          className: "sonner-toast-success"
+        });
       } else {
+        // Add new user
         const result = await addNewUser({ ...formData, password: formData.email });
         refetch();
-        toast.success("User added successfully");
+
+        toast.success("User added successfully", {
+          className: "sonner-toast-success"
+        });
       }
+
+      // Close the dialog after a delay
       setTimeout(() => setOpen(false), 1500);
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Something went wrong", {
+        className: "sonner-toast-error"
+      });
     }
   };
+
 
   return (
     <Dialog open={open} className="relative z-10 w-full" as="div" onClose={() => setOpen(false)}>
@@ -96,7 +115,7 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
                   error={errors.email ? errors.email.message : ""}
                 />
 
-                <Textbox
+                {/* <Textbox
                   placeholder='Role'
                   type='text'
                   name='role'
@@ -106,7 +125,29 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
                     required: "User role is required!",
                   })}
                   error={errors.role ? errors.role.message : ""}
-                />
+                /> */}
+
+                <div className="space-y-2">
+                  <label htmlFor="role" className="text-sm font-semibold">Role</label>
+                  <Select
+                    name="role"
+                    label="Role"
+                    className="w-full p-4 border border-gray-300 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    {...register("role", {
+                      required: "User role is required!",
+                    })}
+                  >
+                    <option value="">Select a role</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                    <option value="moderator">Moderator</option>
+                  </Select>
+
+                  {/* Display error message */}
+                  {errors.role && (
+                    <span className="text-xs text-[#f64949fe] mt-0.5">{errors.role.message}</span>
+                  )}
+                </div>
               </div>
               {isLoading || isUpdating ? (
                 <div className="py-5">
