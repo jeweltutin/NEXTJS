@@ -13,6 +13,15 @@ export const userApiSlice = apiSlice.injectEndpoints({
                 credentials: "include"
             }),
         }),
+        getUserData: builder.query({
+            query: () => ({
+                url: '/user/profile', // Replace with your actual API endpoint to fetch user data
+                method: 'GET',
+                credentials: 'include', // Include credentials for session management
+            }),
+            // Optional: You can add more configuration here for caching, refetching, etc.
+            refetchOnMountOrArgChange: true, // Ensures data is refetched when component mounts or arguments change
+        }),
         getTeamList: builder.query({
             query: () => ({
                 url: `${USER_URL}/get-team`,
@@ -59,11 +68,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
             query: (data) => ({
                 url: `${USER_URL}/change-password`,
                 method: "PUT",
-                body: data, 
+                body: data,
                 credentials: "include"
             })
         })
-    }),  
+    }),
 });
 
-export const {  useUpdateUserMutation, useGetTeamListQuery, useDeleteUserMutation, useUserActionMutation, useGetNotificationQuery, useMarkNotiAsReadMutation, useChangePasswordMutation } = userApiSlice;
+export const { useUpdateUserMutation, useGetUserDataQuery, useGetTeamListQuery, useDeleteUserMutation, useUserActionMutation, useGetNotificationQuery, useMarkNotiAsReadMutation, useChangePasswordMutation } = userApiSlice;

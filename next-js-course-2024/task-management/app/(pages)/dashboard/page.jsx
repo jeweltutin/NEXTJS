@@ -1,6 +1,5 @@
-
+"use client";
 import { summary } from '@/app/data';
-
 import {MdAdminPanelSettings} from "react-icons/md";
 import { LuClipboardEdit } from "react-icons/lu";
 import { FaNewspaper, FaUsers } from "react-icons/fa";
@@ -9,14 +8,25 @@ import Card from '@/app/components/Card';
 import Chart from '@/app/components/Home/Chart';
 import TaskTable from '@/app/components/Home/TaskTable';
 import UserTable from '@/app/components/Home/UserTable';
+import { useGetDashboardStatsQuery } from '@/app/redux/slices/api/taskApiSlice';
+import Loader from '@/app/components/Loader';
 
 function Dashboard() {
     const totals = summary.tasks;
+
+    const { data, isLoading, error } = useGetDashboardStatsQuery();
+    //const totals = data?.tasks;
+    if (isLoading) (
+        <div className='py-10'>
+            <Loader />
+        </div>
+    )
+
     const stats = [
         {
             _id: "1",
             label: "TOTAL TASK",
-            total: summary?.totalTasks || 0,
+            total: data?.totalTasks || 0,
             icon: <FaNewspaper />,
             bg: "bg-[#1d4ed8]",
         },
@@ -43,6 +53,7 @@ function Dashboard() {
         },
     ];
 
+    
 
     return (
         <div className='h-full py-4'>

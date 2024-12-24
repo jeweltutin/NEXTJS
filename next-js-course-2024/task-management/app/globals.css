@@ -140,6 +140,10 @@
   background-color: #28a745 !important; /* Green */
   color: #fff;
 }
+.sonner-toast-warning {
+  background-color: #fff !important; /* orange  */
+  color: #FFA500;
+}
 .sonner-toast-error {
   background-color: #dc3545 !important; /* Red */
   color: #fff;

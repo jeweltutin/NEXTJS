@@ -13,7 +13,6 @@ import { useEffect } from "react";
 const AddUser = ({ open, setOpen, userData, refetch }) => {
   const { user } = useSelector((state) => state.auth);
 
-
   const {
     register,
     handleSubmit,
@@ -25,14 +24,19 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
   const [addNewUser, { isLoading }] = useRegisterMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
 
-  useEffect(() => {
+/*   useEffect(() => {
     if (userData) {
       reset(userData); // Pre-fill form for editing
     } else {
       reset({ name: "", email: "", title: "", role: "" }); // Clear form for new user creation
     }
-  }, [userData, reset]);
+  }, [userData, reset]); */
 
+  useEffect(() => {
+    const defaultUserData = { name: "", email: "", title: "", role: "" };
+    reset(userData || defaultUserData);
+  }, [userData, reset]);
+  
 
   const handleOnSubmit = async (formData) => {
     try {
@@ -48,7 +52,7 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
           dispatch(setCredentials(result.user));
         } */
 
-        toast.success(result?.message, {
+        toast.success(result?.message || "Profile updated successfully", {
           className: "sonner-toast-success"
         });
       } else {
@@ -64,6 +68,7 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
       // Close the dialog after a delay
       setTimeout(() => setOpen(false), 1500);
     } catch (error) {
+      console.error("Error updating user:", error); // Log the error
       toast.error("Something went wrong", {
         className: "sonner-toast-error"
       });
