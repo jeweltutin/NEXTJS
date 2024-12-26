@@ -13,13 +13,14 @@ import { IoMdAdd } from 'react-icons/io';
 import { MdGridView } from 'react-icons/md';
 import Table from '../../components/task/Table';
 import AddTask from '@/app/components/task/AddTask';
+import { useGetAllTaskQuery } from '@/app/redux/slices/api/taskApiSlice';
 
 function Tasks() {
   const params = useParams();
 
   const [selected, setSelected] = useState(0);
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
 
   const TABS = [
     { title: "Board View", icon: <MdGridView /> },
@@ -34,7 +35,13 @@ function Tasks() {
 
   const status = params?.status || "";
 
-  return loading ? (
+  const { data, isLoading } = useGetAllTaskQuery({
+    strQuery: status,
+     isTrashed: "",
+     search: ""
+  });
+
+  return isLoading ? (
     <div className='py-10'>
       <Loader />
     </div>
@@ -62,10 +69,11 @@ function Tasks() {
         )}
 
         {selected !== 1 ? (
-          <BoardView tasks={tasks} />
+          // <BoardView tasks={tasks} />
+          <BoardView tasks={data?.tasks} />
         ) : (
           <div className='w-full'>
-            <Table tasks={tasks} />
+            <Table tasks={data?.tasks} />
           </div>
         )}
       </Tabs>

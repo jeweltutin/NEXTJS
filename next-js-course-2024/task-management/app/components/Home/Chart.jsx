@@ -13,10 +13,10 @@ import {
 } from 'recharts';
 import { chartData } from '../../data';
 
-function Chart() {
+function Chart({ data }) {
     return (
         <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartData}>
+            <BarChart data={data}>
                 <XAxis dataKey='name' />
                 <YAxis yAxisId="left" />
                 <YAxis yAxisId="right" orientation="right" />

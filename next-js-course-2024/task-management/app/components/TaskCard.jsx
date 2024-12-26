@@ -26,7 +26,7 @@ const TaskCard = ({ task }) => {
     const { user } = useSelector((state) => state.auth);
     const [openModal, setOpenModal] = useState(false);
 
-    //console.log(user);
+    //console.log("USER in Task: ", user?.data.isAdmin);
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
@@ -53,7 +53,7 @@ const TaskCard = ({ task }) => {
                         <span className='uppercase'>{task?.priority} Priority</span>
                     </div>
 
-                    {user?.isAdmin && <TaskDialog task={task} />}
+                    {user?.data?.isAdmin && <TaskDialog task={task} />}
                 </div>
 
                 <>
