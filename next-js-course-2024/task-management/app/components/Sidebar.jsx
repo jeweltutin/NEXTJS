@@ -34,7 +34,7 @@ function Sidebar() {
     },
     {
       label: "Completed",
-      link: "completed/completed",
+      link: "tasks/completed",
       icon: <MdTaskAlt />,
     },
     {
@@ -44,7 +44,7 @@ function Sidebar() {
     },
     {
       label: "To Do",
-      link: "todo/todo",
+      link: "tasks/todo",
       icon: <MdOutlinePendingActions />,
     },
     {
