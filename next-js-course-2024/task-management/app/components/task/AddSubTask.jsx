@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import Textbox from "../MyTextBox";
 import Button from "../Button";
+import { useCreateSubTaskMutation } from "@/app/redux/slices/api/taskApiSlice";
+import { toast } from "sonner";
 
 const AddSubTask = ({ openModal, setOpenModal, id }) => {
     const {
@@ -11,19 +13,19 @@ const AddSubTask = ({ openModal, setOpenModal, id }) => {
         formState: { errors },
     } = useForm();
 
-    // const [addSbTask] = useCreateSubTaskMutation();
+    const [addSbTask] = useCreateSubTaskMutation();
 
     const handleOnSubmit = async (data) => {
-        // try {
-        //   const res = await addSbTask({ data, id }).unwrap();
-        //   toast.success(res.message);
-        //   setTimeout(() => {
-        //     setOpen(false);
-        //   }, 500);
-        // } catch (err) {
-        //   console.log(err);
-        //   toast.error(err?.data?.message || err.error);
-        // }
+        try {
+            const res = await addSbTask({ data, id }).unwrap();
+            toast.success(res.message);
+            setTimeout(() => {
+                setOpenModal(false);
+            }, 500);
+        } catch (err) {
+            console.log(err);
+            toast.error(err?.data?.message || err.error);
+        }
     };
 
     return (
@@ -88,7 +90,7 @@ const AddSubTask = ({ openModal, setOpenModal, id }) => {
                                 <Button
                                     type='submit'
                                     addClasses='bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 sm:ml-3 sm:w-auto'
-                                    label='Add Task'
+                                    label='Add Sub Task'
                                 />
 
                                 <Button

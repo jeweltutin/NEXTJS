@@ -30,11 +30,11 @@ const TaskCard = ({ task }) => {
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
-      setIsClient(true); // Set to true after the component mounts on the client
+        setIsClient(true); // Set to true after the component mounts on the client
     }, []);
-  
+
     if (!isClient) {
-      return null; // Return nothing during SSR
+        return null; // Return nothing during SSR
     }
 
     //console.log(user.isAdmin);
@@ -125,11 +125,8 @@ const TaskCard = ({ task }) => {
                 )}
 
                 <div className='w-full pb-2'>
-                    <button
-                        onClick={() => setOpenModal(true)}
-                        disabled={user?.isAdmin ? false : true}
-                        className='w-full flex gap-4 items-center text-sm text-gray-500 font-semibold disabled:cursor-not-allowed disabled::text-gray-300'
-                    >
+                    <button onClick={() => setOpenModal(true)} disabled={user?.isAdmin ? true : false}
+                        className='w-[170px] flex gap-2 p-[5px] rounded items-center text-sm text-white bg-blue-500 font-semibold disabled:cursor-not-allowed disabled::text-gray-300'>
                         <IoMdAdd className='text-lg' />
                         <span>ADD SUBTASK</span>
                     </button>

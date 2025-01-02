@@ -41,8 +41,33 @@ export const taskApislice = apiSlice.injectEndpoints({
                 body: data,
                 credentials: "include"
             })
+        }),
+        trashTask: builder.mutation({
+            query: ({ id }) => ({
+                url: `${TASKS_URL}/${id}`,
+                method: "PUT",
+                credentials: "include"
+            })
+        }),
+        createSubTask: builder.mutation({
+            query: ({ data, id }) => ({
+                url: `${TASKS_URL}/create-subtask/${id}`,
+                method: "PUT",
+                body: data,
+                credentials: "include"
+            })
         })
+
     })
+
 });
 
-export const { useGetDashboardStatsQuery, useGetAllTaskQuery, useCreateTaskMutation, useDuplicateTaskMutation, useUpdateTaskMutation } = taskApislice;
+export const {
+    useGetDashboardStatsQuery,
+    useGetAllTaskQuery,
+    useCreateTaskMutation,
+    useDuplicateTaskMutation,
+    useUpdateTaskMutation,
+    useTrashTaskMutation,
+    useCreateSubTaskMutation
+} = taskApislice;

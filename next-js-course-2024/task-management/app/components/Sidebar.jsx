@@ -24,37 +24,37 @@ function Sidebar() {
   const linkData = [
     {
       label: "Dashboard",
-      link: "dashboard",
+      link: "/dashboard",
       icon: <MdDashboard />,
     },
     {
       label: "Tasks",
-      link: "tasks",
+      link: "/tasks",
       icon: <FaTasks />,
     },
     {
       label: "Completed",
-      link: "tasks/completed",
+      link: "/tasks/completed",
       icon: <MdTaskAlt />,
     },
     {
       label: "In Progress",
-      link: "in-progress/in progress",
+      link: "/tasks/in-progress",
       icon: <MdOutlinePendingActions />,
     },
     {
       label: "To Do",
-      link: "tasks/todo",
+      link: "/tasks/todo",
       icon: <MdOutlinePendingActions />,
     },
     {
       label: "Team",
-      link: "team",
+      link: "/team",
       icon: <FaUsers />,
     },
     {
       label: "Trash",
-      link: "trashed",
+      link: "/trashed",
       icon: <FaTrashAlt />,
     },
   ];
@@ -75,7 +75,7 @@ function Sidebar() {
   const closeSidebar = () => {
     dispatch(setOpenSidebar(false));
   };
-  console.log(user);
+  //console.log(user);
 
   return (
     <div className="w-full h-full flex flex-col gap-6 p-5">
@@ -86,19 +86,21 @@ function Sidebar() {
         <span className="text-2xl font-bold text-black">TaskMe</span>
       </h1>
       <div className="flex-1 flex flex-col gap-y-5 py-8">
-        {sidebarLinks.map((link) => (
-          <Link
-            href={link.link}
-            key={link.label}
-            className={clsx(
-              "w-full lg:w-3/4 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 text-base hover:bg-[#2564ed2d]",
-              path === link.link.split("/")[0] ? "bg-blue-700 text-neutral-100" : ""
-            )}
-          >
-            {link.icon}
-            <span className="hover:text-[#2564ed]">{link.label}</span>
-          </Link>
-        ))}
+        {sidebarLinks.map((link) => {
+          //const isActive = pathName.startsWith(link.link); // Match full path
+          const isActive = pathName === link.link;
+          return (
+            <Link href={link.link} key={link.label}
+              className={clsx(
+                "w-full lg:w-3/4 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 text-base hover:bg-[#2564ed2d]",
+                isActive ? "bg-blue-700 text-neutral-100" : ""
+              )} >
+              {link.icon}
+              <span className="hover:text-[#2564ed]">{link.label}</span>
+              {/* Cond :{link.link.split("/")[2]} */}
+            </Link>
+          )
+        })}
       </div>
 
       <div className="">
