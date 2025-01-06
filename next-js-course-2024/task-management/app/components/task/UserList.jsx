@@ -12,7 +12,7 @@ const UserList = ({ setTeam, team }) => {
   const { data, isLoading } = useGetTeamListQuery();
   const [selectedUsers, setSelectedUsers] = useState([]);
 
-  console.log(team);
+  //console.log(team);
 
 /*   if (!isLoading) {
     console.log("USER List's Data: ", data[3]);
@@ -29,7 +29,7 @@ const UserList = ({ setTeam, team }) => {
     } else {
       setSelectedUsers(team);
     }
-  }, []);
+  }, [isLoading]);
 
   return (
     <div>

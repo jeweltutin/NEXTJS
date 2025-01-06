@@ -14,6 +14,7 @@ import UserInfo from "@/app/components/UserInfo";
 import Button from "@/app/components/Button";
 import ConfirmationDialog from "../Dialogs";
 import AddTask from "./AddTask";
+import { useTrashTaskMutation } from "@/app/redux/slices/api/taskApiSlice";
 
 
 const ICONS = {
@@ -27,18 +28,37 @@ const Table = ({ tasks }) => {
   const [selected, setSelected] = useState(null);
   const [openEdit, setOpenEdit] = useState(false);
 
+  const [trashTask] = useTrashTaskMutation();
+
   const deleteClicks = (id) => {
     setSelected(id);
     setOpenDialog(true);
   };
 
   const editTask = (vrTask) => {
-    console.log(vrTask);
+    console.log("Edit Task: ", vrTask);
     setSelected(vrTask);
     setOpenEdit(true);
   }
 
-  const deleteHandler = () => { };
+  const deleteHandler = async () => {
+    try {
+      const result = await trashTask({
+        id: selected,
+        isTrash: "trash"
+      }).unwrap();
+      toast.success(result?.message, {
+        className: "sonner-toast-success"
+      });
+      setTimeout(() => {
+        setOpenDialog(false);
+        window.location.reload(); 
+      })
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.date?.message || err.error);
+    }
+  };
 
   const TableHeader = () => (
     <thead className='w-full border-b border-gray-300'>
@@ -158,9 +178,9 @@ const Table = ({ tasks }) => {
       <AddTask
         open={openEdit}
         setOpen={setOpenEdit}
-        taskData={selected || ""} 
+        task={selected || ""}
         key={new Date().getTime()}
-      /> 
+      />
 
     </>
   );

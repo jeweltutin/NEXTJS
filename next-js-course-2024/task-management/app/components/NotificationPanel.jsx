@@ -9,7 +9,7 @@ import { useGetNotificationQuery, useMarkNotiAsReadMutation } from '../redux/sli
 import ViewNotification from './ViewNotification';
 
 function NotificationPanel() {
-    const data = [
+  /*   const data = [
         {
             _id: "65c5bbf3787832cf99f28e6d",
             text: "Mid lavel task. The task date is Thu Feb 29 2024. Thank you!!!",
@@ -51,13 +51,15 @@ function NotificationPanel() {
             updatedAt: "2024-02-09T09:32:26.810Z",
             __v: 0,
         },
-    ]; 
+    ];  */
 
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState(null);
 
-    //const { data, refetch } = useGetNotificationQuery();
-    const { markAsRead } = useMarkNotiAsReadMutation();
+    const { data, refetch } = useGetNotificationQuery();
+    const [ markAsRead ] = useMarkNotiAsReadMutation();   
+
+    //console.log("Notification", data);
 
     const ICONS = {
         alert: (

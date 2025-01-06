@@ -17,7 +17,7 @@ const LISTS = ["TODO", "IN PROGRESS", "COMPLETED"];
 const PRIORITIES = ["HIGH", "MEDIUM", "NORMAL", "LOW"];
 
 function AddTask({ open, setOpen, task }) {
-    console.log("Task Data: ",task);
+    //console.log("Task Data: ",task);
     //const defaultValues = taskData || {};
     const defaultValues = {
         title: task?.title || "",
