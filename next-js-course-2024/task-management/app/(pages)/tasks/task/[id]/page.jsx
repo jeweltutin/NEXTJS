@@ -20,6 +20,7 @@ import Button from "@/app/components/Button";
 import Tabs from "@/app/components/Tabs";
 import Loader from "@/app/components/Loader";
 import { useParams } from "next/navigation";
+import { useGetSingleTaskQuery, usePostTaskActivityMutation } from "@/app/redux/slices/api/taskApiSlice";
 
 const assets = [
     "https://images.pexels.com/photos/2418664/pexels-photo-2418664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -89,13 +90,23 @@ const act_types = [
 
 const TaskDetails = () => {
     const { id } = useParams();
+    const { data, isLoading, refetch } = useGetSingleTaskQuery(id);
 
     const [selected, setSelected] = useState(0);
-    const task = tasks[3];
+    //const task = tasks[3]; 
+    const task = data?.task;
+    console.log(data);
+
+    if (isLoading) (
+        <div className='py-10'>
+            <Loader />
+        </div>
+    )
 
     return (
         <div className='w-full flex flex-col gap-3 mb-4 overflow-y-hidden'>
             <h1 className='text-2xl text-gray-600 font-bold'>{task?.title}</h1>
+            {/* <p>Task Id {id}</p> */}
 
             <Tabs tabs={TABS} setSelected={setSelected}>
                 {selected === 0 ? (
@@ -104,24 +115,20 @@ const TaskDetails = () => {
                             {/* LEFT */}
                             <div className='w-full md:w-1/2 space-y-8'>
                                 <div className='flex items-center gap-5'>
-                                    <div
-                                        className={clsx(
-                                            "flex gap-1 items-center text-base font-semibold px-3 py-1 rounded-full",
-                                            PRIOTITYSTYELS[task?.priority],
-                                            bgColor[task?.priority]
-                                        )}
-                                    >
+                                    <div className={clsx(
+                                        "flex gap-1 items-center text-base font-semibold px-3 py-1 rounded-full",
+                                        PRIOTITYSTYELS[task?.priority],
+                                        bgColor[task?.priority]
+                                    )}>
                                         <span className='text-lg'>{ICONS[task?.priority]}</span>
                                         <span className='uppercase'>{task?.priority} Priority</span>
                                     </div>
 
                                     <div className={clsx("flex items-center gap-2")}>
-                                        <div
-                                            className={clsx(
-                                                "w-4 h-4 rounded-full",
-                                                TASK_TYPE[task.stage]
-                                            )}
-                                        />
+                                        <div className={clsx(
+                                            "w-4 h-4 rounded-full",
+                                            TASK_TYPE[task?.stage]
+                                        )} />
                                         <span className='text-black uppercase'>{task?.stage}</span>
                                     </div>
                                 </div>
@@ -150,20 +157,12 @@ const TaskDetails = () => {
                                     </p>
                                     <div className='space-y-3'>
                                         {task?.team?.map((m, index) => (
-                                            <div
-                                                key={index}
-                                                className='flex gap-4 py-2 items-center border-t border-gray-200'
-                                            >
-                                                <div
-                                                    className={
-                                                        "w-10 h-10 rounded-full text-white flex items-center justify-center text-sm -mr-1 bg-blue-600"
-                                                    }
-                                                >
+                                            <div key={index} className='flex gap-4 py-2 items-center border-t border-gray-200'>
+                                                <div className={"w-10 h-10 rounded-full text-white flex items-center justify-center text-sm -mr-1 bg-blue-600"}>
                                                     <span className='text-center'>
                                                         {getInitials(m?.name)}
                                                     </span>
                                                 </div>
-
                                                 <div>
                                                     <p className='text-lg font-semibold'>{m?.name}</p>
                                                     <span className='text-gray-500'>{m?.title}</span>
@@ -221,7 +220,8 @@ const TaskDetails = () => {
                     </>
                 ) : (
                     <>
-                        <Activities activity={task?.activities} id={id} />
+                        {/* <Activities activity={task?.activities} id={id} /> */}
+                        <Activities activity={data?.task?.activities} id={id} refetch={refetch} />
                     </>
                 )}
             </Tabs>
@@ -229,12 +229,35 @@ const TaskDetails = () => {
     );
 };
 
-const Activities = ({ activity, id }) => {
+const Activities = ({ activity, id, refetch }) => {
     const [selected, setSelected] = useState(act_types[0]);
     const [text, setText] = useState("");
-    const isLoading = false;
+    //const isLoading = false;
 
-    const handleSubmit = async () => { };
+    const [postActivity, { isLoading }] = usePostTaskActivityMutation();
+
+    const handleSubmit = async () => {
+        try {
+            const activityData = {
+                type: selected?.toLowerCase(),
+                activity: text
+            }
+            const result = await postActivity({
+                data: activityData,
+                id
+            }).unwrap();
+            setText("");
+            toast.success(result?.message, {
+                className: "sonner-toast-success"
+            });
+            refetch();
+        } catch (err) {
+            toast.error(err?.data?.message || err.error, {
+                className: "sonner-toast-error"
+            });
+            console.log(err);
+        }
+    };
 
     const Card = ({ item }) => {
         return (

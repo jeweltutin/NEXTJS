@@ -70,7 +70,8 @@ const TaskDialog = ({ task }) => {
     {
       label: "Open Task",
       icon: <AiTwotoneFolderOpen className='mr-2 h-5 w-5' aria-hidden='true' />,
-      onClick: () => router.push(`/tasks/${task._id}`),
+      // onClick: () => router.push(`/tasks/${task._id}`),
+      onClick: () => router.push(`/tasks/task/${task._id}`),
     },
     {
       label: "Edit",
