@@ -57,7 +57,8 @@ const AddUser = ({ open, setOpen, userData, refetch }) => {
         });
       } else {
         // Add new user
-        const result = await addNewUser({ ...formData, password: formData.email });
+        // const result = await addNewUser({ ...formData, password: formData.email });
+        const result = await addNewUser({ ...formData, password: "123456" });
         refetch();
 
         toast.success("User added successfully", {

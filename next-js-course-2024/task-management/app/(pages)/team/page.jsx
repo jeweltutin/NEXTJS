@@ -51,12 +51,16 @@ const Team = () => {
     try {
       const result = await deleteUser(selected._id).unwrap();
       refetch();
-      toast.success(result.message);
+      toast.success(result.message,{
+        className: "sonner-toast-success"
+      });
       setSelected(null);
       setOpenDialog(false);
     } catch (err) {
       console.error(err);
-      toast.error(err?.data?.message || "An error occurred");
+      toast.error(err?.data?.message || "An error occurred", {
+        className: "sonner-toast-error"
+      });
     }
   };
 

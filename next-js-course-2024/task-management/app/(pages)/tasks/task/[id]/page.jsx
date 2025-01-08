@@ -95,7 +95,7 @@ const TaskDetails = () => {
     const [selected, setSelected] = useState(0);
     //const task = tasks[3]; 
     const task = data?.task;
-    console.log(data);
+    //console.log(data);
 
     if (isLoading) (
         <div className='py-10'>
@@ -290,11 +290,7 @@ const Activities = ({ activity, id, refetch }) => {
 
                 <div className='w-full'>
                     {activity?.map((el, index) => (
-                        <Card
-                            key={index}
-                            item={el}
-                            isConnected={index < activity.length - 1}
-                        />
+                        <Card key={index} item={el} isConnected={index < activity.length - 1} />
                     ))}
                 </div>
             </div>

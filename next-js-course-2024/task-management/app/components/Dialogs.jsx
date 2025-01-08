@@ -5,7 +5,7 @@ import Button from "./Button";
 import { Fa42Group } from "react-icons/fa6";
 
 function ConfirmationDialog({ type, msg, open, setOpen, onClick = () => { } }) {
-    console.log(open);
+    //console.log(open);
     return (
         <Dialog open={open} className='relative z-10 w-full' as="div" onClose={() => setOpen(false)}>
             <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -39,7 +39,7 @@ function ConfirmationDialog({ type, msg, open, setOpen, onClick = () => { } }) {
                                             : "bg-red-600 hover:bg-red-500"
                                     )}
                                     onClick={onClick}
-                                    label={type === "restore" ? "Restore" : "Delete"}
+                                    label={type === "restore" ? "Restore" : type === "delete" ? "Delete" : "Ok"}
                                 />
 
                                 <Button

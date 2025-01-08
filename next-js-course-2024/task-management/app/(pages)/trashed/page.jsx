@@ -3,6 +3,7 @@ import Button from "@/app/components/Button";
 import ConfirmationDialog from "@/app/components/Dialogs";
 import Title from "@/app/components/Title";
 import { tasks } from "@/app/data";
+import { useDeleteRestoreTaskMutation, useGetAllTaskQuery } from "@/app/redux/slices/api/taskApiSlice";
 import { TASK_TYPE, PRIOTITYSTYELS } from "@/app/utils";
 import clsx from "clsx";
 import React, { useState } from "react";
@@ -13,6 +14,7 @@ import {
   MdKeyboardDoubleArrowUp,
   MdOutlineRestore,
 } from "react-icons/md";
+import { toast } from "sonner";
 
 // import AddUser from "../components/AddUser";
 // import ConfirmatioDialog from "../components/Dialogs";
@@ -29,6 +31,59 @@ const Trash = () => {
   const [msg, setMsg] = useState(null);
   const [type, setType] = useState("delete");
   const [selected, setSelected] = useState("");
+
+  const { data, isLoading, refetch } = useGetAllTaskQuery({
+    strQuery: "",
+    isTrashed: "true",
+    search: ""
+  });
+
+  const [deleteRestroreTask] = useDeleteRestoreTaskMutation();
+
+  const deleteRestoreHandler = async () => {
+    try {
+      let result;
+      switch (type) {
+        case "delete":
+          result = await deleteRestroreTask({
+            id: selected,
+            actionType: "delete"
+          }).unwrap();
+          break;
+        case "deleteAll":
+          result = await deleteRestroreTask({
+            id: selected,
+            actionType: "deleteAll"
+          }).unwrap();
+          break;
+        case "restore":
+          result = await deleteRestroreTask({
+            id: selected,
+            actionType: "restore"
+          }).unwrap();
+          break;
+        case "restoreAll":
+          result = await deleteRestroreTask({
+            id: selected,
+            actionType: "restoreAll"
+          }).unwrap();
+          break;
+      }
+
+      toast.success(result?.message, {
+        className: "sonner-toast-success"
+      });
+      setTimeout(() => {
+        setOpenDialog(false);
+        refetch();
+      }, 500);
+    } catch (err) {
+      console.log(err);
+      toast.error("Error" || err.error, {
+        className: "sonner-toast-error"
+      });
+    }
+  }
 
   const deleteAllClick = () => {
     setType("deleteAll");
@@ -133,7 +188,8 @@ const Trash = () => {
             <table className='w-full mb-5'>
               <TableHeader />
               <tbody>
-                {tasks?.map((tk, id) => (
+                {/* {tasks?.map((tk, id) => ( */}
+                {data?.tasks?.map((tk, id) => (
                   <TableRow key={id} item={tk} />
                 ))}
               </tbody>
