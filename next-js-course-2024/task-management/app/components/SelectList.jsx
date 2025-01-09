@@ -33,10 +33,10 @@ const SelectList = ({ lists, selected, setSelected, label }) => {
                   className="relative cursor-default select-none py-2 pl-10 pr-4 data-[active]:bg-amber-100 data-[active]:text-amber-900 text-grey-900"
                   value={list}>
                   <>
-                    <span className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>
+                    <span className={`block truncate ${selected === list ? "font-medium" : "font-normal"}`}>
                       {list}
                     </span>
-                    {selected ? (
+                    {selected === list ? (
                       <span className='absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600'>
                         <MdCheck className='h-5 w-5' aria-hidden='true' />
                       </span>

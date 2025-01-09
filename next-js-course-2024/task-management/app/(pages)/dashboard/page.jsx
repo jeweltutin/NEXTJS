@@ -10,8 +10,20 @@ import TaskTable from '@/app/components/Home/TaskTable';
 import UserTable from '@/app/components/Home/UserTable';
 import { useGetDashboardStatsQuery } from '@/app/redux/slices/api/taskApiSlice';
 import Loader from '@/app/components/Loader';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 function Dashboard() {
+    const router = useRouter();
+    const { user } = useSelector((state) => state.auth);
+    //console.log("User From: Dashboard", user?.data?.isAdmin);
+
+    useEffect(() => {
+        if (!user) {
+            router.push('/log-in');
+        }
+    }, [user, router]);
     const totals = summary.tasks;
 
     const { data, isLoading, error } = useGetDashboardStatsQuery();

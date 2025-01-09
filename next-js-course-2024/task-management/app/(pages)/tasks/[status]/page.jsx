@@ -14,6 +14,7 @@ import { MdGridView } from 'react-icons/md';
 import AddTask from '@/app/components/task/AddTask';
 import { useGetAllTaskQuery } from '@/app/redux/slices/api/taskApiSlice';
 import Table from '@/app/components/task/Table';
+import { useSelector } from 'react-redux';
 
 function Tasks() {
   const params = useParams();
@@ -35,10 +36,13 @@ function Tasks() {
 
   const status = params?.status || "";
 
+  const { user } = useSelector((state) => state.auth);
   const { data, isLoading } = useGetAllTaskQuery({
     strQuery: status,
-     isTrashed: "",
-     search: ""
+    isTrashed: "",
+    search: "",
+    userId: user?.data?._id,
+    role: user?.data?.role 
   });
 
   return isLoading ? (

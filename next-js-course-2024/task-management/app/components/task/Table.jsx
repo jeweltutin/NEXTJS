@@ -15,6 +15,9 @@ import Button from "@/app/components/Button";
 import ConfirmationDialog from "../Dialogs";
 import AddTask from "./AddTask";
 import { useTrashTaskMutation } from "@/app/redux/slices/api/taskApiSlice";
+import { useSelector } from "react-redux";
+import Link from "next/link";
+import { AiTwotoneFolderOpen } from "react-icons/ai";
 
 
 const ICONS = {
@@ -24,6 +27,8 @@ const ICONS = {
 };
 
 const Table = ({ tasks }) => {
+  const { user } = useSelector((state) => state.auth);
+
   const [openDialog, setOpenDialog] = useState(false);
   const [selected, setSelected] = useState(null);
   const [openEdit, setOpenEdit] = useState(false);
@@ -36,7 +41,7 @@ const Table = ({ tasks }) => {
   };
 
   const editTask = (vrTask) => {
-    console.log("Edit Task: ", vrTask);
+    //console.log("Edit Task: ", vrTask);
     setSelected(vrTask);
     setOpenEdit(true);
   }
@@ -52,7 +57,7 @@ const Table = ({ tasks }) => {
       });
       setTimeout(() => {
         setOpenDialog(false);
-        window.location.reload(); 
+        window.location.reload();
       })
     } catch (err) {
       console.log(err);
@@ -136,20 +141,23 @@ const Table = ({ tasks }) => {
       </td>
 
       <td className='py-2 flex gap-2 md:gap-4 justify-end'>
-        <Button
-          addClasses='text-blue-600 hover:text-blue-500 sm:px-0 text-sm md:text-base'
-          label='Edit'
-          type='button'
-          // onClick={() => setOpenEdit(true)}
-          onClick={() => editTask(task)}
-        />
-
-        <Button
-          addClasses='text-red-700 hover:text-red-500 sm:px-0 text-sm md:text-base'
-          label='Delete'
-          type='button'
-          onClick={() => deleteClicks(task._id)}
-        />
+        {user?.data?.isAdmin ?
+          <span>
+            <Link href={`/tasks/task/${task._id}`} className="flex items-center gap-2 px-2 bg-gray-400 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg focus:ring-2 focus:ring-blue-400 focus:outline-none" >
+              <AiTwotoneFolderOpen className="h-5 w-5" aria-hidden="true" />
+              <span className="font-medium">Details</span>
+            </Link>
+            <Button label='Edit' type='button' addClasses='text-blue-600 hover:text-blue-500 sm:px-0 text-sm md:text-base'
+              // onClick={() => setOpenEdit(true)}
+              onClick={() => editTask(task)}
+            />
+            <Button label='Delete' type='button' onClick={() => deleteClicks(task._id)} addClasses='text-red-700 hover:text-red-500 sm:px-0 text-sm md:text-base' />
+          </span> :
+          <Link href={`/tasks/task/${task._id}`} className="flex items-center gap-2 px-2 bg-gray-400 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg focus:ring-2 focus:ring-blue-400 focus:outline-none" >
+            <AiTwotoneFolderOpen className="h-5 w-5" aria-hidden="true" />
+            <span className="font-medium">Details</span>
+          </Link>
+        }
       </td>
     </tr>
   );

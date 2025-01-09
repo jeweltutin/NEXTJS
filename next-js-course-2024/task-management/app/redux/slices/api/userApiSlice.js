@@ -30,6 +30,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
             }),
             refetchOnMountOrArgChange: true, // Ensures no cached data is used
         }),
+        getActiveTeamList: builder.query({
+            query: () => ({
+                url: `${USER_URL}/select-team`,
+                method: "GET",
+                credentials: "include"
+            }),
+        }),
         deleteUser: builder.mutation({
             query: (id) => ({
                 url: `${USER_URL}/${id}`,
@@ -75,4 +82,4 @@ export const userApiSlice = apiSlice.injectEndpoints({
     }),
 });
 
-export const { useUpdateUserMutation, useGetUserDataQuery, useGetTeamListQuery, useDeleteUserMutation, useUserActionMutation, useGetNotificationQuery, useMarkNotiAsReadMutation, useChangePasswordMutation } = userApiSlice;
+export const { useUpdateUserMutation, useGetUserDataQuery, useGetTeamListQuery, useGetActiveTeamListQuery, useDeleteUserMutation, useUserActionMutation, useGetNotificationQuery, useMarkNotiAsReadMutation, useChangePasswordMutation } = userApiSlice;

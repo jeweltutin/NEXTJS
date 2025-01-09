@@ -23,8 +23,8 @@ function AddTask({ open, setOpen, task }) {
         title: task?.title || "",
         date: dateFormatter(task?.date || new Date()),
         team: [],
-        stage: "",
-        priority: "",
+        stage: task?.stage || "",  // Ensure stage is populated
+        priority: task?.priority || "",  // Ensure priority is populated
         assets: []
     }
     //console.log("defaultValues:", defaultValues);
@@ -78,13 +78,13 @@ function AddTask({ open, setOpen, task }) {
                 ...data,
                 assets: uploadedURLs,
                 team,
-                stage,
+                stage: stage.toLowerCase().replace(/ /g, '-'),
                 priority,
             };
 
             if (task?._id) {
                 await updateTask({ ...payload, _id: task._id }).unwrap();
-                toast.success("Task Updated Successfully",{
+                toast.success("Task Updated Successfully", {
                     className: "sonner-toast-success"
                 });
             } else {

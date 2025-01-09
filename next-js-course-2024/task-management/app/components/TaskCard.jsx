@@ -14,6 +14,8 @@ import { FaList } from "react-icons/fa";
 import UserInfo from "./UserInfo";
 import { IoMdAdd } from "react-icons/io";
 import AddSubTask from "./task/AddSubTask";
+import { AiTwotoneFolderOpen } from "react-icons/ai";
+import Link from "next/link";
 // import AddSubTask from "./task/AddSubTask";
 
 const ICONS = {
@@ -43,24 +45,24 @@ const TaskCard = ({ task }) => {
         <>
             <div className='w-full h-fit bg-white shadow-md p-4 rounded'>
                 <div className='w-full flex justify-between'>
-                    <div
-                        className={clsx(
-                            "flex flex-1 gap-1 items-center text-sm font-medium",
-                            PRIOTITYSTYELS[task?.priority]
-                        )}
-                    >
+                    <div className={clsx(
+                        "flex flex-1 gap-1 items-center text-sm font-medium",
+                        PRIOTITYSTYELS[task?.priority]
+                    )}>
                         <span className='text-lg'>{ICONS[task?.priority]}</span>
                         <span className='uppercase'>{task?.priority} Priority</span>
                     </div>
 
-                    {user?.data?.isAdmin && <TaskDialog task={task} />}
+                    {user?.data?.isAdmin && <TaskDialog task={task} /> ||
+                        <Link href={`/tasks/task/${task._id}`} className="flex items-center gap-2 px-2 bg-gray-400 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-md hover:shadow-lg focus:ring-2 focus:ring-blue-400 focus:outline-none" >
+                            <AiTwotoneFolderOpen className="h-5 w-5" aria-hidden="true" />
+                            <span className="font-medium">Details</span>
+                        </Link>}
                 </div>
 
                 <>
                     <div className='flex items-center gap-2'>
-                        <div
-                            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
-                        />
+                        <div className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])} />
                         <h4 className='line-clamp-1 text-black'>{task?.title}</h4>
                     </div>
                     <span className='text-sm text-gray-600'>
@@ -87,13 +89,11 @@ const TaskCard = ({ task }) => {
 
                     <div className='flex flex-row-reverse'>
                         {task?.team?.map((m, index) => (
-                            <div
-                                key={index}
+                            <div key={index}
                                 className={clsx(
                                     "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
                                     BGS[index % BGS?.length]
-                                )}
-                            >
+                                )}>
                                 <UserInfo user={m} />
                             </div>
                         ))}
@@ -126,7 +126,7 @@ const TaskCard = ({ task }) => {
 
                 <div className='w-full pb-2'>
                     <button onClick={() => setOpenModal(true)} disabled={user?.isAdmin ? true : false}
-                        className='w-[170px] flex gap-2 p-[5px] rounded items-center text-sm text-white bg-blue-500 font-semibold disabled:cursor-not-allowed disabled::text-gray-300'>
+                        className='w-[170px] flex gap-2 p-[5px] rounded items-center text-sm text-white bg-gray-400 font-semibold disabled:cursor-not-allowed disabled::text-gray-300'>
                         <IoMdAdd className='text-lg' />
                         <span>ADD SUBTASK</span>
                     </button>
