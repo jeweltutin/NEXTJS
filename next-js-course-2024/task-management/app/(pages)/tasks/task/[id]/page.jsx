@@ -209,7 +209,7 @@ const TaskDetails = () => {
                                     {task?.assets?.map((el, index) => (
                                         <img
                                             key={index}
-                                            src={el}
+                                            src={`${process.env.REACT_APP_API_URL || 'http://localhost:8800'}/${el}`} // prepend server URL
                                             alt={task?.title}
                                             className='w-full rounded h-28 md:h-36 2xl:h-52 cursor-pointer transition-all duration-700 hover:scale-125 hover:z-50'
                                         />

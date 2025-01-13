@@ -47,7 +47,7 @@ function AddTask({ open, setOpen, task }) {
         setAssets([...e.target.files]);
     };
 
-    const uploadFiles = async (files) => {
+    /* const uploadFiles = async (files) => {
         const storage = getStorage(fireBaseApp);
         const urls = await Promise.all(
             Array.from(files).map((file) =>
@@ -68,47 +68,90 @@ function AddTask({ open, setOpen, task }) {
         );
         setUploading(false);
         return urls;
-    };
+    }; */
+
+    /*   const onSubmit = async (data) => {
+          try {
+              setUploading(true);
+              const uploadedURLs = await uploadFiles(assets);
+              const payload = {
+                  ...data,
+                  assets: uploadedURLs,
+                  team,
+                  stage: stage.toLowerCase().replace(/ /g, '-'),
+                  priority,
+              };
+  
+              if (task?._id) {
+                  await updateTask({ ...payload, _id: task._id }).unwrap();
+                  toast.success("Task Updated Successfully", {
+                      className: "sonner-toast-success"
+                  });
+              } else {
+                  const res = await createTask(payload).unwrap();
+                  toast.success(res.message, {
+                      className: "sonner-toast-success"
+                  });
+              }
+              setOpen(false);
+          } catch (error) {
+              toast.error("Error submitting task", {
+                  className: "sonner-toast-error"
+              });
+              console.log(error);
+          } finally {
+              setUploading(false);
+          }
+      }; */
 
     const onSubmit = async (data) => {
         try {
             setUploading(true);
-            const uploadedURLs = await uploadFiles(assets);
-            const payload = {
-                ...data,
-                assets: uploadedURLs,
-                team,
-                stage: stage.toLowerCase().replace(/ /g, '-'),
-                priority,
-            };
 
-            if (task?._id) {
-                await updateTask({ ...payload, _id: task._id }).unwrap();
-                toast.success("Task Updated Successfully", {
-                    className: "sonner-toast-success"
-                });
-            } else {
-                const res = await createTask(payload).unwrap();
-                toast.success(res.message, {
-                    className: "sonner-toast-success"
+            // Prepare FormData for the request
+            const formData = new FormData();
+
+            // Add files to FormData if available
+            if (assets && assets.length > 0) {
+                Array.from(assets).forEach((file) => {
+                    formData.append("assets", file);
                 });
             }
 
-            /* const res = task?._id
-                ? await updateTask({ ...payload, _id: task._id }).unwrap()
-                : await createTask(payload).unwrap();
+            // Add other task data
+            formData.append("title", data.title);
+            formData.append("priority", priority);
+            formData.append("stage", stage.toLowerCase().replace(/ /g, "-"));
+            formData.append("team", JSON.stringify(team)); // Convert team array to string
+            formData.append("date", data.date);
 
-            toast.success(res.message); */
+            let res;
+            if (task?._id) {
+                // Update task if task ID exists
+                formData.append("_id", task._id); // Add task ID to FormData
+                res = await updateTask(formData).unwrap();
+            } else {
+                // Create new task
+                res = await createTask(formData).unwrap();
+            }
+
+            // Show success toast
+            toast.success(res.message, {
+                className: "sonner-toast-success",
+            });
+
             setOpen(false);
         } catch (error) {
+            // Show error toast
             toast.error("Error submitting task", {
-                className: "sonner-toast-error"
+                className: "sonner-toast-error",
             });
-            console.log(error);
+            console.log("Error in onSubmit:", error);
         } finally {
             setUploading(false);
         }
     };
+
 
     return (
         <Dialog open={open} as="div" className="relative z-10" onClose={() => setOpen(false)}>
