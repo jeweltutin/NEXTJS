@@ -1,0 +1,4 @@
+//React Slick
+The Last React Carousel You'll Ever Need!
+https://react-slick.neostack.com/docs/get-started
+yarn add react-slick
