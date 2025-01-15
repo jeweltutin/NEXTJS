@@ -10,14 +10,13 @@ export default function Mylayout({ children }) {
         setIsDarkMode(!isDarkMode);
     };
 
-    console.log(isDarkMode);
     return (
         <div className={`min-h-screen transition-all duration-500 ease-in-out ${isDarkMode ? "bg-dark-image text-white" : "bg-light-image text-black"}`}>
             <Header toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
-            <main className={`container mx-auto rounded-2xl py-12 ${isDarkMode ? "bg-black test-white" : "bg-white text-black"}`}>
+            <main className={`container mx-auto rounded-2xl py-12 ${isDarkMode ? "bg-[#111111] test-white" : "bg-white text-black"}`}>
                 {children}
             </main>
-            <Footer />
+            <Footer toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
         </div>
     )
 }

@@ -9,8 +9,8 @@ export default function Header({ toggleTheme, isDarkMode }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { name: 'Home', href: '#', icon: <FaHome /> },
-    { name: 'About', href: '#about', icon: <FaUserAlt /> },
+    { name: 'Home', href: '/', icon: <FaHome /> },
+    { name: 'About', href: '/about', icon: <FaUserAlt /> },
     { name: 'Resume', href: '#resume', icon: <FaFileAlt /> },
     { name: 'Works', href: '#works', icon: <FaBriefcase /> },
     { name: 'Blogs', href: '#blogs', icon: <FaBlog /> },
@@ -56,7 +56,7 @@ export default function Header({ toggleTheme, isDarkMode }) {
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <nav className="md:hidden bg-white dark:bg-gray-800 absolute top-16 left-0 w-full shadow-lg z-50 transition-all duration-300">
+        <nav className="md:hidden bg-white dark:bg-gray-800 absolute top-20 left-0 w-full shadow-lg z-50 transition-all duration-300">
           {navItems.map((item, index) => (
             <a
               key={index}
