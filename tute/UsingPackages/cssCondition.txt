@@ -1,0 +1,21 @@
+//NextJS conditional CSS?
+This should work, and it works as same as React. Only you didn't escape the values correctly.
+
+<main className={`container mx-auto rounded-2xl py-12 ${isDarkMode ? "bg-transparent test-white" : "bg-transparent text-black"}`}>
+https://stackoverflow.com/questions/73345626/nextjs-conditional-css
+
+
+//clsx - A tiny (239B) utility for constructing className strings conditionally.
+https://www.npmjs.com/package/clsx
+
+<div
+  className={clsx(
+    "p-5 rounded-lg mb-2 h-full background:transparent",
+    {
+      "bg-light-green-500": !isDarkMode, // Light green background in light mode
+      "dark:border-[#212425] dark:border-2": isDarkMode // Dark border in dark mode
+    }
+  )}
+>
+  {/* Your content here */}
+</div>

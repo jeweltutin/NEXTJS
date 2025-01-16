@@ -3,16 +3,16 @@ import Image from "next/image";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { useState } from "react";
+import { useMode } from "./context/ModeContext";
 
 export default function Home() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  //const [isDarkMode, setIsDarkMode] = useState(false);
 
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+ const { isDarkMode, toggleTheme } = useMode();
+    console.log("hello!",isDarkMode);
   return (
     <div className={`min-h-screen transition-all duration-500 ease-in-out ${isDarkMode ? "bg-dark-image text-white" : "bg-light-image text-black"}`}>
-      <Header toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
+      <Header />
       <main className={`container mx-auto rounded-2xl py-12 ${isDarkMode ? "bg-transparent test-white" : "bg-transparent text-black"}`}>
         <div className="flex flex-col items-center h-[100vh] md:h-[90vh] lg:h-[80vh] xl:h-[71vh] justify-center aos-init aos-animate" data-aos="fade">
           <img alt="hero image" src="/images/home-avatar.jpg" className="rounded-full w-[250px] h-[250px] 2xl:w-[280px] 2xl:h-[280px]" />
@@ -59,6 +59,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

@@ -40,8 +40,39 @@ body {
   transition-duration: .3s;
   transition-timing-function: cubic-bezier(.4, 0, .2, 1);
 }
+
 .socialbtn:hover {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.after-effect {
+  position: relative;
+  display: inline-block;
+  --tw-gradient-from: #fa5252;
+  --tw-gradient-to: rgba(250, 82, 82, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  --tw-gradient-to: #dd2476;
+  font-family: Roboto Slab, serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.after\:left-32:after {
+  content: var(--tw-content);
+  left: 8rem;
+}
+.after-effect:after {
+  position: absolute;
+  top: 50%;
+  height: .125rem;
+  --tw-translate-y: -50%;
+  border-radius: .375rem;
+  background-image: linear-gradient(to right, var(--tw-gradient-stops));
+  --tw-content: "";
+  content: var(--tw-content);
+}
+.after-effect, .after-effect:after {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }

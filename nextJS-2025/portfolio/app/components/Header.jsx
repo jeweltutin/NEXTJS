@@ -4,17 +4,22 @@ import { FaHome, FaUserAlt, FaBriefcase, FaBlog, FaFileAlt, FaEnvelope } from 'r
 import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 import Link from 'next/link';
+import { useMode } from '../context/ModeContext';
 
-export default function Header({ toggleTheme, isDarkMode }) {
+export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const { isDarkMode, toggleTheme } = useMode();
+
+  console.log(isDarkMode, "Dark", isDarkMode);
 
   const navItems = [
     { name: 'Home', href: '/', icon: <FaHome /> },
     { name: 'About', href: '/about', icon: <FaUserAlt /> },
-    { name: 'Resume', href: '#resume', icon: <FaFileAlt /> },
-    { name: 'Works', href: '#works', icon: <FaBriefcase /> },
-    { name: 'Blogs', href: '#blogs', icon: <FaBlog /> },
-    { name: 'Contact', href: '#contact', icon: <FaEnvelope /> },
+    { name: 'Resume', href: '/resume', icon: <FaFileAlt /> },
+    { name: 'Works', href: '/works', icon: <FaBriefcase /> },
+    { name: 'Blogs', href: '/blogs', icon: <FaBlog /> },
+    { name: 'Contact', href: '/contact', icon: <FaEnvelope /> },
   ];
 
   return (

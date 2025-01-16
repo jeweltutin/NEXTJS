@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
+import { ModeProvider, useMode } from "./context/ModeContext";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,9 +28,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* <body className={`${poppinsFont} ${geistSans.variable} ${geistMono.variable} antialiased`} > */}
       <body className={`${poppinsFont.className} antialiased`} >
-        {children}
+        <ModeProvider>
+          {children}
+        </ModeProvider>
       </body>
     </html>
   );
