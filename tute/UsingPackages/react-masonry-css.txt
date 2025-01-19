@@ -1,0 +1,4 @@
+//A Masonry component leveraging CSS and native React rendering, for fast, responsive masonry layouts
+https://www.npmjs.com/package/react-masonry-css
+yarn add react-masonry-css
+
