@@ -45,14 +45,11 @@ function Works() {
             </div>
             <ul className="mt-[40px] flex w-full justify-start md:justify-end flex-wrap font-medium pb-12">
               {categories.map(category => (
-                <li
-                  key={category}
+                <li key={category} onClick={() => setSelectedCategory(category)}
                   className={clsx(
                     "cursor-pointer mr-4 md:mx-4",
                     category === selectedCategory ? "text-[#FA5252]" : "fillter-btn"
-                  )}
-                  onClick={() => setSelectedCategory(category)}
-                >
+                  )}>
                   {category}
                 </li>
               ))}
