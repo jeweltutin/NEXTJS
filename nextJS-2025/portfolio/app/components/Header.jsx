@@ -5,13 +5,14 @@ import { BsSunFill, BsMoonFill } from 'react-icons/bs';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
 import Link from 'next/link';
 import { useMode } from '../context/ModeContext';
+import clsx from 'clsx';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const { isDarkMode, toggleTheme } = useMode();
 
-  console.log(isDarkMode, "Dark", isDarkMode);
+  //console.log(isDarkMode, "Dark", isDarkMode);
 
   const navItems = [
     { name: 'Home', href: '/', icon: <FaHome /> },
@@ -28,11 +29,7 @@ export default function Header() {
         {/* Logo */}
         <div className="text-3xl font-bold text-pink-500">
           <Link href={"/"}>
-            <img
-              src="/images/logo.png"
-              alt="logo"
-              className="rounded-lg shadow-lg w-full object-cover"
-            />
+            <img src="/images/logo.png" alt="logo" className="rounded-lg shadow-lg w-full object-cover" />
           </Link>
         </div>
 
@@ -40,7 +37,7 @@ export default function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-4">
             {navItems.map((item, index) => (
-              <a key={index} href={item.href} className="flex items-center space-x-2 px-4 py-2 rounded-lg text-gray-700 dark:bg-[#212425] hover:bg-gradient-to-r from-[#FA5252] to-[#DD2476] hover:text-white dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white transition-all duration-200">
+              <a key={index} href={item.href} className={clsx("flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-gradient-to-r from-[#FA5252] to-[#DD2476] hover:text-white dark:hover:bg-gray-700 dark:hover:text-white transition-all duration-200", { "bg-white text-gray-700": !isDarkMode, "dark:bg-[#212425] dark:text-white": isDarkMode })}>
                 {item.icon}
                 <span>{item.name}</span>
               </a>
@@ -61,12 +58,12 @@ export default function Header() {
 
       {/* Mobile Drawer Menu */}
       {isMobileMenuOpen && (
-        <nav className="md:hidden bg-white dark:bg-gray-800 absolute top-20 left-0 w-full shadow-lg z-50 transition-all duration-300">
+        <nav className={clsx("md:hidden absolute top-20 left-0 w-full shadow-lg z-50 transition-all duration-300", { "bg-white text-black" : !isDarkMode, "dark:bg-gray-800" : isDarkMode })}>
           {navItems.map((item, index) => (
             <a
               key={index}
               href={item.href}
-              className="flex items-center space-x-2 px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-pink-200 dark:hover:bg-gray-700 hover:text-pink-600 dark:hover:text-pink-400 transition-all"
+              className={clsx("flex items-center space-x-2 px-4 py-3 border-b border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-pink-200 dark:hover:bg-gray-700 hover:text-pink-600 dark:hover:text-pink-400 transition-all", { "bg-white dark:text-gray-700" : !isDarkMode, "bg-black": isDarkMode })}
               onClick={() => setIsMobileMenuOpen(false)} // Close menu on click
             >
               {item.icon}

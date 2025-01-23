@@ -2,7 +2,7 @@ import nodemailer from 'nodemailer';
 
 export async function POST(req, res) {
   const { name, email, message } = await req.json();
-  console.log(process.env.EMAIL_PASS);
+
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,  // or 465 for SSL

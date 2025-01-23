@@ -1,5 +1,7 @@
+import { useMode } from "../context/ModeContext";
 
-function Footer({ isDarkMode }) {
+function Footer() {
+  const { isDarkMode } = useMode();
   return (
     <div className={`container mx-auto ${isDarkMode ? "bg-[#111111] test-white" : "bg-white text-black"}`}>
       <hr />

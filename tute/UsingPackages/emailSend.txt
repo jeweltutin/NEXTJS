@@ -1,0 +1,9 @@
+Nodemailer is a module for Node.js applications that allows easy email sending. The project started in 2010 when there were few reliable options for sending email messages, and today, it is the default solution for most Node.js users.
+https://www.nodemailer.com/
+https://www.npmjs.com/package/nodemailer
+npm i nodemailer
+//implemented with nextjs -portfolio project
+
+
+//How to Send Emails In Next.JS 14 With Dynamic Templates
+https://www.youtube.com/watch?v=81lt0qcXtHE&ab_channel=SakuraDev

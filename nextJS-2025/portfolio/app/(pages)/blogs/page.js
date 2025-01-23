@@ -8,7 +8,10 @@ function Blogs() {
     return (
         <div className="px-12 lg:px-20">
             <div className="py-12">
-                <h2 className="after-effect after:left-32 mt-12 lg:mt-0">Blogs</h2>
+                    <div className="flex items-center">
+                        <h1 className="text-4xl font-bold mr-3">Blogs</h1>
+                        <div className="h-[2px] w-48 bg-red-500"></div>
+                    </div>             
                 <div className="grid gap-x-10 gap-y-7 mb-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 mt-[40px]">
                     <div className={clsx("p-5 rounded-lg mb-2 h-full background:transparent",
                         {
@@ -88,7 +91,7 @@ function Blogs() {
                             <span>27 April</span>
                             <span className="pl-6 relative after:absolute after:h-1 after:w-1 after:bg-gray-lite after:rounded-full after:left-2 after:top-[50%] transform after:-translate-y-1/2">Inspiration</span>
                         </div>
-                        <h3 className={clsx("text-lg font-medium duration-300 transition cursor-pointer mt-3 pr-4 hover:text-[#FA5252] dark:hover:text-[#FA5252]",{ "text-black": !isDarkMode,"text-white": isDarkMode })}>
+                        <h3 className={clsx("text-lg font-medium duration-300 transition cursor-pointer mt-3 pr-4 hover:text-[#FA5252] dark:hover:text-[#FA5252]", { "text-black": !isDarkMode, "text-white": isDarkMode })}>
                             Everything You Need to Know About Web Accessibility.
                         </h3>
                     </div>

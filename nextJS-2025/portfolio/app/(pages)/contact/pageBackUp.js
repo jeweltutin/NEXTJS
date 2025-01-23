@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 export default function Contact() {
     const [formData, setFormData] = useState({ name: '', email: '', message: '' });
     const [status, setStatus] = useState('');
-    const [isSubmitting, setIsSubmitting] = useState(false); // Track submission state
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -16,30 +15,8 @@ export default function Contact() {
         }));
     };
 
-    const validateForm = () => {
-        if (!formData.name.trim()) {
-            toast.error("Name is required");
-            return false;
-        }
-        if (!formData.email.trim()) {
-            toast.error("Email is required");
-            return false;
-        }
-        if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
-            toast.error("Enter a valid email");
-            return false;
-        }
-        if (!formData.message.trim()) {
-            toast.error("Message is required");
-            return false;
-        }
-        return true;
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!validateForm()) return;
-        setIsSubmitting(true);  // Start submission
         setStatus('Sending...');
         try {
             const response = await fetch('/api/emails', {
@@ -65,20 +42,35 @@ export default function Contact() {
                     progress: undefined,
                     theme: "light"
                 });
-                // Clear form after successful submission
-                setFormData({ name: '', email: '', message: '' });
             } else {
                 setStatus(data.error || 'Failed to send email.');
-                toast.error('Error: ' + (data.error || 'Failed to send email'));
+                toast.error('Error: ' + (data.error || 'Failed to send email'), {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                });
             }
         } catch (error) {
             console.error('Error occurred:', error);  // Log error details
             setStatus('Error occurred while sending the email.');
-            toast.error('Error occurred while sending the email.');
-        } finally {
-            setIsSubmitting(false);  // End submission
+            toast.error('Error occurred while sending the email.', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            });
         }
     };
+
 
     return (
         <div className="py-16 px-8">
@@ -166,16 +158,8 @@ export default function Contact() {
                             type="button"
                             onClick={handleSubmit}
                             className="px-5 text-black font-semibold py-2 rounded-lg border hover:bg-gradient-to-r from-[#FA5252] to-[#DD2476] hover:text-white transition-all duration-300"
-                            disabled={isSubmitting}  // Disable button during submission
                         >
-                            {isSubmitting ? (
-                                <span className="flex items-center space-x-2">
-                                    <div className="w-5 h-5 border-t-2 border-b-2 border-gray-600 rounded-full animate-spin"></div>
-                                    <span>Sending...</span>
-                                </span>
-                            ) : (
-                                'Submit'
-                            )}
+                            Submit
                         </button>
                     </form>
                 </div>
