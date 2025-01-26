@@ -3,3 +3,5 @@ https://fkhadra.github.io/react-toastify/introduction/
 https://www.npmjs.com/package/react-toastify
 
 npm i react-toastify
+
+https://blog.logrocket.com/using-react-toastify-style-toast-messages/
