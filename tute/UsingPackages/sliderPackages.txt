@@ -2,3 +2,6 @@
 The Last React Carousel You'll Ever Need!
 https://react-slick.neostack.com/docs/get-started
 yarn add react-slick
+
+//react-multi-carousel
+https://www.npmjs.com/package/react-multi-carousel

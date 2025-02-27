@@ -11,8 +11,12 @@ import Link from "next/link";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ReactMarkdown from 'react-markdown';
 import ProductList from "./ProductList";
+import WishlistButton from "./WishlistButton";
 
 function ProductDetails({ theProduct }) {
+    const [token, setToken] = useState(null);
+    const [user, setUser] = useState(null);
+
     const router = useRouter();
     const [isOpen, setIsOpen] = useState(false);
     //const defaultImageUrl = "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NzEyNjZ8MHwxfHNlYXJjaHwxfHxoZWFkcGhvbmV8ZW58MHwwfHx8MTcyMTMwMzY5MHww&ixlib=rb-4.0.3&q=80&w=1080";
@@ -37,8 +41,11 @@ function ProductDetails({ theProduct }) {
     const [selectedColor, setSelectedColor] = useState(null);
 
     useEffect(() => {
-        const token = sessionStorage.getItem("jwt");
-        const user = JSON.parse(sessionStorage.getItem('user'));
+        const storedToken = sessionStorage.getItem("jwt");
+        const storedUser = sessionStorage.getItem("user");
+
+        if (storedToken) setToken(storedToken);
+        if (storedUser) setUser(JSON.parse(storedUser));
     }, []);
 
     let num = 314340;
@@ -190,18 +197,19 @@ function ProductDetails({ theProduct }) {
                             <h2 className="text-3xl font-bold mb-2">{theProduct[0].name}</h2>
                             <div className="flex justify-between">
                                 <p className="text-gray-600 mb-4">SKU: WH1000XM4</p>
-                                <div className="">
+                                {/* <div className="">
                                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#34a52c">
                                         <g id="SVGRepo_bgCarrier" strokeWidth="0" />
                                         <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
                                         <g id="SVGRepo_iconCarrier"> <path fillRule="evenodd" clipRule="evenodd" d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z" stroke="#1a8922" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /> </g>
                                     </svg>
-                                    {/* <svg width="25px" height="25px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
-                                    <g id="SVGRepo_iconCarrier"> <path d="M4.03553 1C1.80677 1 0 2.80677 0 5.03553C0 6.10582 0.42517 7.13228 1.18198 7.88909L7.14645 13.8536C7.34171 14.0488 7.65829 14.0488 7.85355 13.8536L13.818 7.88909C14.5748 7.13228 15 6.10582 15 5.03553C15 2.80677 13.1932 1 10.9645 1C9.89418 1 8.86772 1.42517 8.11091 2.18198L7.5 2.79289L6.88909 2.18198C6.13228 1.42517 5.10582 1 4.03553 1Z" fill="#199a22" /> </g>
-                                </svg> */}
-                                </div>
+                                    <svg width="25px" height="25px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                                        <g id="SVGRepo_iconCarrier"> <path d="M4.03553 1C1.80677 1 0 2.80677 0 5.03553C0 6.10582 0.42517 7.13228 1.18198 7.88909L7.14645 13.8536C7.34171 14.0488 7.65829 14.0488 7.85355 13.8536L13.818 7.88909C14.5748 7.13228 15 6.10582 15 5.03553C15 2.80677 13.1932 1 10.9645 1C9.89418 1 8.86772 1.42517 8.11091 2.18198L7.5 2.79289L6.88909 2.18198C6.13228 1.42517 5.10582 1 4.03553 1Z" fill="#199a22" /> </g>
+                                    </svg>
+                                </div> */}
+                                <WishlistButton productId={theProduct[0].id} user={user} token={token}/>
                             </div>
                             {/* <p className="text-gray-600 mb-4">{ num }</p> */}
                             <div className="mb-4">

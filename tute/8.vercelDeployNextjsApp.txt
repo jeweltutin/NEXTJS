@@ -1,0 +1,9 @@
+//Deploying NextJS Application | NextJS Tutorial in Hindi    // I first checked and done: 27-01-2025
+https://www.youtube.com/watch?v=YyeyXhKvgPY&ab_channel=PiyushGarg
+
+
+https://www.youtube.com/watch?v=hiZy1enqIyg&ab_channel=iPixelsStudio
+
+
+//Deploy ExpressJs App on Vercel | Hindi
+https://www.youtube.com/watch?v=OoI87qhiFlQ&ab_channel=DoSomeCoding

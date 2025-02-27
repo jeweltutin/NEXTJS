@@ -156,6 +156,9 @@ function Header() {
                             <Link href={'/my-order'}>
                                 <DropdownMenuItem>My Order</DropdownMenuItem>
                             </Link>
+                            <Link href={'/wishlist'}>
+                                <DropdownMenuItem>My Wishlist</DropdownMenuItem>
+                            </Link>
                             <DropdownMenuItem onClick={onSignOut}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>

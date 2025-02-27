@@ -538,7 +538,8 @@ export default {
 
 
 
-
+//Select products with images url only
+//http://localhost:1337/api/products?populate[images][fields][0]=url
 
 // products filter api by category:
 // http://localhost:1337/api/products?filters[categories][name][$in]=Fruits
