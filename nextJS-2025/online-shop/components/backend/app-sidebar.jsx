@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import {
   AudioWaveform,
   BookOpen,
@@ -27,6 +26,8 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar";
 import { NavSingle } from "./nav-single";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 
 
@@ -61,9 +62,9 @@ const data = {
       icon: LayoutDashboard
     }
   ],
-  test: [
+  logOut: [
     {
-      name: "Test",
+      name: "Log Out",
       url: "/dx-admin/dashboard",
       icon: LayoutDashboard
     }
@@ -180,6 +181,30 @@ const data = {
 }
 
 export function AppSidebar({ ...props }) {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const jwt = sessionStorage.getItem("jwt");
+    const userData = JSON.parse(sessionStorage.getItem("user"));
+
+    if (jwt) {
+      setIsLoggedIn(true);
+      setToken(jwt);
+      setUser(userData);
+    }
+  }, []);
+
+  const onSignOut = () => {
+    sessionStorage.clear();
+    setIsLoggedIn(false);
+    setUser(null);
+    setToken(null);
+    router.push("/sign-in");
+  };
+
   return (
     <Sidebar collapsible="icon" {...props} className={"text-white"}>
       <SidebarHeader>
@@ -188,7 +213,13 @@ export function AppSidebar({ ...props }) {
       <SidebarContent>
         <NavSingle singles={data.manus} />
         <NavMain items={data.navMain} />
-        <NavSingle singles={data.test} />
+        {/* <NavSingle singles={data.logOut} /> */}
+        <NavSingle
+          singles={data.logOut.map((item) => ({
+            ...item,
+            onClick: item.name === "Log Out" ? onSignOut : item.onClick, // Add onClick for Log Out
+          }))}
+        />
         <NavProjects projects={data.projects} />
       </SidebarContent>
       <SidebarFooter>

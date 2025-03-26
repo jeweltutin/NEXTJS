@@ -7,7 +7,8 @@ import logo from "@/public/images/logo.png";
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import GlobalApi from '@/actions/GlobalApi';
+//import GlobalApi from '@/actions/GlobalApi';
+import BackendApi from '@/actions/BackendApi';
 import { toast } from 'sonner';
 import { LoaderIcon } from 'lucide-react';
 
@@ -17,32 +18,80 @@ function SignIn() {
   const [loader, setLoader] = useState();
   const router = useRouter();
 
+  /*   useEffect(() => {
+      const jwt = sessionStorage.getItem('jwt');
+      if (jwt) {
+        router.push("/");
+      }
+    }, []) */
+
   useEffect(() => {
     const jwt = sessionStorage.getItem('jwt');
-    if (jwt) {
-      router.push("/");
+    const user = JSON.parse(sessionStorage.getItem('user'));
+
+    if (jwt && user) {
+      // Check the user's role and navigate accordingly
+      const userRole = user.role;
+
+      if (userRole === 'admin' || userRole === 'manager' || userRole === 'editor') {
+        router.push("/dx-admin/dashboard");  // Redirect to dashboard for admin, manager, or editor
+      } else if (userRole === 'user' || userRole === 'customer') {
+        router.push("/");  // Redirect to home page for user or customer
+      }
     }
-  }, [])
+  }, [router]);
+  /*   const onSignIn = async () => {
+      setLoader(true);
+      try {
+        const resp = await BackendApi.signIn(email, password);
+        console.log("API Response:", resp.data);  // Log the full response
+  
+        sessionStorage.setItem("user", JSON.stringify(resp.data.user));
+        sessionStorage.setItem("jwt", resp.data.token);
+  
+        toast("Login Successful!");
+        router.push("/");
+      } catch (error) {
+        console.error(error);
+        toast(error?.response?.data?.error?.message || "Something went wrong!");
+      } finally {
+        setLoader(false);
+      }
+    }; */
 
-  const onSignIn = () => {
+  const onSignIn = async () => {
     setLoader(true);
-    GlobalApi.signIn(email, password).then(resp => {
-      //console.log(resp.data.user);
-      //console.log(resp.data.jwt);
+    try {
+      const resp = await BackendApi.signIn(email, password);
+      console.log("API Response:", resp.data);  // Log the full response
 
-      sessionStorage.setItem('user', JSON.stringify(resp.data.user));
-      sessionStorage.setItem('jwt', resp.data.jwt);
-      toast("Login Successfull!");
-      router.push("/");
-      setLoader(false);
+      // Store user data and token in sessionStorage
+      sessionStorage.setItem("user", JSON.stringify(resp.data.user));
+      sessionStorage.setItem("jwt", resp.data.token);
 
-    }, (error) => {
-      console.log(error);
-      // toast("Something went wrong!");
-      toast(error?.response?.data?.error?.message);
+      // Get the user role
+      const userRole = resp.data.user.role;
+
+      // Check the user role and navigate to the appropriate page
+      if (userRole === 'admin' || userRole === 'manager' || userRole === 'editor') {
+        router.push("/dx-admin/dashboard");  // Redirect to dashboard for admin, manager, or editor
+      } else if (userRole === 'user' || userRole === 'customer') {
+        router.push("/");  // Redirect to home page for user or customer
+      } else {
+        // Handle undefined roles, if necessary
+        toast("Invalid role detected");
+      }
+
+      toast("Login Successful!");
+    } catch (error) {
+      console.error(error);
+      toast(error?.response?.data?.error?.message || "Something went wrong!");
+    } finally {
       setLoader(false);
-    })
-  }
+    }
+  };
+
+
 
   return (
     <div className="flex items-baseline justify-center my-36">
@@ -55,7 +104,7 @@ function SignIn() {
           <Input onChange={(e) => setPassword(e.target.value)} className="bg-background h-11" type="password" placeholder="Password" />
 
           <Button onClick={() => onSignIn()} disabled={!(email || password)} className="h-11">
-          {loader ? <LoaderIcon className="animate-spin" /> : "Sign In"}
+            {loader ? <LoaderIcon className="animate-spin" /> : "Sign In"}
           </Button>
           <p>
             Don't have an account ?

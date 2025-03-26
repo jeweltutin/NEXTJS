@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -11,10 +11,28 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger} from "@/components/ui/sidebar";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const jwt = sessionStorage.getItem("jwt");
+    const user = JSON.parse(sessionStorage.getItem("user"));
+
+    if (!jwt || !user) {
+      router.push("/sign-in"); // Redirect to sign-in if no JWT or user data
+      return;
+    }
+
+    // Check if the user's role allows access to the dashboard
+    const userRole = user.role;
+    if (userRole !== "admin" && userRole !== "manager" && userRole !== "editor") {
+      router.push("/"); // Redirect to home if the role isn't allowed
+    }
+  }, [router]);
 
   return (
     <>

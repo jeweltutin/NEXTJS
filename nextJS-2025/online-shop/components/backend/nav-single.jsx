@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/sidebar"
 
 export function NavSingle({
-    singles,
+  singles,
 }) {
   const { isMobile } = useSidebar()
 
@@ -35,7 +35,15 @@ export function NavSingle({
         {singles.map((item) => (
           <SidebarMenuItem key={item.name}>
             <SidebarMenuButton asChild>
-              <a href={item.url}>
+              {/* <a href={item.url}> */}
+              <a href={item.url}
+                onClick={(e) => {
+                  if (item.onClick) {
+                    e.preventDefault(); // Prevent default navigation if onClick is set
+                    item.onClick();
+                  }
+                }}
+              >
                 <item.icon />
                 <span>{item.name}</span>
               </a>

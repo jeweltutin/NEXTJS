@@ -3,6 +3,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { usePathname } from "next/navigation";
 import { SidebarInset, SidebarProvider } from "../ui/sidebar";
 import { AppSidebar } from "../backend/app-sidebar";
+import { Toaster } from "../ui/sonner";
 
 export default function BackendLayout({ children }) {
   const pathname = usePathname();
@@ -19,5 +20,6 @@ export default function BackendLayout({ children }) {
             </SidebarInset>
           </SidebarProvider>
         </div>
+        <Toaster richColors position="top-right" />
       </div> : children}</>;
 }

@@ -15,7 +15,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 
-export default function Slider() {
+function Slider() {
     const router = useRouter();
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(null);
@@ -23,6 +23,7 @@ export default function Slider() {
     const [loading, setLoading] = useState(true); // State to manage loading state
     const [error, setError] = useState(null); // State to manage error
 
+    // Check for token and user in sessionStorage
     useEffect(() => {
         const jwt = sessionStorage.getItem("jwt");
         const userData = JSON.parse(sessionStorage.getItem("user"));
@@ -34,27 +35,30 @@ export default function Slider() {
         }
     }, [router]);
 
+    // Fetch slides when user and token are available
     useEffect(() => {
         if (user && token) {
-            // Fetch slides asynchronously with Promises
-            setLoading(true);
-            axios.get("http://localhost:5000/api/slide", {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((response) => {
-                setSlides(response.data);
-            })
-            .catch((err) => {
-                setError("Failed to fetch slides");
-                console.error(err);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+            getAllSlides();
         }
     }, [user, token]);
+
+    // Fetch slides function
+    async function getAllSlides() {
+        try {
+            setLoading(true); // Start loading
+            const response = await axios.get("http://localhost:5000/api/slide", {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Use the token from state
+                },
+            });
+            setSlides(response.data); // Update slides state
+        } catch (err) {
+            setError("Failed to fetch slides"); // Handle error
+            console.error(err);
+        } finally {
+            setLoading(false); // Stop loading
+        }
+    }
 
     if (loading) return <p>Loading slides...</p>;
     if (error) return <p>{error}</p>;
@@ -86,3 +90,5 @@ export default function Slider() {
         </div>
     );
 }
+
+export default Slider;

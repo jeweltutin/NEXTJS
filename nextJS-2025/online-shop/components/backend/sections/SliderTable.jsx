@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import { HiSearch } from 'react-icons/hi';
@@ -15,6 +16,7 @@ import { HiSearch } from 'react-icons/hi';
 export default function SliderTable({ sliderData }) {
     const [isClient, setIsClient] = useState(false);
     const [search, setSearch] = useState("");
+    const router = useRouter();
 
     // Ensure the code runs only on the client
     useEffect(() => {
@@ -87,15 +89,23 @@ export default function SliderTable({ sliderData }) {
 
     return (
         <div className="p-4">
-            <div className="mb-4 flex items-center gap-2">
-                <HiSearch className="text-xl" />
-                <input
-                    type="text"
-                    value={search}
-                    onChange={e => setSearch(e.target.value)}
-                    placeholder="Search"
-                    className="p-2 border rounded"
-                />
+            <div className="mb-4 flex items-center gap-2 justify-between">
+                <div className="flex items-center gap-2">
+                    <HiSearch className="text-xl" />
+                    <input
+                        type="text"
+                        value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        placeholder="Search"
+                        className="p-2 border rounded"
+                    />
+                </div>
+                <button
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                    onClick={() => router.push("/dx-admin/slider/slide/add")}
+                >
+                    + Create New Slide
+                </button>
             </div>
 
             <DataTable
