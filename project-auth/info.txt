@@ -1,5 +1,15 @@
+The website 
+dx.com.bd
 https://dx-group-website-frontend.vercel.app/
 
 https://dx-group-website-frontend.vercel.app/login
 user: test@gmail.com
 pass: 123456
+
+
+
+Backend for this project - express
+expressexp
+
+Backend URL: http://localhost:3000/marketing/dashboard
+http://localhost:3000/login
